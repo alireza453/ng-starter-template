@@ -1,204 +1,91 @@
 <!-- Notifications toggle -->
-<button mat-icon-button (click)="openPanel()" #notificationsOrigin>
+<p-button severity="secondary"
+          icon="fa-regular fa-light fa-bell"
+          variant="outlined"
+          (click)="op.toggle($event)">
     @if (unreadCount > 0) {
-        <span
-            class="absolute left-0 right-0 top-0 flex h-3 items-center justify-center"
-        >
-            <span
-                class="ml-4 mt-2.5 flex h-4 min-w-4 shrink-0 items-center justify-center rounded-full bg-teal-600 px-1 text-xs font-medium text-indigo-50"
-            >
-                {{ unreadCount }}
-            </span>
-        </span>
+        <p-badge value="{{unreadCount}}"></p-badge>
     }
-    <mat-icon [svgIcon]="'heroicons_outline:bell'"></mat-icon>
-</button>
+</p-button>
 
-<!-- Notifications panel -->
-<ng-template #notificationsPanel>
-    <div
-        class="fixed inset-0 flex flex-col overflow-hidden shadow-lg sm:static sm:inset-auto sm:w-90 sm:min-w-90 sm:rounded-2xl"
-    >
-        <!-- Header -->
-        <div
-            class="flex shrink-0 items-center bg-primary py-4 pl-6 pr-4 text-on-primary"
-        >
-            <div class="-ml-1 mr-3 sm:hidden">
-                <button mat-icon-button (click)="closePanel()">
-                    <mat-icon
-                        class="text-current icon-size-5"
-                        [svgIcon]="'heroicons_solid:x-mark'"
-                    ></mat-icon>
-                </button>
-            </div>
-            <div class="text-lg font-medium leading-10">Notifications</div>
-            <div class="ml-auto">
-                <button
-                    class="dark:text-white"
-                    mat-icon-button
-                    [matTooltip]="'Mark all as read'"
+<p-popover #op>
+    <div class="flex flex-col gap-4 w-[20rem]">
+        <div>
+            <!--Header-->
+            <div class="w-full gap-2  mb-2 flex items-center ">
+
+                <p-button
+                    severity="primary"
+                    variant="outlined"
+                    icon="fa-solid fa-solid fa-envelope-circle-check"
+                    [pTooltip]=" ('mark-all-as-read' | transloco) "
                     [disabled]="unreadCount === 0"
                     (click)="markAllAsRead()"
                 >
-                    <mat-icon
-                        class="text-current icon-size-5"
-                        [svgIcon]="'heroicons_solid:envelope-open'"
-                    ></mat-icon>
-                </button>
+                </p-button>
+                <span class="font-medium text-surface-900 dark:text-surface-200  block ">{{ 'notifications' | transloco }}</span>
             </div>
-        </div>
 
-        <!-- Content -->
-        <div
-            class="bg-card relative flex flex-auto flex-col divide-y overflow-y-auto sm:max-h-120"
-        >
-            <!-- Notifications -->
-            @for (
-                notification of notifications;
-                track trackByFn($index, notification)
-            ) {
-                <div
-                    class="group flex hover:bg-gray-50 dark:hover:bg-black dark:hover:bg-opacity-5"
-                    [ngClass]="{ unread: !notification.read }"
-                >
-                    <!-- Notification with a link -->
-                    @if (notification.link) {
-                        <!-- Normal links -->
-                        @if (!notification.useRouter) {
-                            <a
-                                class="flex flex-auto cursor-pointer py-5 pl-6"
-                                [href]="notification.link"
-                            >
-                                <ng-container
-                                    *ngTemplateOutlet="notificationContent"
-                                ></ng-container>
-                            </a>
-                        }
-                        <!-- Router links -->
-                        @if (notification.useRouter) {
-                            <a
-                                class="flex flex-auto cursor-pointer py-5 pl-6"
-                                [routerLink]="notification.link"
-                            >
-                                <ng-container
-                                    *ngTemplateOutlet="notificationContent"
-                                ></ng-container>
-                            </a>
-                        }
-                    }
-
-                    <!-- Notification without a link -->
-                    @if (!notification.link) {
-                        <div class="flex flex-auto py-5 pl-6">
-                            <ng-container
-                                *ngTemplateOutlet="notificationContent"
-                            ></ng-container>
-                        </div>
-                    }
-
-                    <!-- Actions -->
-                    <div class="relative my-5 ml-2 mr-6 flex flex-col">
-                        <!-- Indicator -->
-                        <button
-                            class="h-6 min-h-6 w-6"
-                            mat-icon-button
-                            (click)="toggleRead(notification)"
-                            [matTooltip]="
-                                notification.read
-                                    ? 'Mark as unread'
-                                    : 'Mark as read'
-                            "
+            @if (notifications.length > 0) {
+                <ul class="list-none sm:max-h-120 p-0 m-0 flex flex-col overflow-hidden overscroll-auto"
+                    fuseScrollbar [fuseScrollbarOptions]="{ wheelPropagation: false }">
+                    @for (notification of notifications; track notification.id) {
+                        <li
+                            class="flex items-center justify-stretch gap-2 px-2 py-3 hover:bg-emphasis cursor-pointer rounded-border"
                         >
-                            <span
-                                class="h-2 w-2 rounded-full"
-                                [ngClass]="{
-                                    'bg-gray-400 dark:bg-gray-500 sm:opacity-0 sm:group-hover:opacity-100':
-                                        notification.read,
-                                    'bg-primary': !notification.read,
-                                }"
-                            ></span>
-                        </button>
-                        <!-- Remove -->
-                        <button
-                            class="h-6 min-h-6 w-6 sm:opacity-0 sm:group-hover:opacity-100"
-                            mat-icon-button
-                            (click)="delete(notification)"
-                            [matTooltip]="'Remove'"
-                        >
-                            <mat-icon
-                                class="icon-size-4"
-                                [svgIcon]="'heroicons_solid:x-mark'"
-                            ></mat-icon>
-                        </button>
-                    </div>
-                </div>
+                            <!--                        Avatar-->
+                            @if (notification.image) {
+                                <img
+                                    class="w-8 rounded-md"
+                                    [src]="notification.image "
+                                    [alt]="'Notification image'"
+                                />
+                            } @else {
+                                <p-avatar class="w-8" icon="fa-light fa-user"></p-avatar>
+                            }
 
-                <!-- Notification content template -->
-                <ng-template #notificationContent>
-                    <!-- Icon -->
-                    @if (notification.icon && !notification.image) {
-                        <div
-                            class="mr-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700"
-                        >
-                            <mat-icon
-                                class="icon-size-5"
-                                [svgIcon]="notification.icon"
-                            >
-                            </mat-icon>
-                        </div>
-                    }
-                    <!-- Image -->
-                    @if (notification.image) {
-                        <img
-                            class="mr-4 h-8 w-8 shrink-0 overflow-hidden rounded-full object-cover object-center"
-                            [src]="notification.image"
-                            [alt]="'Notification image'"
-                        />
-                    }
-                    <!-- Title, description & time -->
-                    <div class="flex flex-auto flex-col">
-                        @if (notification.title) {
-                            <div
-                                class="line-clamp-1 font-semibold"
-                                [innerHTML]="notification.title"
-                            ></div>
-                        }
-                        @if (notification.description) {
-                            <div
-                                class="line-clamp-2"
-                                [innerHTML]="notification.description"
-                            ></div>
-                        }
-                        <div class="text-secondary mt-2 text-sm leading-none">
-                            {{ notification.time | date: 'MMM dd, h:mm a' }}
-                        </div>
-                    </div>
-                </ng-template>
-            }
+                            <!--                        title,Description,Time-->
+                            <div class="flex flex-1 flex-col gap-1">
+                                <span class="font-medium">{{ notification.title }}</span>
+                                <div class="text-sm text-ellipsis">{{ notification.description }}</div>
+                                <div class="text-sm ">{{ notification.time }}</div>
+                            </div>
 
-            <!-- No notifications -->
-            @if (!notifications || !notifications.length) {
-                <div
-                    class="flex flex-auto flex-col items-center justify-center px-8 py-12 sm:justify-start"
-                >
-                    <div
-                        class="flex h-14 w-14 flex-0 items-center justify-center rounded-full bg-primary-100 dark:bg-primary-600"
-                    >
-                        <mat-icon
-                            class="text-primary-700 dark:text-primary-50"
-                            [svgIcon]="'heroicons_outline:bell'"
-                        ></mat-icon>
-                    </div>
-                    <div class="mt-5 text-2xl font-semibold tracking-tight">
-                        No notifications
-                    </div>
-                    <div
-                        class="text-secondary mt-1 w-full max-w-60 text-center text-md"
-                    >
-                        When you have notifications, they will appear here.
-                    </div>
+                            <!--Actions-->
+                            <div class=" flex flex-col gap-2">
+                                <p-button
+                                    size="small"
+                                    [icon]="notification.read ?  'fa-duotone fa-light fa-check' : 'fa-duotone fa-thin fa-envelope'  "
+                                    [severity]="notification.read ? 'secondary' : 'primary' "
+                                    [rounded]="true"
+                                    variant="text"
+                                    (click)="toggleRead(notification)"
+                                    [pTooltip]=" notification.read ? ('mark-as-unread' |transloco)  : ('mark-as-read'   | transloco) "></p-button>
+
+                                <!-- Remove -->
+                                <p-button
+                                    size="small"
+                                    severity="danger"
+                                    variant="text"
+                                    [rounded]="true"
+                                    icon="fa-duotone fa-light fa-trash"
+                                    (click)="delete(notification)"
+                                    [pTooltip]=" 'remove' | transloco "
+                                >
+                                </p-button>
+                            </div>
+                        </li>
+                        <p-divider></p-divider>
+                    }
+
+                </ul>
+            } @else {
+                <div class="flex flex-col items-center justify-center gap-6">
+                    <i class="fa-regular fa-bell-slash text-7xl"></i>
+                    <p class="text-lg">{{ 'no-notification'|transloco }}</p>
                 </div>
             }
+
         </div>
     </div>
-</ng-template>
+</p-popover>

@@ -14,9 +14,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { UserService } from 'app/core/user/user.service';
+import { Message } from 'primeng/message';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
     selector: 'auth-unlock-session',
@@ -25,7 +26,6 @@ import { UserService } from 'app/core/user/user.service';
     animations: fuseAnimations,
     standalone: true,
     imports: [
-        FuseAlertComponent,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
@@ -34,15 +34,13 @@ import { UserService } from 'app/core/user/user.service';
         MatIconModule,
         MatProgressSpinnerModule,
         RouterLink,
+        Message,
+        TranslocoPipe,
     ],
 })
 export class AuthUnlockSessionComponent implements OnInit {
     @ViewChild('unlockSessionNgForm') unlockSessionNgForm: NgForm;
 
-    alert: { type: FuseAlertType; message: string } = {
-        type: 'success',
-        message: '',
-    };
     name: string;
     showAlert: boolean = false;
     unlockSessionForm: UntypedFormGroup;
@@ -134,12 +132,6 @@ export class AuthUnlockSessionComponent implements OnInit {
                             disabled: true,
                         },
                     });
-
-                    // Set the alert
-                    this.alert = {
-                        type: 'error',
-                        message: 'Invalid password',
-                    };
 
                     // Show the alert
                     this.showAlert = true;

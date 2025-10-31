@@ -13,18 +13,26 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
 import { finalize } from 'rxjs';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
+
+import { Button } from 'primeng/button';
+import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
+import { TranslocoPipe } from '@ngneat/transloco';
+
+import { Message } from 'primeng/message';
 
 @Component({
     selector: 'auth-forgot-password',
     templateUrl: './forgot-password.component.html',
+    styleUrl: './forgot-password.component.scss',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
     standalone: true,
     imports: [
-        FuseAlertComponent,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
@@ -32,12 +40,19 @@ import { finalize } from 'rxjs';
         MatButtonModule,
         MatProgressSpinnerModule,
         RouterLink,
+        IconField,
+        InputIcon,
+        InputText,
+        Button,
+        AuthBasePartComponent,
+        TranslocoPipe,
+        Message,
     ],
 })
 export class AuthForgotPasswordComponent implements OnInit {
     @ViewChild('forgotPasswordNgForm') forgotPasswordNgForm: NgForm;
 
-    alert: { type: FuseAlertType; message: string } = {
+    alert: { type: 'success'|'error'; message: string } = {
         type: 'success',
         message: '',
     };
@@ -106,15 +121,14 @@ export class AuthForgotPasswordComponent implements OnInit {
                     this.alert = {
                         type: 'success',
                         message:
-                            "Password reset sent! You'll receive an email if you are registered on our system.",
+                            "password-reset-send",
                     };
                 },
                 (response) => {
                     // Set the alert
                     this.alert = {
                         type: 'error',
-                        message:
-                            'Email does not found! Are you sure you are already a member?',
+                        message:'email-not-found',
                     };
                 }
             );

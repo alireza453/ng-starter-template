@@ -20,6 +20,9 @@ import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 import { Subject, takeUntil } from 'rxjs';
+import { Tooltip } from 'primeng/tooltip';
+import { Badge } from 'primeng/badge';
+import { Tag } from 'primeng/tag';
 
 @Component({
     selector: 'fuse-vertical-navigation-basic-item',
@@ -33,6 +36,9 @@ import { Subject, takeUntil } from 'rxjs';
         MatTooltipModule,
         NgTemplateOutlet,
         MatIconModule,
+        Tooltip,
+        Badge,
+        Tag,
     ],
 })
 export class FuseVerticalNavigationBasicItemComponent

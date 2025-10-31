@@ -1,8 +1,11 @@
 import { provideHttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
-import { LuxonDateAdapter } from '@angular/material-luxon-adapter';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+    DateAdapter,
+    MAT_DATE_FORMATS,
+    MAT_DATE_LOCALE,
+} from '@angular/material/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
     PreloadAllModules,
     provideRouter,
@@ -11,16 +14,86 @@ import {
 } from '@angular/router';
 import { provideFuse } from '@fuse';
 import { TranslocoService, provideTransloco } from '@ngneat/transloco';
+import { definePreset } from '@primeng/themes';
+import AURA from '@primeng/themes/aura';
+import LARA from '@primeng/themes/lara';
 import { appRoutes } from 'app/app.routes';
 import { provideAuth } from 'app/core/auth/auth.provider';
 import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
+import { providePrimeNG } from 'primeng/config';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
+import {
+    MaterialPersianDateAdapter,
+    PERSIAN_DATE_FORMATS,
+} from './core/utils/MaterialPersianDateAdapter';
 
+const IndigoPreset = definePreset(AURA, {
+    semantic: {
+        colorScheme: {
+            light: {
+                surface: {
+                    0: '#ffffff',
+                    50: '{zinc.50}',
+                    100: '{zinc.100}',
+                    200: '{zinc.200}',
+                    300: '{zinc.300}',
+                    400: '{zinc.400}',
+                    500: '{zinc.500}',
+                    600: '{zinc.600}',
+                    700: '{zinc.700}',
+                    800: '{zinc.800}',
+                    900: '{zinc.900}',
+                    950: '{zinc.950}'
+                }
+            },
+            dark: {
+                surface: {
+                    0: '#ffffff',
+                    50: '{slate.50}',
+                    100: '{slate.100}',
+                    200: '{slate.200}',
+                    300: '{slate.300}',
+                    400: '{slate.400}',
+                    500: '{slate.500}',
+                    600: '{slate.600}',
+                    700: '{slate.700}',
+                    800: '{slate.800}',
+                    900: '{slate.900}',
+                    950: '{slate.950}'
+                }
+            }
+        },
+        primary: {
+            50: '{indigo.50}',
+            100: '{indigo.100}',
+            200: '{indigo.200}',
+            300: '{indigo.300}',
+            400: '{indigo.400}',
+            500: '{indigo.500}',
+            600: '{indigo.600}',
+            700: '{indigo.700}',
+            800: '{indigo.800}',
+            900: '{indigo.900}',
+            950: '{indigo.950}',
+        },
+    },
+});
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideAnimations(),
+        provideAnimationsAsync(),
+        providePrimeNG({
+             ripple: true,
+            theme: {
+                preset: IndigoPreset,
+                options: {
+                    darkModeSelector: '.mydark',
+                    cssLayer:false
+                },
+            },
+
+        }),
         provideHttpClient(),
         provideRouter(
             appRoutes,
@@ -28,24 +101,15 @@ export const appConfig: ApplicationConfig = {
             withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
         ),
 
-        // Material Date Adapter
+        // Material Persian Date Adapter
         {
             provide: DateAdapter,
-            useClass: LuxonDateAdapter,
+            useClass: MaterialPersianDateAdapter,
+            deps: [MAT_DATE_LOCALE],
         },
         {
             provide: MAT_DATE_FORMATS,
-            useValue: {
-                parse: {
-                    dateInput: 'D',
-                },
-                display: {
-                    dateInput: 'DDD',
-                    monthYearLabel: 'LLL yyyy',
-                    dateA11yLabel: 'DD',
-                    monthYearA11yLabel: 'LLLL yyyy',
-                },
-            },
+            useValue: PERSIAN_DATE_FORMATS,
         },
 
         // Transloco Config
@@ -57,11 +121,15 @@ export const appConfig: ApplicationConfig = {
                         label: 'English',
                     },
                     {
-                        id: 'tr',
-                        label: 'Turkish',
+                        id: 'fa',
+                        label: 'فارسی',
+                    },
+                    {
+                        id: 'ar',
+                        label: 'العربية',
                     },
                 ],
-                defaultLang: 'en',
+                defaultLang: 'fa',
                 fallbackLang: 'en',
                 reRenderOnLangChange: true,
                 prodMode: true,
@@ -91,40 +159,14 @@ export const appConfig: ApplicationConfig = {
             },
             fuse: {
                 layout: 'classy',
-                scheme: 'light',
+                scheme: 'mylight',
                 screens: {
                     sm: '600px',
                     md: '960px',
                     lg: '1280px',
                     xl: '1440px',
                 },
-                theme: 'theme-default',
-                themes: [
-                    {
-                        id: 'theme-default',
-                        name: 'Default',
-                    },
-                    {
-                        id: 'theme-brand',
-                        name: 'Brand',
-                    },
-                    {
-                        id: 'theme-teal',
-                        name: 'Teal',
-                    },
-                    {
-                        id: 'theme-rose',
-                        name: 'Rose',
-                    },
-                    {
-                        id: 'theme-purple',
-                        name: 'Purple',
-                    },
-                    {
-                        id: 'theme-amber',
-                        name: 'Amber',
-                    },
-                ],
+                layoutDirection: 'rtl',
             },
         }),
     ],

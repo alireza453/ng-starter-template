@@ -1,0 +1,17 @@
+@use "sass:meta";
+
+// ICON FONT
+@include meta.load-css("font-awesome/all.scss");
+
+// FARSI FONT
+@include meta.load-css("vazirmatn/farsi-digits/vazirmatn");
+//include meta.load-css("vazirmatn/farsi-digits-non-latin/vazirmatn");
+//include meta.load-css("vazirmatn/non-latin/vazirmatn");
+//include meta.load-css("vazirmatn/plain/vazirmatn");
+//include meta.load-css("vazirmatn-round-dots/farsi-digits/vazirmatn-round-dots");
+//include meta.load-css("vazirmatn-round-dots/farsi-digits-non-latin/vazirmatn-round-dots");
+//include meta.load-css("vazirmatn-round-dots/non-latin/vazirmatn-round-dots");
+//include meta.load-css("vazirmatn-round-dots/plain/vazirmatn-round-dots");
+
+// ENGLISH FONT
+@include meta.load-css("roboto/roboto");

@@ -12,8 +12,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { Message } from 'primeng/message';
 
 @Component({
     selector: 'coming-soon-classic',
@@ -22,19 +22,19 @@ import { AuthService } from 'app/core/auth/auth.service';
     animations: fuseAnimations,
     standalone: true,
     imports: [
-        FuseAlertComponent,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
         MatProgressSpinnerModule,
+        Message,
     ],
 })
 export class ComingSoonClassicComponent implements OnInit {
     @ViewChild('comingSoonNgForm') comingSoonNgForm: NgForm;
 
-    alert: { type: FuseAlertType; message: string } = {
+    alert: { type: 'success'|'error'; message: string } = {
         type: 'success',
         message: '',
     };

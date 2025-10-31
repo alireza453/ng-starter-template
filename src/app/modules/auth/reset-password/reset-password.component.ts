@@ -14,19 +14,26 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { FuseValidators } from '@fuse/validators';
 import { AuthService } from 'app/core/auth/auth.service';
 import { finalize } from 'rxjs';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
+import { Message } from 'primeng/message';
+import { Button } from 'primeng/button';
+import { Password } from 'primeng/password';
+import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
+import { TranslocoPipe } from '@ngneat/transloco';
 
 @Component({
     selector: 'auth-reset-password',
     templateUrl: './reset-password.component.html',
+    styleUrl: 'reset-password.component.scss',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
     standalone: true,
     imports: [
-        FuseAlertComponent,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
@@ -35,12 +42,17 @@ import { finalize } from 'rxjs';
         MatIconModule,
         MatProgressSpinnerModule,
         RouterLink,
+        Message,
+        Button,
+        Password,
+        AuthBasePartComponent,
+        TranslocoPipe,
     ],
 })
 export class AuthResetPasswordComponent implements OnInit {
     @ViewChild('resetPasswordNgForm') resetPasswordNgForm: NgForm;
 
-    alert: { type: FuseAlertType; message: string } = {
+    alert: { type: 'success'|'error'; message: string } = {
         type: 'success',
         message: '',
     };
@@ -117,14 +129,14 @@ export class AuthResetPasswordComponent implements OnInit {
                     // Set the alert
                     this.alert = {
                         type: 'success',
-                        message: 'Your password has been reset.',
+                        message: 'password-reset-done',
                     };
                 },
                 (response) => {
                     // Set the alert
                     this.alert = {
                         type: 'error',
-                        message: 'Something went wrong, please try again.',
+                        message: 'something-went-wrong',
                     };
                 }
             );

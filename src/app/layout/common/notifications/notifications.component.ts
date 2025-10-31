@@ -1,10 +1,16 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import {
+    CommonModule,
+    DatePipe,
+    NgClass,
+    NgForOf,
+    NgTemplateOutlet,
+} from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component,
+    Component, computed,
     OnDestroy,
     OnInit,
     TemplateRef,
@@ -12,18 +18,29 @@ import {
     ViewContainerRef,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatButton, MatButtonModule } from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
 import { Notification } from 'app/layout/common/notifications/notifications.types';
+import { Button, ButtonModule } from 'primeng/button';
+import { Popover } from 'primeng/popover';
+import { Tooltip } from 'primeng/tooltip';
 import { Subject, takeUntil } from 'rxjs';
+import { Avatar } from 'primeng/avatar';
+import { Badge, BadgeDirective } from 'primeng/badge';
+import { Tag } from 'primeng/tag';
+import { notifications } from '../../../mock-api/common/notifications/data';
+import { Divider } from 'primeng/divider';
+import { TranslocoDirective, TranslocoPipe } from '@ngneat/transloco';
+import { FuseScrollbarDirective } from '../../../../@fuse/directives/scrollbar';
 
 @Component({
     selector: 'notifications',
     templateUrl: './notifications.component.html',
     encapsulation: ViewEncapsulation.None,
+    styleUrl: './notifications.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'notifications',
     standalone: true,
@@ -35,17 +52,51 @@ import { Subject, takeUntil } from 'rxjs';
         NgTemplateOutlet,
         RouterLink,
         DatePipe,
+        Button,
+        ButtonModule,
+        Tooltip,
+        CommonModule,
+        Popover,
+        NgForOf,
+        Avatar,
+        Badge,
+        BadgeDirective,
+        Tag,
+        Divider,
+        TranslocoPipe,
+        TranslocoDirective,
+        FuseScrollbarDirective,
     ],
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
-    @ViewChild('notificationsOrigin') private _notificationsOrigin: MatButton;
+    @ViewChild('notificationsOrigin') private _notificationsOrigin: any;
     @ViewChild('notificationsPanel')
     private _notificationsPanel: TemplateRef<any>;
-
+    htmlTag = document.documentElement;
     notifications: Notification[];
     unreadCount: number = 0;
     private _overlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    members = [
+        {
+            name: 'Amy Elsner',
+            image: 'amyelsner.png',
+            email: 'amy@email.com',
+            role: 'Owner',
+        },
+        {
+            name: 'Bernardo Dominic',
+            image: 'bernardodominic.png',
+            email: 'bernardo@email.com',
+            role: 'Editor',
+        },
+        {
+            name: 'Ioni Bowcher',
+            image: 'ionibowcher.png',
+            email: 'ioni@email.com',
+            role: 'Viewer',
+        },
+    ];
 
     /**
      * Constructor
@@ -68,8 +119,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         // Subscribe to notification changes
         this._notificationsService.notifications$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((notifications: Notification[]) => {
-                // Load the notifications
+            .subscribe((notifications) => {
                 this.notifications = notifications;
 
                 // Calculate the unread count
@@ -116,6 +166,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         this._overlayRef.attach(
             new TemplatePortal(this._notificationsPanel, this._viewContainerRef)
         );
+        console.log('sample');
     }
 
     /**

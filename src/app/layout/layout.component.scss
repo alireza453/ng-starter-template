@@ -16,10 +16,11 @@ layout {
     /* Base styles for components that load as a route */
     router-outlet {
         + * {
-            position: relative;
+            //position: relative;
             display: flex;
             flex: 1 1 auto;
             width: 100%;
         }
     }
 }
+

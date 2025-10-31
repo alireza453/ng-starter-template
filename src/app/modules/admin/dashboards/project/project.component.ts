@@ -17,7 +17,14 @@ import { Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ProjectService } from 'app/modules/admin/dashboards/project/project.service';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
+import { MenuItem, PrimeTemplate } from 'primeng/api';
+import { Button } from 'primeng/button';
+import { Card } from 'primeng/card';
+import { Menu } from 'primeng/menu';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from 'primeng/tabs';
 import { Subject, takeUntil } from 'rxjs';
+import { SummaryCardComponent } from '../../ui/summary-card/summary-card.component';
+import { SummaryDataModel } from '../../ui/summary-card/summary-data.model';
 
 @Component({
     selector: 'project',
@@ -37,6 +44,16 @@ import { Subject, takeUntil } from 'rxjs';
         MatTableModule,
         NgClass,
         CurrencyPipe,
+        Button,
+        Tabs,
+        TabList,
+        TabPanels,
+        Tab,
+        TabPanel,
+        Card,
+        PrimeTemplate,
+        Menu,
+        SummaryCardComponent,
     ],
 })
 export class ProjectComponent implements OnInit, OnDestroy {
@@ -47,7 +64,36 @@ export class ProjectComponent implements OnInit, OnDestroy {
     chartMonthlyExpenses: ApexOptions = {};
     chartYearlyExpenses: ApexOptions = {};
     data: any;
-    selectedProject: string = 'ACME Corp. Backend App';
+    summaryData:SummaryDataModel[]=[
+        {
+            title:'Overdue',
+            count:17,
+            status:'Open',
+            time:' From yesterday: 9',
+            style:'text-red-500'
+        },
+        {
+            title:'Issue',
+            count:24,
+            status:'Close',
+            time:' From yesterday: 9',
+            style:'text-amber-500'
+        },
+        {
+            title:'Overdue',
+            count:38,
+            status:'Task',
+            time:' From yesterday: 9',
+            style:'text-green-500'
+        },
+        {
+            title:'Feature',
+            count:16,
+            status:'Open',
+            time:' From yesterday: 9',
+            style:'text-blue-500'
+        }
+    ]
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**

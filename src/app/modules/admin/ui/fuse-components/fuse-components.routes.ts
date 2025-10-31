@@ -1,12 +1,9 @@
 import { Routes } from '@angular/router';
-import { AlertComponent } from 'app/modules/admin/ui/fuse-components/components/alert/alert.component';
 import { CardComponent } from 'app/modules/admin/ui/fuse-components/components/card/card.component';
-import { DrawerComponent } from 'app/modules/admin/ui/fuse-components/components/drawer/drawer.component';
 import { FullscreenComponent } from 'app/modules/admin/ui/fuse-components/components/fullscreen/fullscreen.component';
 import { HighlightComponent } from 'app/modules/admin/ui/fuse-components/components/highlight/highlight.component';
 import { LoadingBarComponent } from 'app/modules/admin/ui/fuse-components/components/loading-bar/loading-bar.component';
 import { MasonryComponent } from 'app/modules/admin/ui/fuse-components/components/masonry/masonry.component';
-import { NavigationComponent } from 'app/modules/admin/ui/fuse-components/components/navigation/navigation.component';
 import { ScrollResetComponent } from 'app/modules/admin/ui/fuse-components/directives/scroll-reset/scroll-reset.component';
 import { ScrollbarComponent } from 'app/modules/admin/ui/fuse-components/directives/scrollbar/scrollbar.component';
 import { FuseComponentsComponent } from 'app/modules/admin/ui/fuse-components/fuse-components.component';
@@ -46,16 +43,8 @@ export default [
                         redirectTo: 'alert',
                     },
                     {
-                        path: 'alert',
-                        component: AlertComponent,
-                    },
-                    {
                         path: 'card',
                         component: CardComponent,
-                    },
-                    {
-                        path: 'drawer',
-                        component: DrawerComponent,
                     },
                     {
                         path: 'fullscreen',
@@ -72,10 +61,6 @@ export default [
                     {
                         path: 'masonry',
                         component: MasonryComponent,
-                    },
-                    {
-                        path: 'navigation',
-                        component: NavigationComponent,
                     },
                 ],
             },

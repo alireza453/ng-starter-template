@@ -1,0 +1,8 @@
+<!--Theme Toggle-->
+<p-button
+    [icon]="currentScheme() == 'mylight' ? 'fa-regular fa-light fa-moon' : 'fa-regular fa-light fa-sun-bright' "
+    variant="outlined"
+    severity="secondary"
+    [rounded]="true"
+    (click)="setScheme()">
+</p-button>

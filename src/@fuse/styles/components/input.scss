@@ -4,19 +4,15 @@ textarea {
 
     /* Placeholder color */
     &::placeholder {
-        @apply text-hint;
     }
 
     &::-moz-placeholder {
-        @apply text-hint;
     }
 
     &::-webkit-input-placeholder {
-        @apply text-hint;
     }
 
     &:-ms-input-placeholder {
-        @apply text-hint;
     }
 
     /* Autofill color fix */

@@ -1,0 +1,20 @@
+//Global Styles
+
+:root {
+    --app-font-vazirmatn: "Vazirmatn";
+    --app-font-roboto: "Roboto";
+    --app-font-family: var(--app-font-roboto), var(--app-font-vazirmatn), sans-serif;
+}
+
+html,
+body {
+    line-height: normal;
+    height: 100%;
+
+    &,
+    .p-component,
+    .p-inputtext {
+        font-family: var(--app-font-family);
+    }
+
+}

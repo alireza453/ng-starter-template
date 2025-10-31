@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
+    FormBuilder,
+    FormGroup,
     FormsModule,
-    NgForm,
     ReactiveFormsModule,
-    UntypedFormBuilder,
     UntypedFormGroup,
     Validators,
 } from '@angular/forms';
@@ -15,8 +16,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
+import { TranslocoPipe } from '@ngneat/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
+import { Button } from 'primeng/button';
+import { Checkbox } from 'primeng/checkbox';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon } from 'primeng/inputicon';
+import { InputText } from 'primeng/inputtext';
+import { Message } from 'primeng/message';
+import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
 
 @Component({
     selector: 'auth-sign-up',
@@ -26,7 +34,6 @@ import { AuthService } from 'app/core/auth/auth.service';
     standalone: true,
     imports: [
         RouterLink,
-        FuseAlertComponent,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
@@ -35,48 +42,48 @@ import { AuthService } from 'app/core/auth/auth.service';
         MatIconModule,
         MatCheckboxModule,
         MatProgressSpinnerModule,
+        Message,
+        TranslocoPipe,
+        AuthBasePartComponent,
+        Button,
+        Checkbox,
+        IconField,
+        InputIcon,
+        InputText,
+        NgIf,
     ],
 })
 export class AuthSignUpComponent implements OnInit {
-    @ViewChild('signUpNgForm') signUpNgForm: NgForm;
+    //@ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
-    alert: { type: FuseAlertType; message: string } = {
+    alert: { type: 'success' | 'error'; message: string } = {
         type: 'success',
         message: '',
     };
     signUpForm: UntypedFormGroup;
     showAlert: boolean = false;
 
-    /**
-     * Constructor
-     */
     constructor(
         private _authService: AuthService,
-        private _formBuilder: UntypedFormBuilder,
+        private _formBuilder: FormBuilder,
         private _router: Router
     ) {}
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
     ngOnInit(): void {
         // Create the form
-        this.signUpForm = this._formBuilder.group({
-            name: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required],
-            company: [''],
-            agreements: ['', Validators.requiredTrue],
-        });
+        this.signUpForm = this._formBuilder.group(
+            {
+                name: ['', [Validators.required]],
+                email: ['', [Validators.required, Validators.email]],
+                password: ['', Validators.required],
+                confirmPassword: ['', [Validators.required]],
+                agreements: [false, Validators.requiredTrue],
+            },
+            {
+                validators: this._CheckPasswords,
+            }
+        );
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * Sign up
@@ -104,17 +111,77 @@ export class AuthSignUpComponent implements OnInit {
                 this.signUpForm.enable();
 
                 // Reset the form
-                this.signUpNgForm.resetForm();
+                this.signUpForm.reset();
 
                 // Set the alert
                 this.alert = {
                     type: 'error',
-                    message: 'Something went wrong, please try again.',
+                    message: 'something-went-wrong',
                 };
 
                 // Show the alert
                 this.showAlert = true;
             }
         );
+    }
+
+    /**
+     Name Input Validation
+     */
+    get name() {
+        return this.signUpForm.get('name');
+    }
+    get nameIsInvalid() {
+        return (this.name.touched || this.name.dirty) && this.name.invalid;
+    }
+
+    /**
+     Email Input Validation
+     */
+    get email() {
+        return this.signUpForm.get('email');
+    }
+    get emailIsInvalid() {
+        return (this.email.touched || this.email.dirty) && this.email.invalid;
+    }
+
+    /**
+     Password Input Validation
+     */
+    get password() {
+        return this.signUpForm.get('password');
+    }
+    get passwordIsInvalid() {
+        return (
+            (this.password.touched || this.password.dirty) &&
+            this.password.invalid
+        );
+    }
+
+    /**
+     Confirm Password Input Validation
+     */
+    get confirmPassword() {
+        return this.signUpForm.get('confirmPassword');
+    }
+    get confirmPasswordIsInvalid() {
+        return (
+            (this.confirmPassword.touched || this.confirmPassword.dirty) &&
+            this.confirmPassword.invalid
+        );
+    }
+
+    /**
+     *  Private Methods*/
+    _CheckPasswords(f: FormGroup) {
+        const password = f.get('password')?.value;
+        const confirm = f.get('confirmPassword')?.value;
+        if (password !== confirm) {
+            f.get('confirmPassword').setErrors({
+                passwordMismatch: true,
+            });
+        } else {
+            return null;
+        }
     }
 }

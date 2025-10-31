@@ -1,8 +1,7 @@
 // Types
-export type Scheme = 'auto' | 'dark' | 'light';
+export type Scheme = 'mylight' | 'mydark';
 export type Screens = { [key: string]: string };
-export type Theme = 'theme-default' | string;
-export type Themes = { id: string; name: string }[];
+export type LayoutDirection = 'rtl' | 'ltr';
 
 /**
  * AppConfig interface. Update this interface to strictly type your config
@@ -12,6 +11,5 @@ export interface FuseConfig {
     layout: string;
     scheme: Scheme;
     screens: Screens;
-    theme: Theme;
-    themes: Themes;
+    layoutDirection: LayoutDirection;
 }

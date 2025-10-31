@@ -1,11 +1,10 @@
 <!-- Bar search -->
 @if (appearance === 'bar') {
     @if (!opened) {
-        <button mat-icon-button (click)="open()">
-            <mat-icon
-                [svgIcon]="'heroicons_outline:magnifying-glass'"
-            ></mat-icon>
-        </button>
+        <!-- Button -->
+        <p-button severity="secondary" variant="outlined"  icon="pi pi-search" (click)="open()">
+        </p-button>
+
     }
     @if (opened) {
         <div
@@ -13,15 +12,14 @@
             @slideInTop
             @slideOutTop
         >
-            <mat-icon
-                class="absolute ml-6 sm:ml-8"
-                [svgIcon]="'heroicons_outline:magnifying-glass'"
-            ></mat-icon>
+
+            <i class="absolute ms-6 sm:ml-8 pi pi-search"></i>
+
             <input
                 class="h-full w-full px-16 sm:px-18"
                 [formControl]="searchControl"
                 [matAutocomplete]="matAutocomplete"
-                [placeholder]="'Search...'"
+                [placeholder]="'جستجو...'"
                 (keydown)="onKeydown($event)"
                 #barSearchInput
             />
@@ -35,23 +33,19 @@
                     <mat-option
                         class="text-secondary pointer-events-none bg-transparent px-6 py-0 text-md"
                     >
-                        No results found!
+                        نتیجه یافت نشد!
                     </mat-option>
                 }
-                @for (
-                    resultSet of resultSets;
-                    track trackByFn($index, resultSet)
-                ) {
+                @for (resultSet of resultSets;
+                    track trackByFn($index, resultSet)) {
                     <mat-optgroup class="mt-2 flex items-center px-2">
                         <span
                             class="text-secondary text-sm font-semibold tracking-wider"
-                            >{{ resultSet.label.toUpperCase() }}</span
+                        >{{ resultSet.label.toUpperCase() }}</span
                         >
                     </mat-optgroup>
-                    @for (
-                        result of resultSet.results;
-                        track trackByFn($index, result)
-                    ) {
+                    @for (result of resultSet.results;
+                        track trackByFn($index, result)) {
                         <mat-option
                             class="group relative mb-1 rounded-md px-6 py-0 text-md dark:hover:bg-hover hover:bg-gray-100"
                             [routerLink]="result.link"
@@ -88,13 +82,14 @@
                     }
                 }
             </mat-autocomplete>
-            <button
-                class="absolute right-5 top-1/2 -mt-5 h-10 w-10 shrink-0 sm:right-7"
-                mat-icon-button
+            <p-button
+                severity="secondary" [rounded]="true" [text]="true"
+                class="absolute rtl:left-5 ltr:right-5 top-1/2 -mt-5 h-10 w-10 shrink-0  "
+
                 (click)="close()"
             >
-                <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
-            </button>
+                <i class="pi pi-times"></i>
+            </p-button>
         </div>
     }
 }
@@ -125,20 +120,18 @@
                 <mat-option
                     class="text-secondary pointer-events-none bg-transparent px-6 py-0 text-md"
                 >
-                    No results found!
+                    نتیجه یافت نشد!
                 </mat-option>
             }
             @for (resultSet of resultSets; track trackByFn($index, resultSet)) {
                 <mat-optgroup class="mt-2 flex items-center px-2">
                     <span
                         class="text-secondary text-sm font-semibold tracking-wider"
-                        >{{ resultSet.label.toUpperCase() }}</span
+                    >{{ resultSet.label.toUpperCase() }}</span
                     >
                 </mat-optgroup>
-                @for (
-                    result of resultSet.results;
-                    track trackByFn($index, result)
-                ) {
+                @for (result of resultSet.results;
+                    track trackByFn($index, result)) {
                     <mat-option
                         class="group relative mb-1 rounded-md px-6 py-0 text-md dark:hover:bg-hover hover:bg-gray-100"
                         [routerLink]="result.link"

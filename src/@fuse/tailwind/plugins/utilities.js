@@ -31,9 +31,9 @@ module.exports = plugin(({ addComponents }) => {
             color: 'var(--fuse-divider) !important',
         },
         '.bg-card': {
-            '--tw-bg-opacity': '1 !important',
-            backgroundColor:
-                'rgba(var(--fuse-bg-card-rgb), var(--tw-bg-opacity)) !important',
+            // '--tw-bg-opacity': '1 !important',
+            // backgroundColor:
+            //     'rgba(var(--fuse-bg-card-rgb), var(--tw-bg-opacity)) !important',
         },
         '.bg-default': {
             '--tw-bg-opacity': '1 !important',
@@ -59,7 +59,7 @@ module.exports = plugin(({ addComponents }) => {
 
     addComponents({
         '.bg-hover': {
-            backgroundColor: 'var(--fuse-bg-hover) !important',
+            // backgroundColor: 'var(--fuse-bg-hover) !important',
         },
     });
 });

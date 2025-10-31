@@ -1,55 +1,12 @@
-quick-chat {
-    z-index: 399;
-
-    > div {
-        overflow: hidden;
-    }
-
-    &.quick-chat-opened {
-        > div {
-            overflow: visible;
-        }
-    }
-
-    &:not(.quick-chat-opened) {
-        > div {
-            overflow: visible;
-            animation: addOverflowHidden 1ms linear 400ms;
-            animation-fill-mode: forwards;
-        }
-    }
+.p-drawer-content{
+    overflow-y: hidden !important;
 }
-
-/* Adjustments depending on the selected layout */
-.quick-chat-header {
+.drawer-header{
     height: 64px;
-
-    enterprise-layout &,
-    modern-layout & {
-        height: 80px !important;
-    }
+    @apply border-b-[1px] border-b-slate-300 dark:border-b-slate-600;
 }
 
-/* Overlay */
-.quick-chat-overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 299;
-    opacity: 1;
-    background-color: transparent;
-}
-
-@keyframes addOverflowHidden {
-    0% {
-        overflow: visible;
-    }
-    99% {
-        overflow: visible;
-    }
-    100% {
-        overflow: hidden;
-    }
+.drawer-footer{
+    height: 64px;
+    @apply border-t-[1px] border-t-slate-300 dark:border-t-slate-600;
 }

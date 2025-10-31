@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { FuseAlertComponent } from '@fuse/components/alert';
+import { Message } from 'primeng/message';
 
 @Component({
     selector: 'settings-plan-billing',
@@ -29,7 +29,6 @@ import { FuseAlertComponent } from '@fuse/components/alert';
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        FuseAlertComponent,
         MatRadioModule,
         NgClass,
         MatIconModule,
@@ -39,6 +38,7 @@ import { FuseAlertComponent } from '@fuse/components/alert';
         MatOptionModule,
         MatButtonModule,
         CurrencyPipe,
+        Message,
     ],
 })
 export class SettingsPlanBillingComponent implements OnInit {

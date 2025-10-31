@@ -23,6 +23,8 @@ import { FuseVerticalNavigationGroupItemComponent } from '@fuse/components/navig
 import { FuseVerticalNavigationSpacerItemComponent } from '@fuse/components/navigation/vertical/components/spacer/spacer.component';
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { Tooltip } from 'primeng/tooltip';
+import { Badge } from 'primeng/badge';
 
 @Component({
     selector: 'fuse-vertical-navigation-collapsable-item',
@@ -39,6 +41,8 @@ import { Subject, filter, takeUntil } from 'rxjs';
         FuseVerticalNavigationDividerItemComponent,
         FuseVerticalNavigationGroupItemComponent,
         FuseVerticalNavigationSpacerItemComponent,
+        Tooltip,
+        Badge,
     ],
 })
 export class FuseVerticalNavigationCollapsableItemComponent
@@ -56,11 +60,11 @@ export class FuseVerticalNavigationCollapsableItemComponent
     @Input() item: FuseNavigationItem;
     @Input() name: string;
 
+    htmltag = document.documentElement;
     isCollapsed: boolean = true;
     isExpanded: boolean = false;
     private _fuseVerticalNavigationComponent: FuseVerticalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
     // -----------------------------------------------------------------------------------------------------
@@ -340,4 +344,6 @@ export class FuseVerticalNavigationCollapsableItemComponent
 
         return false;
     }
+
+    protected readonly document = document;
 }

@@ -21,30 +21,32 @@
     >
         <!-- Header -->
         <div
-            class="flex shrink-0 items-center bg-primary py-4 pl-6 pr-4 text-on-primary"
+            class="flex shrink-0 ltr:flex-row-reverse justify-between items-center bg-primary py-4 px-4 text-on-primary"
         >
-            <div class="-ml-1 mr-3 sm:hidden">
-                <button mat-icon-button (click)="closePanel()">
-                    <mat-icon
-                        class="text-current icon-size-5"
-                        [svgIcon]="'heroicons_solid:x-mark'"
-                    ></mat-icon>
-                </button>
-            </div>
-            <div class="text-lg font-medium leading-10">Messages</div>
-            <div class="ml-auto">
-                <button
-                    class="dark:text-white"
-                    mat-icon-button
-                    [disabled]="unreadCount === 0"
-                    [matTooltip]="'Mark all as read'"
-                    (click)="markAllAsRead()"
-                >
-                    <mat-icon
-                        class="text-current icon-size-5"
-                        [svgIcon]="'heroicons_solid:envelope-open'"
-                    ></mat-icon>
-                </button>
+            <div class="text-lg font-medium leading-10">پیام ها</div>
+            <div class="flex ltr:flex-row-reverse">
+                <div>
+                    <button
+                        class="dark:text-white"
+                        mat-icon-button
+                        [disabled]="unreadCount === 0"
+                        [matTooltip]="'Mark all as read'"
+                        (click)="markAllAsRead()"
+                    >
+                        <mat-icon
+                            class="text-current icon-size-5"
+                            [svgIcon]="'heroicons_solid:envelope-open'"
+                        ></mat-icon>
+                    </button>
+                </div>
+                <div class="sm:hidden">
+                    <button mat-icon-button (click)="closePanel()">
+                        <mat-icon
+                            class="text-current icon-size-5"
+                            [svgIcon]="'heroicons_solid:x-mark'"
+                        ></mat-icon>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -55,15 +57,16 @@
             <!-- Messages -->
             @for (message of messages; track trackByFn($index, message)) {
                 <div
-                    class="group flex hover:bg-gray-50 dark:hover:bg-black dark:hover:bg-opacity-5"
+                    class="group ltr:flex-row-reverse flex hover:bg-gray-50 dark:hover:bg-black dark:hover:bg-opacity-5"
                     [ngClass]="{ unread: !message.read }"
                 >
+
                     <!-- Message with a link -->
                     @if (message.link) {
                         <!-- Normal links -->
                         @if (!message.useRouter) {
                             <a
-                                class="flex flex-auto cursor-pointer py-5 pl-6"
+                                class="flex ltr:flex-row-reverse flex-auto cursor-pointer py-5 "
                                 [href]="message.link"
                             >
                                 <ng-container
@@ -74,7 +77,7 @@
                         <!-- Router links -->
                         @if (message.useRouter) {
                             <a
-                                class="flex flex-auto cursor-pointer py-5 pl-6"
+                                class="flex ltr:flex-row-reverse flex-auto cursor-pointer py-5"
                                 [routerLink]="message.link"
                             >
                                 <ng-container
@@ -86,7 +89,7 @@
 
                     <!-- Message without a link -->
                     @if (!message.link) {
-                        <div class="flex flex-auto py-5 pl-6">
+                        <div class="flex ltr:flex-row-reverse flex-auto py-5 ">
                             <ng-container
                                 *ngTemplateOutlet="messageContent"
                             ></ng-container>
@@ -94,7 +97,7 @@
                     }
 
                     <!-- Actions -->
-                    <div class="relative my-5 ml-2 mr-6 flex flex-col">
+                    <div class="relative my-5 rtl:ml-3 ltr:mr-3 flex flex-col">
                         <!-- Indicator -->
                         <button
                             class="h-6 min-h-6 w-6"
@@ -126,14 +129,17 @@
                             ></mat-icon>
                         </button>
                     </div>
+
+
                 </div>
 
                 <!-- Message content template -->
                 <ng-template #messageContent>
+
                     <!-- Icon -->
                     @if (message.icon && !message.image) {
                         <div
-                            class="mr-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700"
+                            class="mx-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700"
                         >
                             <mat-icon
                                 class="icon-size-5"
@@ -145,13 +151,13 @@
                     <!-- Image -->
                     @if (message.image) {
                         <img
-                            class="mr-4 h-8 w-8 shrink-0 overflow-hidden rounded-full object-cover object-center"
+                            class="mx-4 h-8 w-8 shrink-0 overflow-hidden rounded-full object-cover object-center"
                             [src]="message.image"
                             [alt]="'Message image'"
                         />
                     }
                     <!-- Title, description & time -->
-                    <div class="flex flex-auto flex-col">
+                    <div class="flex flex-auto flex-col text-start">
                         @if (message.title) {
                             <div
                                 class="line-clamp-1 font-semibold"
@@ -168,6 +174,7 @@
                             {{ message.time | date: 'MMM dd, h:mm a' }}
                         </div>
                     </div>
+
                 </ng-template>
             }
 

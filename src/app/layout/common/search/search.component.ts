@@ -16,6 +16,7 @@ import {
     ViewChild,
     ViewEncapsulation,
     inject,
+    signal,
 } from '@angular/core';
 import {
     FormsModule,
@@ -35,6 +36,11 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations/public-api';
 import { Subject, debounceTime, filter, map, takeUntil } from 'rxjs';
+import {
+    FuseConfig,
+    FuseConfigService,
+} from '../../../../@fuse/services/config';
+import {  ButtonModule } from 'primeng/button';
 
 @Component({
     selector: 'search',
@@ -55,6 +61,7 @@ import { Subject, debounceTime, filter, map, takeUntil } from 'rxjs';
         MatFormFieldModule,
         MatInputModule,
         NgClass,
+        ButtonModule,
     ],
     providers: [
         {
@@ -84,7 +91,8 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
     constructor(
         private _elementRef: ElementRef,
         private _httpClient: HttpClient,
-        private _renderer2: Renderer2
+        private _renderer2: Renderer2,
+        private _fuseConfigService: FuseConfigService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -253,4 +261,5 @@ export class SearchComponent implements OnChanges, OnInit, OnDestroy {
     trackByFn(index: number, item: any): any {
         return item.id || index;
     }
+    protected readonly document = document;
 }

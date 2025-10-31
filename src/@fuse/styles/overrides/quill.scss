@@ -28,7 +28,7 @@
 
             .ql-picker-options {
                 z-index: 10 !important;
-                @apply bg-card border-gray-300;
+                @apply  border-gray-300;
 
                 .dark & {
                     @apply border-gray-500;
@@ -37,12 +37,10 @@
         }
 
         .ql-picker-label {
-            @apply text-default;
         }
 
         .ql-picker-options {
             .ql-picker-item {
-                @apply text-default;
             }
         }
     }
@@ -88,14 +86,13 @@
     }
 
     .ql-editor {
-        @apply bg-card;
+
 
         .dark & {
             //background-color: rgba(0, 0, 0, 0.05);
         }
 
         &.ql-blank::before {
-            @apply text-hint;
         }
     }
 
@@ -108,7 +105,6 @@
 
         // Label
         &:before {
-            @apply text-secondary;
         }
 
         .ql-action,
@@ -129,7 +125,7 @@
         }
 
         input {
-            @apply text-default rounded-sm border-gray-300 bg-white #{'!important'};
+            @apply  rounded-sm border-gray-300 bg-white #{'!important'};
 
             .dark & {
                 @apply border-gray-500 bg-gray-700 #{'!important'};

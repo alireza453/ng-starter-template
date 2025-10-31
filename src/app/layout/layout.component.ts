@@ -13,18 +13,8 @@ import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { FusePlatformService } from '@fuse/services/platform';
 import { FUSE_VERSION } from '@fuse/version';
 import { Subject, combineLatest, filter, map, takeUntil } from 'rxjs';
-import { SettingsComponent } from './common/settings/settings.component';
 import { EmptyLayoutComponent } from './layouts/empty/empty.component';
-import { CenteredLayoutComponent } from './layouts/horizontal/centered/centered.component';
-import { EnterpriseLayoutComponent } from './layouts/horizontal/enterprise/enterprise.component';
-import { MaterialLayoutComponent } from './layouts/horizontal/material/material.component';
-import { ModernLayoutComponent } from './layouts/horizontal/modern/modern.component';
-import { ClassicLayoutComponent } from './layouts/vertical/classic/classic.component';
-import { ClassyLayoutComponent } from './layouts/vertical/classy/classy.component';
-import { CompactLayoutComponent } from './layouts/vertical/compact/compact.component';
-import { DenseLayoutComponent } from './layouts/vertical/dense/dense.component';
-import { FuturisticLayoutComponent } from './layouts/vertical/futuristic/futuristic.component';
-import { ThinLayoutComponent } from './layouts/vertical/thin/thin.component';
+import { ClassyLayoutComponent } from './layouts/classy/classy.component';
 
 @Component({
     selector: 'layout',
@@ -32,25 +22,12 @@ import { ThinLayoutComponent } from './layouts/vertical/thin/thin.component';
     styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
     standalone: true,
-    imports: [
-        EmptyLayoutComponent,
-        CenteredLayoutComponent,
-        EnterpriseLayoutComponent,
-        MaterialLayoutComponent,
-        ModernLayoutComponent,
-        ClassicLayoutComponent,
-        ClassyLayoutComponent,
-        CompactLayoutComponent,
-        DenseLayoutComponent,
-        FuturisticLayoutComponent,
-        ThinLayoutComponent,
-        SettingsComponent,
-    ],
+    imports: [EmptyLayoutComponent, ClassyLayoutComponent],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
     config: FuseConfig;
     layout: string;
-    scheme: 'dark' | 'light';
+    scheme: 'mydark' | 'mylight';
     theme: string;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -79,8 +56,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
         combineLatest([
             this._fuseConfigService.config$,
             this._fuseMediaWatcherService.onMediaQueryChange$([
-                '(prefers-color-scheme: dark)',
-                '(prefers-color-scheme: light)',
+                '(prefers-color-scheme: mydark)',
+                '(prefers-color-scheme: mylight)',
             ]),
         ])
             .pipe(
@@ -90,16 +67,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
                         scheme: config.scheme,
                         theme: config.theme,
                     };
-
-                    // If the scheme is set to 'auto'...
-                    if (config.scheme === 'auto') {
-                        // Decide the scheme using the media query
-                        options.scheme = mql.breakpoints[
-                            '(prefers-color-scheme: dark)'
-                        ]
-                            ? 'dark'
-                            : 'light';
-                    }
 
                     return options;
                 })
@@ -222,11 +189,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
      * @private
      */
     private _updateScheme(): void {
-        // Remove class names for all schemes
-        this._document.body.classList.remove('light', 'dark');
-
-        // Add class name for the currently selected scheme
-        this._document.body.classList.add(this.scheme);
+        this._document.querySelector('html').classList.remove('mylight', 'mydark');
+        this._document.querySelector('html').classList.add(this.scheme);
     }
 
     /**

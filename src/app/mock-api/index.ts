@@ -3,7 +3,6 @@ import { ChatMockApi } from 'app/mock-api/apps/chat/api';
 import { ContactsMockApi } from 'app/mock-api/apps/contacts/api';
 import { ECommerceInventoryMockApi } from 'app/mock-api/apps/ecommerce/inventory/api';
 import { FileManagerMockApi } from 'app/mock-api/apps/file-manager/api';
-import { HelpCenterMockApi } from 'app/mock-api/apps/help-center/api';
 import { MailboxMockApi } from 'app/mock-api/apps/mailbox/api';
 import { NotesMockApi } from 'app/mock-api/apps/notes/api';
 import { ScrumboardMockApi } from 'app/mock-api/apps/scrumboard/api';
@@ -21,6 +20,7 @@ import { FinanceMockApi } from 'app/mock-api/dashboards/finance/api';
 import { ProjectMockApi } from 'app/mock-api/dashboards/project/api';
 import { ActivitiesMockApi } from 'app/mock-api/pages/activities/api';
 import { IconsMockApi } from 'app/mock-api/ui/icons/api';
+import { LoginHistoryMockApi } from './common/signin-history/api';
 
 export const mockApiServices = [
     AcademyMockApi,
@@ -33,7 +33,6 @@ export const mockApiServices = [
     ECommerceInventoryMockApi,
     FileManagerMockApi,
     FinanceMockApi,
-    HelpCenterMockApi,
     IconsMockApi,
     MailboxMockApi,
     MessagesMockApi,
@@ -46,4 +45,5 @@ export const mockApiServices = [
     ShortcutsMockApi,
     TasksMockApi,
     UserMockApi,
+    LoginHistoryMockApi
 ];

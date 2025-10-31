@@ -66,19 +66,18 @@
     body,
     .dark,
     .light {
-        @apply text-default bg-default #{'!important'};
     }
 
     /* Set the border color */
     *,
     ::before,
     ::after {
-        --tw-border-opacity: 1 !important;
-        border-color: rgba(var(--fuse-border-rgb), var(--tw-border-opacity));
-
-        .dark & {
-            --tw-border-opacity: 0.12 !important;
-        }
+        //--tw-border-opacity: 1 !important;
+        //border-color: rgba(var(--fuse-border-rgb), var(--tw-border-opacity));
+        //
+        //.dark & {
+        //    --tw-border-opacity: 0.12 !important;
+        //}
     }
 
     /* Style scrollbars on platforms other than MacOS and iOS */
@@ -121,7 +120,6 @@
 
     /* Set the foreground color for disabled elements */
     [disabled] {
-        @apply text-disabled #{'!important'};
     }
 
     /* Print styles */

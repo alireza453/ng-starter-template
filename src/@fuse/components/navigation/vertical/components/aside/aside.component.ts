@@ -23,6 +23,7 @@ import { FuseVerticalNavigationGroupItemComponent } from '@fuse/components/navig
 import { FuseVerticalNavigationSpacerItemComponent } from '@fuse/components/navigation/vertical/components/spacer/spacer.component';
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'fuse-vertical-navigation-aside-item',
@@ -38,6 +39,7 @@ import { Subject, filter, takeUntil } from 'rxjs';
         FuseVerticalNavigationDividerItemComponent,
         FuseVerticalNavigationGroupItemComponent,
         FuseVerticalNavigationSpacerItemComponent,
+        Tooltip,
     ],
 })
 export class FuseVerticalNavigationAsideItemComponent

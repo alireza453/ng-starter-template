@@ -14,22 +14,18 @@
             >
                 Almost there!
             </div>
-            <div class="mt-0.5">
+            <div class="mt-0.5 mb-8">
                 Do you want to be notified when we are ready? Register below so
                 we can notify you about the launch!
             </div>
 
             <!-- Alert -->
             @if (showAlert) {
-                <fuse-alert
-                    class="mt-8"
-                    [appearance]="'outline'"
-                    [showIcon]="false"
-                    [type]="alert.type"
-                    [@shake]="alert.type === 'error'"
+                <p-message
+                    [severity]="alert.type"
                 >
                     {{ alert.message }}
-                </fuse-alert>
+                </p-message>
             }
 
             <!-- Coming soon form -->

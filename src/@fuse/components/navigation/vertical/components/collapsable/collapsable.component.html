@@ -1,18 +1,18 @@
 <div
-    class="fuse-vertical-navigation-item-wrapper"
+    class="fuse-vertical-navigation-item-wrapper text-surface-800 dark:text-surface-100"
     [class.fuse-vertical-navigation-item-has-subtitle]="!!item.subtitle"
     [ngClass]="item.classes?.wrapper"
 >
     <div
         class="fuse-vertical-navigation-item"
         [ngClass]="{ 'fuse-vertical-navigation-item-disabled': item.disabled }"
-        [matTooltip]="item.tooltip || ''"
+        [pTooltip]="item.tooltip || ''"
         (click)="toggleCollapsable()"
     >
         <!-- Icon -->
         @if (item.icon) {
             <mat-icon
-                class="fuse-vertical-navigation-item-icon"
+                class="rtl:ml-4 ltr:mr-4"
                 [ngClass]="item.classes?.icon"
                 [svgIcon]="item.icon"
             ></mat-icon>
@@ -47,10 +47,22 @@
         }
 
         <!-- Arrow -->
-        <mat-icon
-            class="fuse-vertical-navigation-item-arrow icon-size-4"
-            [svgIcon]="'heroicons_solid:chevron-right'"
-        ></mat-icon>
+        @if (htmltag.getAttribute('dir') === 'rtl') {
+            <mat-icon
+                class="fuse-vertical-navigation-item-arrow icon-size-4   rtl:mr-auto  ltr:ml-auto"
+
+
+                [svgIcon]="'heroicons_solid:chevron-left'"
+            ></mat-icon>
+        } @else {
+            <mat-icon
+                class="fuse-vertical-navigation-item-arrow icon-size-4   rtl:mr-auto  ltr:ml-auto"
+
+
+                [svgIcon]="'heroicons_solid:chevron-right'"
+            ></mat-icon>
+        }
+
     </div>
 </div>
 

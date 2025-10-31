@@ -1,0 +1,15 @@
+<p-card >
+        <div class="flex items-center  gap-2 justify-start w-full ">
+            <p-menu #menu [model]="stateOptions" [popup]="true" />
+            <p-button severity="contrast" variant="text" (click)="menu.toggle($event)" icon="fa-regular fa-ellipsis-vertical" />
+        </div>
+
+    <ng-template pTemplate="subtitle">{{summaryData.title}}</ng-template>
+    <div class="flex items-center justify-center  flex-col leading-none font-bold" [ngClass]="summaryData.style">
+        <p class="text-8xl ">{{ summaryData.count }}</p>
+        <p class="text-xl">{{ summaryData.status }}</p>
+    </div>
+    <ng-template pTemplate="footer">
+        <p class="text-center font-semibold text-slate-800 dark:text-slate-200">{{ summaryData.time }}</p>
+    </ng-template>
+</p-card>

@@ -1,0 +1,8 @@
+.p-popover::before {
+    content: none !important;
+}
+
+.p-popover::after {
+    content: none !important;
+    border-width: 0;
+}

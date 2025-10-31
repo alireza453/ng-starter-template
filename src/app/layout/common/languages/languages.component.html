@@ -1,37 +1,36 @@
-<!-- Button -->
-<button mat-icon-button [matMenuTriggerFor]="languages">
-    <ng-container
-        *ngTemplateOutlet="flagImage; context: { $implicit: activeLang }"
-    ></ng-container>
-</button>
+<p-select size="small" [options]="availableLangs" sele (onChange)="setActiveLang($event)" [(ngModel)]="activeLang"
+          optionLabel="label"
+          [placeholder]="('select-language'|transloco)"
+          class="">
+    <ng-template #selectedItem let-selectedOption>
+        @if (activeLang) {
+            <div class="flex items-center gap-2">
+                <img
+                    class="w-5"
+                    [src]="'images/flags/' + selectedOption.id.toUpperCase() + '.svg'"
+                    alt="Flag"
+                >
 
-<!-- Language menu -->
-<mat-menu [xPosition]="'before'" #languages="matMenu">
-    @for (lang of availableLangs; track trackByFn($index, lang)) {
-        <button mat-menu-item (click)="setActiveLang(lang.id)">
-            <span class="flex items-center">
-                <ng-container
-                    *ngTemplateOutlet="
-                        flagImage;
-                        context: { $implicit: lang.id }
-                    "
-                ></ng-container>
-                <span class="ml-3">{{ lang.label }}</span>
-            </span>
-        </button>
-    }
-</mat-menu>
+                <div class="flag flag-us"></div>
+                <div>{{ selectedOption.label }}</div>
+            </div>
+        }
+    </ng-template>
+    <ng-template let-country #item>
+        <div class=" flex items-center gap-2">
 
-<!-- Flag image template -->
-<ng-template let-lang #flagImage>
-    <span class="relative w-6 overflow-hidden rounded-sm shadow">
-        <span
-            class="absolute inset-0 ring-1 ring-inset ring-black ring-opacity-10"
-        ></span>
-        <img
-            class="w-full"
-            [src]="'images/flags/' + flagCodes[lang].toUpperCase() + '.svg'"
-            [alt]="'Flag image for ' + lang"
-        />
-    </span>
-</ng-template>
+            <img
+                class="w-5"
+                [src]="'images/flags/' + country.id.toUpperCase() + '.svg'"
+                alt="Flag"
+            >
+
+            <div>{{ country.label }}</div>
+        </div>
+    </ng-template>
+    <ng-template #dropdownicon>
+        <i class="fa-duotone fa-light fa-earth-americas"></i>
+    </ng-template>
+
+</p-select>
+

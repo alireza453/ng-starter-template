@@ -97,11 +97,11 @@ export class FuseVerticalNavigationComponent
     @Input() appearance: FuseVerticalNavigationAppearance = 'default';
     @Input() autoCollapse: boolean = true;
     @Input() inner: boolean = false;
-    @Input() mode: FuseVerticalNavigationMode = 'side';
+    @Input() mode: FuseVerticalNavigationMode = 'over';
     @Input() name: string = this._fuseUtilsService.randomId();
     @Input() navigation: FuseNavigationItem[];
-    @Input() opened: boolean = true;
-    @Input() position: FuseVerticalNavigationPosition = 'left';
+    @Input() opened: boolean = false;
+    @Input() position: FuseVerticalNavigationPosition;
     @Input() transparentOverlay: boolean = false;
     @Output()
     readonly appearanceChanged: EventEmitter<FuseVerticalNavigationAppearance> =

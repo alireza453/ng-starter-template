@@ -1,0 +1,7 @@
+@use "sass:meta";
+@use "primeicons/primeicons.css";
+
+@include meta.load-css("tailwind");
+@include meta.load-css("fonts/fonts");
+@include meta.load-css("vendors");
+@include meta.load-css("styles");
