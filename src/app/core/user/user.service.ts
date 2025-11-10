@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from 'app/core/user/user.types';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
+import { map, Observable, of, ReplaySubject, switchMap, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

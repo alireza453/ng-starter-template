@@ -37,15 +37,16 @@
 
             <!-- Sign in form -->
             <form class="mt-8 " [formGroup]="signInForm" #signInNgForm="ngForm">
-                <!-- Email field -->
+                <!-- Username or Email field -->
                 <div class="flex flex-col gap-1 ">
                     <p-icon-field>
                         <p-inputicon styleClass="fa-duotone fa-regular fa-user" />
                         <input class="w-full" pInputText size="large" formControlName="email"
-                               placeholder="{{'email'|transloco}}" />
+                               placeholder="{{'username'|transloco}}" />
                     </p-icon-field>
-                    @if (emailIsInvalid) {
-                        <p-message severity="error" variant="simple" size="small">{{ 'invalid-email' | transloco }}
+                    @if (usernameRequiredError) {
+                        <p-message severity="error" variant="simple" size="small">
+                            {{ 'required-username' | transloco }}
                         </p-message>
                     }
                 </div>
@@ -59,9 +60,9 @@
                                placeholder="{{'password' | transloco}}" />
 
                     </p-icon-field>
-                    @if (passwordIsInvalid) {
+                    @if (passwordRequiredError) {
                         <p-message severity="error" variant="simple"
-                                   size="small">{{ 'invalid-password' | transloco }}
+                                   size="small">{{ 'required-password' | transloco }}
                         </p-message>
                     }
                 </div>
@@ -74,8 +75,9 @@
                     <div class="flex items-center gap-2">
                         <p-checkbox
                             inputId="remember"
-                            [formControlName]="'rememberMe'"
-                            binary="true"></p-checkbox>
+                            formControlName="rememberMe"
+                            binary="true">
+                        </p-checkbox>
                         <label for="remember" class="ms-2">{{ 'remember-me'|transloco }}</label>
                     </div>
 
@@ -98,7 +100,7 @@
                 </p-button>
                 <div class="w-full flex items-center justify-center mt-4">
 
-                <languages></languages>
+                    <languages></languages>
                 </div>
 
                 <!-- Separator -->

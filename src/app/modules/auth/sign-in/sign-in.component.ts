@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-    FormBuilder,
-    FormControl,
+    FormBuilder, FormControl,
     FormGroup,
     FormsModule,
     NgForm,
@@ -24,8 +23,9 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
-import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
+import { UserService } from '../../../core/user/user.service';
 import { LanguagesComponent } from '../../../layout/common/languages/languages.component';
+import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
 
 @Component({
     selector: 'auth-sign-in',
@@ -92,26 +92,40 @@ export class AuthSignInComponent implements OnInit {
         });
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+    /**
+     * Username field validation
+     */
+    get username() {
+        return this.signInForm.get('email');
+    }
 
-    get emailIsInvalid() {
+    get usernameRequiredError() {
         return (
-            this.signInForm.controls.email.invalid &&
-            this.signInForm.controls.email.dirty &&
-            this.signInForm.controls.email.touched
+            (this.username.touched || this.username.dirty) &&
+            this.username.errors?.required
         );
     }
 
-    get passwordIsInvalid() {
+    /**
+     * Password field validation
+     */
+    get password() {
+        return this.signInForm.get('password');
+    }
+
+    get passwordRequiredError(): boolean {
         return (
-            this.signInForm.controls.password.invalid &&
-            this.signInForm.controls.password.dirty &&
-            this.signInForm.controls.password.touched
+            (this.password.touched || this.password.dirty) &&
+            this.password.errors?.required
         );
     }
 
+    /**
+     * RememberMe field validation
+     */
+    get rememberMe() {
+        return this.signInForm.get('rememberMe');
+    }
     /**
      * Sign in
      */
@@ -134,13 +148,14 @@ export class AuthSignInComponent implements OnInit {
                 password: this.signInForm.value.password,
             })
             .subscribe(
-                () => {
+                (ress) => {
                     const redirectURL =
                         this._activatedRoute.snapshot.queryParamMap.get(
                             'redirectURL'
                         ) || '/signed-in-redirect';
 
-                    this._router.navigateByUrl(redirectURL);
+                    console.log(ress);
+                     this._router.navigateByUrl(redirectURL);
                 },
                 (response) => {
                     // Re-enable the form

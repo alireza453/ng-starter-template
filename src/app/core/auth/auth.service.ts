@@ -2,7 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import {
+    catchError,
+    Observable,
+    of,
+    switchMap,
+    throwError,
+} from 'rxjs';
+import { LoginUserDto, RegisterUserDto, ResultLoginUserDto } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -132,13 +139,11 @@ export class AuthService {
      *
      * @param user
      */
-    signUp(user: {
-        name: string;
-        email: string;
-        password: string;
-        company: string;
-    }): Observable<any> {
-        return this._httpClient.post('api/auth/sign-up', user);
+    signUp(user: RegisterUserDto): Observable<any> {
+        return this._httpClient.post(
+            'https://localhost:44393/api/account/register',
+            user
+        );
     }
 
     /**

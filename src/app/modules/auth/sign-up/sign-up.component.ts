@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {
     FormBuilder,
@@ -14,7 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { AuthService } from 'app/core/auth/auth.service';
@@ -25,6 +24,7 @@ import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
 import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
+import { AuthValidationService } from '../auth-validation.service';
 
 @Component({
     selector: 'auth-sign-up',
@@ -50,12 +50,9 @@ import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
         IconField,
         InputIcon,
         InputText,
-        NgIf,
     ],
 })
 export class AuthSignUpComponent implements OnInit {
-    //@ViewChild('signUpNgForm') signUpNgForm: NgForm;
-
     alert: { type: 'success' | 'error'; message: string } = {
         type: 'success',
         message: '',
@@ -65,6 +62,8 @@ export class AuthSignUpComponent implements OnInit {
 
     constructor(
         private _authService: AuthService,
+        private _activatedRoute: ActivatedRoute,
+        private _authValidation:AuthValidationService,
         private _formBuilder: FormBuilder,
         private _router: Router
     ) {}
@@ -73,14 +72,14 @@ export class AuthSignUpComponent implements OnInit {
         // Create the form
         this.signUpForm = this._formBuilder.group(
             {
-                name: ['', [Validators.required]],
-                email: ['', [Validators.required, Validators.email]],
-                password: ['', Validators.required],
+                userName: ['', [Validators.required]],
+                emailAddress: ['', [Validators.required, Validators.email]],
+                password: ['', [Validators.required, Validators.minLength(6)]],
                 confirmPassword: ['', [Validators.required]],
                 agreements: [false, Validators.requiredTrue],
             },
             {
-                validators: this._CheckPasswords,
+                validators: this._authValidation.MatchPassword('password','confirmPassword'),
             }
         );
     }
@@ -101,48 +100,64 @@ export class AuthSignUpComponent implements OnInit {
         this.showAlert = false;
 
         // Sign up
-        this._authService.signUp(this.signUpForm.value).subscribe(
-            (response) => {
-                // Navigate to the confirmation required page
-                this._router.navigateByUrl('/confirmation-required');
-            },
-            (response) => {
-                // Re-enable the form
-                this.signUpForm.enable();
+        this._authService
+            .signUp({
+                userName: this.username.value,
+                emailAddress: this.email.value,
+                password: this.password.value,
+                appName: 'Ravanyar',
+            })
+            .subscribe(
+                (response) => {
+                    // Navigate to the confirmation required page
+                    this._router.navigateByUrl('/confirmation-required');
+                },
+                (response) => {
+                    // Re-enable the form
+                    this.signUpForm.enable();
 
-                // Reset the form
-                this.signUpForm.reset();
+                    // Reset the form
+                    //this.signUpForm.reset();
 
-                // Set the alert
-                this.alert = {
-                    type: 'error',
-                    message: 'something-went-wrong',
-                };
+                    console.log(response);
+                    // Set the alert
+                    this.alert = {
+                        type: 'error',
+                        message: 'something-went-wrong',
+                    };
 
-                // Show the alert
-                this.showAlert = true;
-            }
-        );
+                    // Show the alert
+                    this.showAlert = true;
+                }
+            );
     }
 
     /**
      Name Input Validation
      */
-    get name() {
-        return this.signUpForm.get('name');
+    get username() {
+        return this.signUpForm.get('userName');
     }
-    get nameIsInvalid() {
-        return (this.name.touched || this.name.dirty) && this.name.invalid;
+
+    get usernameIsInvalid() {
+        return (
+            (this.username.touched || this.username.dirty) &&
+            this.username.invalid
+        );
     }
 
     /**
      Email Input Validation
      */
     get email() {
-        return this.signUpForm.get('email');
+        return this.signUpForm.get('emailAddress');
     }
-    get emailIsInvalid() {
-        return (this.email.touched || this.email.dirty) && this.email.invalid;
+
+    get emailRequiredError() {
+        return (this.email.touched || this.email.dirty) && this.email.errors?.required;
+    }
+    get emailInvalidError() {
+        return (this.email.touched || this.email.dirty) && this.email.errors?.email;
     }
 
     /**
@@ -151,10 +166,17 @@ export class AuthSignUpComponent implements OnInit {
     get password() {
         return this.signUpForm.get('password');
     }
-    get passwordIsInvalid() {
+
+    get passwordRequiredError(): boolean {
         return (
             (this.password.touched || this.password.dirty) &&
-            this.password.invalid
+            this.password.errors?.required
+        );
+    }
+    get passwordMinlengthError(): boolean {
+        return (
+            (this.password.touched || this.password.dirty) &&
+            this.password.errors?.minlength
         );
     }
 
@@ -164,10 +186,17 @@ export class AuthSignUpComponent implements OnInit {
     get confirmPassword() {
         return this.signUpForm.get('confirmPassword');
     }
-    get confirmPasswordIsInvalid() {
+
+    get confirmPasswordRequiredError() {
         return (
             (this.confirmPassword.touched || this.confirmPassword.dirty) &&
-            this.confirmPassword.invalid
+            this.confirmPassword.errors?.required
+        );
+    }
+    get confirmPasswordMismatchError() {
+        return (
+            (this.confirmPassword.touched || this.confirmPassword.dirty) &&
+            this.confirmPassword.errors?.passwordMismatch
         );
     }
 

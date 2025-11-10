@@ -6,14 +6,18 @@
     "signup": "Sign Up",
     "dont-have-account": "Don't have an account?",
     "required-email": "email is required",
+    "required-username": "username is required",
     "required-field": "field is required",
     "invalid-email": "invalid email",
     "invalid-name": "invalid name",
+    "invalid-username": "invalid Username",
     "required-password": "password is required",
     "required-confirm-password": "password is required",
     "invalid-password": "invalid password",
+    "password-min-length-error": "Password must be at least 6 character",
     "invalid-username-or-password": "invalid username or password",
     "confirm-password-match-error": "confirm password and password doesn't match ",
+    "confirm-password-required": "confirm password is required ",
     "password": "Password",
     "confirm-password": "Confirm Password",
     "invalid-confirm-password": "Invalid Confirm Password",
@@ -64,5 +68,4 @@
     "success": "Success",
     "fail": "Fail",
     "signin-history": "SignIn history"
-
 }
