@@ -2,7 +2,7 @@
     class="flex min-w-0 flex-auto flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start"
 >
     <div
-        class="w-full px-4 py-8 sm:bg-card sm:w-auto sm:rounded-2xl sm:p-12 sm:shadow md:flex md:h-full md:w-1/2 md:items-center md:justify-end md:rounded-none md:p-16 md:shadow-none"
+        class="sm:bg-card w-full px-4 py-8 sm:w-auto sm:rounded-2xl sm:p-12 sm:shadow md:flex md:h-full md:w-1/2 md:items-center md:justify-end md:rounded-none md:p-16 md:shadow-none"
     >
         <div class="mx-auto w-full max-w-80 sm:mx-0 sm:w-80">
             <!-- Logo -->
@@ -17,7 +17,6 @@
                 {{ 'signin' | transloco }}
             </div>
             <div class="mt-0.5 flex items-baseline font-medium">
-
                 <div>{{ 'dont-have-account' | transloco }}</div>
                 <a
                     class="ms-1 text-primary-500 hover:underline"
@@ -29,44 +28,66 @@
             <!-- Alert -->
             @if (showAlert) {
                 <div class="mt-4">
-                    <p-message icon="fa-duotone fa-thin fa-triangle-exclamation"
-                               severity="error"> {{ signInResultAlert }}
+                    <p-message
+                        icon="fa-duotone fa-thin fa-triangle-exclamation"
+                        severity="error"
+                    >
+                        {{ signInResultAlert }}
                     </p-message>
                 </div>
             }
 
             <!-- Sign in form -->
-            <form class="mt-8 " [formGroup]="signInForm" #signInNgForm="ngForm">
+            <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
                 <!-- Username or Email field -->
-                <div class="flex flex-col gap-1 ">
+                <div class="flex flex-col gap-1">
                     <p-icon-field>
-                        <p-inputicon styleClass="fa-duotone fa-regular fa-user" />
-                        <input class="w-full" pInputText size="large" formControlName="email"
-                               placeholder="{{'username'|transloco}}" />
+                        <p-inputicon
+                            styleClass="fa-duotone fa-regular fa-user"
+                        />
+                        <input
+                            class="w-full"
+                            pInputText
+                            size="large"
+                            formControlName="email"
+                            placeholder="{{ 'username' | transloco }}"
+                        />
                     </p-icon-field>
                     @if (usernameRequiredError) {
-                        <p-message severity="error" variant="simple" size="small">
+                        <p-message
+                            severity="error"
+                            variant="simple"
+                            size="small"
+                        >
                             {{ 'required-username' | transloco }}
                         </p-message>
                     }
                 </div>
 
-
                 <!-- Password field -->
-                <div class="flex flex-col gap-1 mt-4">
+                <div class="mt-4 flex flex-col gap-1">
                     <p-icon-field>
-                        <p-inputicon styleClass="fa-duotone fa-regular fa-lock" />
-                        <input type="password" class="w-full" pInputText size="large" formControlName="password"
-                               placeholder="{{'password' | transloco}}" />
-
+                        <p-inputicon
+                            styleClass="fa-duotone fa-regular fa-lock"
+                        />
+                        <input
+                            type="password"
+                            class="w-full"
+                            pInputText
+                            size="large"
+                            formControlName="password"
+                            placeholder="{{ 'password' | transloco }}"
+                        />
                     </p-icon-field>
                     @if (passwordRequiredError) {
-                        <p-message severity="error" variant="simple"
-                                   size="small">{{ 'required-password' | transloco }}
+                        <p-message
+                            severity="error"
+                            variant="simple"
+                            size="small"
+                            >{{ 'required-password' | transloco }}
                         </p-message>
                     }
                 </div>
-
 
                 <!-- Actions -->
                 <div
@@ -76,9 +97,12 @@
                         <p-checkbox
                             inputId="remember"
                             formControlName="rememberMe"
-                            binary="true">
+                            binary="true"
+                        >
                         </p-checkbox>
-                        <label for="remember" class="ms-2">{{ 'remember-me'|transloco }}</label>
+                        <label for="remember" class="ms-2">{{
+                            'remember-me' | transloco
+                        }}</label>
                     </div>
 
                     <a
@@ -92,14 +116,16 @@
                 <!-- Submit button -->
 
                 <p-button
-                    [disabled]="signInForm.disabled || signInForm.invalid "
+                    [disabled]="signInForm.disabled || signInForm.invalid"
                     (click)="signIn()"
                 >
                     <span> {{ 'signin' | transloco }} </span>
-
                 </p-button>
-                <div class="w-full flex items-center justify-center mt-4">
-
+                <p-button label="Login2" severity="success" (click)="signIn2()">
+                </p-button>
+                <p-button label="profile" severity="info" (click)="getProfile()">
+                </p-button>
+                <div class="mt-4 flex w-full items-center justify-center">
                     <languages></languages>
                 </div>
 
@@ -135,7 +161,8 @@
         </div>
     </div>
     <div
-        class="relative hidden h-full w-1/2 flex-auto items-center justify-center overflow-hidden bg-gray-800 p-16 dark:border-l md:flex lg:px-28">
+        class="relative hidden h-full w-1/2 flex-auto items-center justify-center overflow-hidden bg-gray-800 p-16 md:flex lg:px-28 dark:border-l"
+    >
         <auth-base-part></auth-base-part>
     </div>
 </div>

@@ -32,7 +32,7 @@ import { MenuItem } from 'primeng/api';
 import { FuseLoadingBarComponent } from '../../../../@fuse/components/loading-bar';
 import { SchemeComponent } from '../../common/theme/scheme.component';
 import { NotificationsComponent } from '../../common/notifications/notifications.component';
-import { HomeComponent } from '../../../modules/admin/dashboards/home/home-component';
+import { HomeComponent } from '../../../modules/admin/ravanyar/home/home-component';
 import { SigninHistoryDialogComponent } from '../../../modules/auth/signin-history/signin-history-dialog.component';
 
 @Component({

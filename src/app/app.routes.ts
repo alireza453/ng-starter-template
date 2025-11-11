@@ -80,6 +80,26 @@ export const appRoutes: Route[] = [
         },
         children: [
 
+            // Dashboards
+            {
+                path: 'dashboards', children: [
+                    {
+                        path: 'project',
+                        loadChildren: () => import('app/modules/admin/dashboards/project/project.routes'),
+                    },
+                    {
+                        path: 'analytics',
+                        loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.routes'),
+                    },
+                    {
+                        path: 'finance',
+                        loadChildren: () => import('app/modules/admin/dashboards/finance/finance.routes'),
+                    },
+                    { path: 'crypto', loadChildren: () => import('app/modules/admin/dashboards/crypto/crypto.routes') },
+                ],
+            },
+
+
             // Apps
             {
                 path: 'apps', children: [
@@ -242,7 +262,7 @@ export const appRoutes: Route[] = [
 
 
     /*
-    Project routes
+    Ravanyar routes
      */
     {
         path: 'ravanyar',
@@ -253,31 +273,19 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver,
         },
         children: [
-            // Dashboards
             {
                 path: 'dashboards', children: [
                     //home page
                     {
                         path: 'home',
-                        loadChildren: () => import('app/modules/admin/dashboards/home/home.routes'),
+                        loadChildren: () => import('app/modules/admin/ravanyar/home/home.routes'),
                     },
                     {
-                        path: 'project',
-                        loadChildren: () => import('app/modules/admin/dashboards/project/project.routes'),
+                        path: 'base-data',
+                        loadChildren: () => import('app/modules/admin/ravanyar/base-data/base-data.routes'),
                     },
-                    {
-                        path: 'analytics',
-                        loadChildren: () => import('app/modules/admin/dashboards/analytics/analytics.routes'),
-                    },
-                    {
-                        path: 'finance',
-                        loadChildren: () => import('app/modules/admin/dashboards/finance/finance.routes'),
-                    },
-                    { path: 'crypto', loadChildren: () => import('app/modules/admin/dashboards/crypto/crypto.routes') },
-                ],
+                ]
             },
-
-
             // 404 & Catch all
             {
                 path: '404-not-found',

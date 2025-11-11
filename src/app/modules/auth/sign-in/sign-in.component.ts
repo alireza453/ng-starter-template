@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
-    FormBuilder, FormControl,
+    FormBuilder,
+    FormControl,
     FormGroup,
     FormsModule,
     NgForm,
@@ -23,7 +24,6 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
-import { UserService } from '../../../core/user/user.service';
 import { LanguagesComponent } from '../../../layout/common/languages/languages.component';
 import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
 
@@ -155,7 +155,7 @@ export class AuthSignInComponent implements OnInit {
                         ) || '/signed-in-redirect';
 
                     console.log(ress);
-                     this._router.navigateByUrl(redirectURL);
+                    this._router.navigateByUrl(redirectURL);
                 },
                 (response) => {
                     // Re-enable the form
@@ -173,5 +173,16 @@ export class AuthSignInComponent implements OnInit {
                     this.showAlert = true;
                 }
             );
+    }
+
+    signIn2() {
+        this._authService.mySignIn().subscribe((res) => {
+            console.log(res);
+        });
+    }
+    getProfile() {
+        this._authService.myProfile().subscribe((res) => {
+            console.log(res);
+        });
     }
 }

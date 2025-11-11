@@ -2,14 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
-import {
-    catchError,
-    Observable,
-    of,
-    switchMap,
-    throwError,
-} from 'rxjs';
-import { LoginUserDto, RegisterUserDto, ResultLoginUserDto } from './auth.model';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { RegisterUserDto } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -79,6 +73,31 @@ export class AuthService {
                 // Return a new observable with the response
                 return of(response);
             })
+        );
+    }
+
+    mySignIn(): Observable<any> {
+        return this._httpClient
+            .post(
+                'https://localhost:44393/api/account/login',
+                {
+                    userNameOrEmailAddress: 'admin',
+                    password: '1q2w3E*',
+                    rememerMe: true,
+                },
+                { withCredentials: true }
+            )
+            .pipe(
+                switchMap((response: any) => {
+                    return of(response);
+                })
+            );
+    }
+
+    myProfile(): Observable<any> {
+        return this._httpClient.get(
+            'https://localhost:44393/api/account/my-profile',
+            { withCredentials: true }
         );
     }
 

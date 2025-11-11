@@ -9,7 +9,34 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type: 'collapsable',
         icon: 'heroicons_outline:home',
         children: [
-
+            {
+                id: 'dashboards.project',
+                title: 'Project',
+                type: 'basic',
+                icon: 'heroicons_outline:clipboard-document-check',
+                link: '/fuse/dashboards/project',
+            },
+            {
+                id: 'dashboards.analytics',
+                title: 'Analytics',
+                type: 'basic',
+                icon: 'heroicons_outline:chart-pie',
+                link: '/fuse/dashboards/analytics',
+            },
+            {
+                id: 'dashboards.finance',
+                title: 'Finance',
+                type: 'basic',
+                icon: 'heroicons_outline:banknotes',
+                link: '/fuse/dashboards/finance',
+            },
+            {
+                id: 'dashboards.crypto',
+                title: 'Crypto',
+                type: 'basic',
+                icon: 'heroicons_outline:currency-dollar',
+                link: '/fuse/dashboards/crypto',
+            },
             {
                 id: 'apps',
                 type: 'group',
@@ -433,39 +460,18 @@ export const defaultNavigation: FuseNavigationItem[] = [
         icon: 'heroicons_outline:home',
         children: [
             {
-                id: 'dashboards.project',
-                title: 'Home',
+                id: 'dashboards.home',
+                title: 'صفحه اصلی',
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-document-check',
                 link: '/ravanyar/dashboards/home',
             },
             {
-                id: 'dashboards.project',
-                title: 'Project',
+                id: 'dashboards.basedata',
+                title: 'ثبت اطلاعات پایه',
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-document-check',
-                link: '/ravanyar/dashboards/project',
-            },
-            {
-                id: 'dashboards.analytics',
-                title: 'Analytics',
-                type: 'basic',
-                icon: 'heroicons_outline:chart-pie',
-                link: '/ravanyar/dashboards/analytics',
-            },
-            {
-                id: 'dashboards.finance',
-                title: 'Finance',
-                type: 'basic',
-                icon: 'heroicons_outline:banknotes',
-                link: '/ravanyar/dashboards/finance',
-            },
-            {
-                id: 'dashboards.crypto',
-                title: 'Crypto',
-                type: 'basic',
-                icon: 'heroicons_outline:currency-dollar',
-                link: '/ravanyar/dashboards/crypto',
+                link: '/ravanyar/dashboards/base-data',
             },
         ]
     }
