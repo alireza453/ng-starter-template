@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     FormBuilder,
@@ -81,8 +82,8 @@ export class AuthSignInComponent implements OnInit {
      */
     ngOnInit(): void {
         this.signInForm = this._formBuilder.group({
-            userNameOrEmailAddress: ['', [Validators.required]],
-            password: ['', [Validators.required]],
+            userNameOrEmailAddress: ['admin', [Validators.required]],
+            password: ['1q2w3E*', [Validators.required]],
             rememberMe: [false],
         });
     }
@@ -137,36 +138,32 @@ export class AuthSignInComponent implements OnInit {
         // Hide the alert
         this.showAlert = false;
 
-        // Sign in
-        this._authService
-            .signIn({
-                userNameOrEmailAddress: this.username.value,
-                password: this.password.value,
-                rememberMe: this.rememberMe.value,
-            })
-            .subscribe(
-                (response) => {
-                    if (response.result == 1) {
-                        const redirectURL =
-                            this._activatedRoute.snapshot.queryParamMap.get(
-                                'redirectURL'
-                            ) || '/signed-in-redirect';
+        const body = new HttpParams()
+            .set('grant_type', 'password')
+            .set('username', this.username.value)
+            .set('password', this.password.value)
+            .set('client_id', 'RavanYar_App')
+            .set('scope', 'openid profile email phone offline_access RavanYar');
 
-                        this._router.navigateByUrl(redirectURL);
-                    } else {
-                        this.signInErrorAction(
-                            this._translocoService.translate(
-                                'invalid-username-or-password'
-                            )
-                        );
-                    }
-                },
-                 (err) => {
-                    this.signInErrorAction(
-                        this._translocoService.translate('something-went-wrong')
-                    );
-                },
-            );
+        // Sign in
+        this._authService.signIn(body).subscribe({
+            next: (response) => {
+                const redirectURL =
+                    this._activatedRoute.snapshot.queryParamMap.get(
+                        'redirectURL'
+                    ) || '/signed-in-redirect';
+
+                this._router.navigateByUrl(redirectURL);
+            },
+            error: (err) => {
+                console.log(err);
+                // this.signInErrorAction(
+                //     this._translocoService.translate(
+                //         'invalid-username-or-password'
+                //     )
+                // );
+            },
+        });
     }
 
     /**

@@ -34,7 +34,7 @@ export class UserService {
     /**
      * Get the current signed-in user profile
      */
-    get(): Observable<User> {
+    getUserProfile(): Observable<User> {
         return this._httpClient.get<User>(`${environment.BASE_URL}/account/my-profile`).pipe(
             tap((user) => {
                 this._user.next(user);

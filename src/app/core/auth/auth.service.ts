@@ -1,10 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
-import { catchError, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LoginUserDto, RegisterUserDto, ResultLoginDto } from './auth.types';
+import {
+    RegisterUserDto,
+    RequestTokenDto,
+    ResponseTokenDto,
+} from './auth.types';
+import { AuthUtils } from './auth.utils';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -54,63 +58,32 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: LoginUserDto): Observable<any> {
+
+    signIn(credentials: HttpParams): Observable<any> {
+
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
 
         return this._httpClient
-            .post<ResultLoginDto>(
-                `${environment.BASE_URL}/account/login`,
-                credentials
+            .post<ResponseTokenDto>(
+                `${environment.BASE_URL_DOMAIN}/connect/token`,
+                credentials.toString(),
+                {headers}
             )
             .pipe(
-                switchMap((response) => {
-                    if (response.result == 1) {
-                        // Set the authenticated flag to true
-                        this._authenticated = true;
-                    }
-                    // Return a new observable with the response
-                    return of(response);
-                })
-            );
-    }
-
-    /**
-     * Sign in using the access token
-     */
-    signInUsingToken(): Observable<any> {
-        // Sign in using the token
-        return this._httpClient
-            .post('api/auth/sign-in-with-token', {
-                accessToken: this.accessToken,
-            })
-            .pipe(
-                catchError(() =>
-                    // Return false
-                    of(false)
-                ),
-                switchMap((response: any) => {
-                    // Replace the access token with the new one if it's available on
-                    // the response object.
-                    //
-                    // This is an added optional step for better security. Once you sign
-                    // in using the token, you should generate a new one on the server
-                    // side and attach it to the response object. Then the following
-                    // piece of code can replace the token with the refreshed one.
-                    if (response.accessToken) {
-                        this.accessToken = response.accessToken;
-                    }
-
-                    // Set the authenticated flag to true
+                tap((token: ResponseTokenDto) => {
                     this._authenticated = true;
-
-                    // Store the user on the user service
-                    this._userService.user = response.user;
-
-                    // Return true
-                    return of(true);
+                    this.accessToken = token.access_token;
+                }),
+                catchError((error) => {
+                    console.error('Login error:', error);
+                    return throwError(() => error);
                 })
             );
     }
@@ -118,20 +91,15 @@ export class AuthService {
     /**
      * Sign out
      */
-    signOut() {
-        this._httpClient
-            .get(`${environment.BASE_URL}/account/logout`, {
-                observe: 'response',
-            })
-            .pipe(
-                tap((res) => {
-                    if (res.status == 204) {
-                        // Set the authenticated flag to false
-                        this._authenticated = false;
-                    }
-                })
-            )
-            .subscribe();
+    signOut(): Observable<any> {
+        // Remove the access token from the local storage
+        localStorage.removeItem('accessToken');
+
+        // Set the authenticated flag to false
+        this._authenticated = false;
+
+        // Return the observable
+        return of(true);
     }
 
     /**
@@ -178,6 +146,6 @@ export class AuthService {
         }
 
         // If the access token exists, and it didn't expire, sign in using it
-        return this.signInUsingToken();
+        //return this.signInUsingToken();
     }
 }

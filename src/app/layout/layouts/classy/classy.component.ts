@@ -34,6 +34,7 @@ import { SchemeComponent } from '../../common/theme/scheme.component';
 import { NotificationsComponent } from '../../common/notifications/notifications.component';
 import { HomeComponent } from '../../../modules/admin/ravanyar/home/home-component';
 import { SigninHistoryDialogComponent } from '../../../modules/auth/signin-history/signin-history-dialog.component';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
     selector: 'classy-layout',
@@ -55,14 +56,12 @@ import { SigninHistoryDialogComponent } from '../../../modules/auth/signin-histo
         Button,
         Menubar,
         NotificationsComponent,
-        Avatar,
         FuseLoadingBarComponent,
     ],
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;
     navigation: Navigation;
-    user: User;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     /**
@@ -72,10 +71,11 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
         private _navigationService: NavigationService,
-        private _userService: UserService,
+        private _authService: AuthService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService
-    ) {}
+        private _fuseNavigationService: FuseNavigationService,
+    ) {
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -101,13 +101,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navigation) => {
                 this.navigation = navigation;
-            });
-
-        // Subscribe to the user service
-        this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
-                this.user = user;
             });
 
         // Subscribe to media changes
@@ -141,7 +134,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         // Get the navigation
         const navigation =
             this._fuseNavigationService.getComponent<FuseVerticalNavigationComponent>(
-                name
+                name,
             );
 
         if (navigation) {

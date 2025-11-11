@@ -1,25 +1,39 @@
-<div class="flex relative">
 
-    <p-button (click)="menu.toggle($event)" icon="fa-regular fa-light fa-user" variant="outlined"
-              severity="secondary" aria-label="Save"></p-button>
+    <p-button (click)="menu.toggle($event)"
+              severity="secondary"
+              variant="outlined"
+              icon="fa-light fa-user">
+    </p-button>
 
-    <div class="inline-flex w-2 h-2 rounded-full absolute -top-0.5 -end-0.5 " [ngClass]="getUserStatus()"></div>
-</div>
 
-<p-tieredMenu #menu [model]="userMenuItems" [popup]="true">
-    <ng-template #item let-item let-hasSubmenu="hasSubmenu">
-        <a pRipple class="flex items-center p-tieredmenu-item-link">
-
-            @if (item.icon) {
-                <i [class]="item.icon"></i>
-            }
-            <span class="ms-2 " [class]="item.styleClass">{{ item.label | transloco }}</span>
-
-            <!--            <p-badge *ngIf="item.badge" class="ms-auto" [value]="item.badge" />-->
-
-            <i *ngIf="hasSubmenu" class="fa-duotone fa-regular fa-chevron-left ltr:rotate-180 ms-auto"></i>
-        </a>
+<p-menu #menu [model]="userMenuItems" styleClass=" md:w-60 p-1 mt-2" [popup]="true">
+    <ng-template #start>
+        <div
+            class="relative overflow-hidden w-full border-0 p-2 gap-2 bg-transparent flex items-center justify-start  rounded-none  transition-colors duration-200">
+            <p-avatar icon="fa-regular fa-user" shape="circle" />
+            <div class="inline-flex flex-col items-start gap-1">
+                <span class="font-bold">{{ user.name ? user.name : 'No Name' }}</span>
+                <span>{{ user.email }}</span>
+            </div>
+        </div>
     </ng-template>
-</p-tieredMenu>
 
-<signin-history-dialog ></signin-history-dialog>
+    <ng-template #item let-item>
+        <button pRipple
+                class="relative overflow-hidden gap-2 w-full border-0 p-2  bg-transparent flex items-center justify-start  hover:bg-surface-100 dark:hover:bg-surface-800 rounded-lg cursor-pointer transition-colors duration-200">
+            <i [class]="item.icon"></i>
+            <span>{{ item.label | transloco }}</span>
+        </button>
+    </ng-template>
+
+    <ng-template #end>
+        <p-button (click)="signOut()" styleClass="w-full " severity="danger" variant="outlined" size="small"
+                  [label]=" 'sign-out' | transloco"
+                  icon="fa-regular fa-arrow-right-from-bracket">
+        </p-button>
+
+    </ng-template>
+
+</p-menu>
+
+<signin-history-dialog></signin-history-dialog>

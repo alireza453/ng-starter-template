@@ -16,7 +16,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
-import { TranslocoPipe } from '@ngneat/transloco';
+import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.types';
 import { MenuItem } from 'primeng/api';
@@ -30,6 +30,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { SigninHistoryDialogComponent } from '../../../modules/auth/signin-history/signin-history-dialog.component';
 import { UserStatus } from './user-status.mode';
 import { SigninHistoryDialogService } from '../../../modules/auth/signin-history/signin-history-dialog.service';
+import { Popover } from 'primeng/popover';
+import { Divider } from 'primeng/divider';
+import { Menu } from 'primeng/menu';
 
 @Component({
     selector: 'user',
@@ -49,11 +52,10 @@ import { SigninHistoryDialogService } from '../../../modules/auth/signin-history
         RippleModule,
         AvatarModule,
         OverlayBadgeModule,
-        TieredMenu,
-        TranslocoPipe,
-        NgIf,
         NgClass,
         SigninHistoryDialogComponent,
+        Menu,
+        TranslocoPipe,
     ],
 })
 export class UserComponent implements OnInit, OnDestroy {
@@ -63,7 +65,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
     @Input() showAvatar: boolean = true;
     user: User;
-    _currentUserStatus = signal<UserStatus>('Online');
     userMenuItems: MenuItem[];
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -75,7 +76,8 @@ export class UserComponent implements OnInit, OnDestroy {
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
         private _userService: UserService,
-        private _signInHistoryDialog:SigninHistoryDialogService
+        private _translocoService: TranslocoService,
+        private _signInHistoryDialog: SigninHistoryDialogService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -86,65 +88,29 @@ export class UserComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Subscribe to user changes
-        this._userService.user$
+        // Subscribe to the user service
+        this._userService
+            .getUserProfile()
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: User) => {
                 this.user = user;
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
             });
 
         this.userMenuItems = [
             {
-                label: 'account',
-            },
-            {
-                label: 'signin-history',
-                command: (event) => {
-                  this._signInHistoryDialog.visibleDialog=true;
-                },
-            },
-            {
-                label: 'status',
-                items: [
-                    {
-                        label: 'online',
-                        icon: 'w-3 h-3 rounded-full bg-green-500',
-                        command: (event) => {
-                            this._currentUserStatus.set('Online');
-                            this.updateUserStatus('Online');
-                        },
-                    },
-                    {
-                        label: 'busy',
-                        icon: 'w-3 h-3 rounded-full bg-amber-500',
-                        command: (event) => {
-                            this._currentUserStatus.set('Busy');
-                            this.updateUserStatus('Busy');
-                        },
-                    },
-                    {
-                        label: 'offline',
-                        icon: 'w-3 h-3 rounded-full bg-red-500',
-                        command: (event) => {
-                            this._currentUserStatus.set('Offline');
-                            this.updateUserStatus('Offline');
-                        },
-                    },
-                ],
-            },
-            {
                 separator: true,
             },
             {
-                label: 'sign-out',
-                icon: 'fa-regular fa-regular fa-arrow-right-from-bracket ltr:rotate-180 text-red-500',
-                styleClass: 'text-red-500 ',
-                command: () => {
-                    this.signOut();
-                },
+                label: 'account',
+                icon: 'fa-regular fa-user',
             },
+            {
+                label:'signin-history',
+                icon: 'fa-regular fa-user',
+                command: (event) => {
+                    this._signInHistoryDialog.visibleDialog = true;
+                },
+            }
         ];
     }
 
@@ -161,23 +127,6 @@ export class UserComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Update the user status
-     *
-     * @param status
-     */
-    updateUserStatus(status: string): void {
-        // Return if user is not available
-        if (!this.user) {
-            return;
-        }
-        // Update the user
-        this._userService
-            .update({
-                ...this.user
-            })
-            .subscribe();
-    }
 
     /**
      * Sign out
@@ -186,31 +135,4 @@ export class UserComponent implements OnInit, OnDestroy {
         this._router.navigate(['/sign-out']);
     }
 
-    /*
-    chang color of user button badge depending on status
-     */
-    getUserStatus = computed(() => {
-        switch (this._currentUserStatus()) {
-            case 'Online':
-                return 'bg-green-500';
-            case 'Busy':
-                return 'bg-amber-500';
-            case 'Offline':
-                return 'bg-red-500';
-        }
-    });
-
-    /*
-    chang severity of user button depending on status
-     */
-    getUserStatusColor = computed(() => {
-        switch (this._currentUserStatus()) {
-            case 'Online':
-                return 'success';
-            case 'Busy':
-                return 'warn';
-            case 'Offline':
-                return 'danger';
-        }
-    });
 }
