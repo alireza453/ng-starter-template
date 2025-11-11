@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
-import { RegisterUserDto } from './auth.model';
+import { catchError, Observable, of, switchMap, tap, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { LoginUserDto, RegisterUserDto, ResultLoginDto } from './auth.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -53,52 +54,27 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any> {
+    signIn(credentials: LoginUserDto): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
-            switchMap((response: any) => {
-                // Store the access token in the local storage
-                this.accessToken = response.accessToken;
-
-                // Set the authenticated flag to true
-                this._authenticated = true;
-
-                // Store the user on the user service
-                this._userService.user = response.user;
-
-                // Return a new observable with the response
-                return of(response);
-            })
-        );
-    }
-
-    mySignIn(): Observable<any> {
         return this._httpClient
-            .post(
-                'https://localhost:44393/api/account/login',
-                {
-                    userNameOrEmailAddress: 'admin',
-                    password: '1q2w3E*',
-                    rememerMe: true,
-                },
-                { withCredentials: true }
+            .post<ResultLoginDto>(
+                `${environment.BASE_URL}/account/login`,
+                credentials
             )
             .pipe(
-                switchMap((response: any) => {
+                switchMap((response) => {
+                    if (response.result == 1) {
+                        // Set the authenticated flag to true
+                        this._authenticated = true;
+                    }
+                    // Return a new observable with the response
                     return of(response);
                 })
             );
-    }
-
-    myProfile(): Observable<any> {
-        return this._httpClient.get(
-            'https://localhost:44393/api/account/my-profile',
-            { withCredentials: true }
-        );
     }
 
     /**
@@ -142,15 +118,20 @@ export class AuthService {
     /**
      * Sign out
      */
-    signOut(): Observable<any> {
-        // Remove the access token from the local storage
-        localStorage.removeItem('accessToken');
-
-        // Set the authenticated flag to false
-        this._authenticated = false;
-
-        // Return the observable
-        return of(true);
+    signOut() {
+        this._httpClient
+            .get(`${environment.BASE_URL}/account/logout`, {
+                observe: 'response',
+            })
+            .pipe(
+                tap((res) => {
+                    if (res.status == 204) {
+                        // Set the authenticated flag to false
+                        this._authenticated = false;
+                    }
+                })
+            )
+            .subscribe();
     }
 
     /**
@@ -160,7 +141,7 @@ export class AuthService {
      */
     signUp(user: RegisterUserDto): Observable<any> {
         return this._httpClient.post(
-            'https://localhost:44393/api/account/register',
+            `${environment.BASE_URL}/account/register`,
             user
         );
     }

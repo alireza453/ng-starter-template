@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     FormBuilder,
-    FormControl,
     FormGroup,
     FormsModule,
     NgForm,
@@ -82,13 +81,9 @@ export class AuthSignInComponent implements OnInit {
      */
     ngOnInit(): void {
         this.signInForm = this._formBuilder.group({
-            email: new FormControl('hughes.brian@company.com', {
-                validators: [Validators.required, Validators.email],
-            }),
-            password: new FormControl('admin', {
-                validators: [Validators.required],
-            }),
-            rememberMe: new FormControl(false),
+            userNameOrEmailAddress: ['', [Validators.required]],
+            password: ['', [Validators.required]],
+            rememberMe: [false],
         });
     }
 
@@ -96,7 +91,7 @@ export class AuthSignInComponent implements OnInit {
      * Username field validation
      */
     get username() {
-        return this.signInForm.get('email');
+        return this.signInForm.get('userNameOrEmailAddress');
     }
 
     get usernameRequiredError() {
@@ -121,11 +116,12 @@ export class AuthSignInComponent implements OnInit {
     }
 
     /**
-     * RememberMe field validation
+     * RememberMe field
      */
     get rememberMe() {
         return this.signInForm.get('rememberMe');
     }
+
     /**
      * Sign in
      */
@@ -144,45 +140,46 @@ export class AuthSignInComponent implements OnInit {
         // Sign in
         this._authService
             .signIn({
-                email: this.signInForm.value.email,
-                password: this.signInForm.value.password,
+                userNameOrEmailAddress: this.username.value,
+                password: this.password.value,
+                rememberMe: this.rememberMe.value,
             })
             .subscribe(
-                (ress) => {
-                    const redirectURL =
-                        this._activatedRoute.snapshot.queryParamMap.get(
-                            'redirectURL'
-                        ) || '/signed-in-redirect';
-
-                    console.log(ress);
-                    this._router.navigateByUrl(redirectURL);
-                },
                 (response) => {
-                    // Re-enable the form
-                    this.signInForm.enable();
+                    if (response.result == 1) {
+                        const redirectURL =
+                            this._activatedRoute.snapshot.queryParamMap.get(
+                                'redirectURL'
+                            ) || '/signed-in-redirect';
 
-                    // Reset the form
-                    this.signInNgForm.resetForm();
-
-                    // Set the alert
-                    this.signInResultAlert = this._translocoService.translate(
-                        'invalid-username-or-password'
+                        this._router.navigateByUrl(redirectURL);
+                    } else {
+                        this.signInErrorAction(
+                            this._translocoService.translate(
+                                'invalid-username-or-password'
+                            )
+                        );
+                    }
+                },
+                 (err) => {
+                    this.signInErrorAction(
+                        this._translocoService.translate('something-went-wrong')
                     );
-
-                    // Show the alert
-                    this.showAlert = true;
-                }
+                },
             );
     }
 
-    signIn2() {
-        this._authService.mySignIn().subscribe((res) => {
-            console.log(res);
-        });
-    }
-    getProfile() {
-        this._authService.myProfile().subscribe((res) => {
-            console.log(res);
-        });
+    /**
+     Private Methods
+     */
+    signInErrorAction(alertMessage: string) {
+        // Re-enable the form
+        this.signInForm.enable();
+        // Reset the form
+        this.signInNgForm.resetForm();
+        // Set the alert
+        this.signInResultAlert = alertMessage;
+        // Show the alert
+        this.showAlert = true;
     }
 }

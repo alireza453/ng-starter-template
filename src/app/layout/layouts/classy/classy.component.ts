@@ -44,28 +44,19 @@ import { SigninHistoryDialogComponent } from '../../../modules/auth/signin-histo
     imports: [
         FuseLoadingBarComponent,
         FuseVerticalNavigationComponent,
-
         UserComponent,
         MatIconModule,
         MatButtonModule,
         LanguagesComponent,
         FuseFullscreenComponent,
-        SearchComponent,
-        ShortcutsComponent,
-        MessagesComponent,
         RouterOutlet,
         QuickChatComponent,
         SchemeComponent,
         Button,
-        Card,
         Menubar,
         NotificationsComponent,
-        Drawer,
         Avatar,
-        CdkScrollable,
         FuseLoadingBarComponent,
-        Menu,
-        SigninHistoryDialogComponent,
     ],
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy {

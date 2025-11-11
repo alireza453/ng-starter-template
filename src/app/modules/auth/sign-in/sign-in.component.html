@@ -49,7 +49,7 @@
                             class="w-full"
                             pInputText
                             size="large"
-                            formControlName="email"
+                            formControlName="userNameOrEmailAddress"
                             placeholder="{{ 'username' | transloco }}"
                         />
                     </p-icon-field>
@@ -84,7 +84,7 @@
                             severity="error"
                             variant="simple"
                             size="small"
-                            >{{ 'required-password' | transloco }}
+                        >{{ 'required-password' | transloco }}
                         </p-message>
                     }
                 </div>
@@ -101,8 +101,8 @@
                         >
                         </p-checkbox>
                         <label for="remember" class="ms-2">{{
-                            'remember-me' | transloco
-                        }}</label>
+                                'remember-me' | transloco
+                            }}</label>
                     </div>
 
                     <a
@@ -120,10 +120,6 @@
                     (click)="signIn()"
                 >
                     <span> {{ 'signin' | transloco }} </span>
-                </p-button>
-                <p-button label="Login2" severity="success" (click)="signIn2()">
-                </p-button>
-                <p-button label="profile" severity="info" (click)="getProfile()">
                 </p-button>
                 <div class="mt-4 flex w-full items-center justify-center">
                     <languages></languages>

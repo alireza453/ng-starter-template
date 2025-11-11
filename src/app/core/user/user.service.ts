@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { User } from 'app/core/user/user.types';
 import { map, Observable, of, ReplaySubject, switchMap, tap } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -31,12 +32,13 @@ export class UserService {
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Get the current signed-in user data
+     * Get the current signed-in user profile
      */
     get(): Observable<User> {
-        return this._httpClient.get<User>('api/common/user').pipe(
+        return this._httpClient.get<User>(`${environment.BASE_URL}/account/my-profile`).pipe(
             tap((user) => {
                 this._user.next(user);
+
             })
         );
     }

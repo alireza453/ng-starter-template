@@ -11,7 +11,7 @@ export interface LoginUserDto {
     rememberMe: true;
 }
 
-export interface ResultLoginUserDto {
+export interface ResultLoginDto {
     result: number;
     description: string;
 }

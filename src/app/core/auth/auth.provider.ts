@@ -10,7 +10,7 @@ import { AuthService } from 'app/core/auth/auth.service';
 
 export const provideAuth = (): Array<Provider | EnvironmentProviders> => {
     return [
-        provideHttpClient(),
+        provideHttpClient(withInterceptors([authInterceptor])),
         {
             provide: ENVIRONMENT_INITIALIZER,
             useValue: () => inject(AuthService),
