@@ -10,30 +10,17 @@ import {
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { Navigation } from 'app/core/navigation/navigation.types';
-import { UserService } from 'app/core/user/user.service';
-import { User } from 'app/core/user/user.types';
 import { LanguagesComponent } from 'app/layout/common/languages/languages.component';
-import { MessagesComponent } from 'app/layout/common/messages/messages.component';
 import { QuickChatComponent } from 'app/layout/common/quick-chat/quick-chat.component';
-import { SearchComponent } from 'app/layout/common/search/search.component';
-import { ShortcutsComponent } from 'app/layout/common/shortcuts/shortcuts.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
 
 import { Button } from 'primeng/button';
 import { over } from 'lodash-es';
-import { Card } from 'primeng/card';
 import { Menubar } from 'primeng/menubar';
-import { Drawer } from 'primeng/drawer';
-import { Avatar } from 'primeng/avatar';
-import { CdkScrollable } from '@angular/cdk/scrolling';
-import { Menu } from 'primeng/menu';
-import { MenuItem } from 'primeng/api';
 import { FuseLoadingBarComponent } from '../../../../@fuse/components/loading-bar';
 import { SchemeComponent } from '../../common/theme/scheme.component';
 import { NotificationsComponent } from '../../common/notifications/notifications.component';
-import { HomeComponent } from '../../../modules/admin/ravanyar/home/home-component';
-import { SigninHistoryDialogComponent } from '../../../modules/auth/signin-history/signin-history-dialog.component';
 import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({

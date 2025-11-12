@@ -8,8 +8,6 @@ import {
     OnDestroy,
     OnInit,
     ViewEncapsulation,
-    computed,
-    signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -17,8 +15,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { UserService } from 'app/core/user/user.service';
-import { User } from 'app/core/user/user.types';
 import { MenuItem } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
@@ -33,6 +29,8 @@ import { SigninHistoryDialogService } from '../../../modules/auth/signin-history
 import { Popover } from 'primeng/popover';
 import { Divider } from 'primeng/divider';
 import { Menu } from 'primeng/menu';
+import { User } from '../../../core/auth/auth.types';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
     selector: 'user',
@@ -52,7 +50,6 @@ import { Menu } from 'primeng/menu';
         RippleModule,
         AvatarModule,
         OverlayBadgeModule,
-        NgClass,
         SigninHistoryDialogComponent,
         Menu,
         TranslocoPipe,
@@ -75,7 +72,7 @@ export class UserComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _userService: UserService,
+        private _authService: AuthService,
         private _translocoService: TranslocoService,
         private _signInHistoryDialog: SigninHistoryDialogService
     ) {}
@@ -89,7 +86,7 @@ export class UserComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Subscribe to the user service
-        this._userService
+        this._authService
             .getUserProfile()
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((user: User) => {

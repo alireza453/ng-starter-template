@@ -1,39 +1,32 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { UserService } from 'app/core/user/user.service';
-import { catchError, Observable, of, tap, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
     RegisterUserDto,
-    RequestTokenDto,
-    ResponseTokenDto,
+    RequestLoginDto,
+    ResultLoginDto,
+    User,
 } from './auth.types';
-import { AuthUtils } from './auth.utils';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private _authenticated: boolean = false;
     private _httpClient = inject(HttpClient);
-    private _userService = inject(UserService);
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
+    private _userInfo = new BehaviorSubject<User | null>(null);
 
     /**
-     * Setter & getter for access token
+     * Setter & getter for user
+     *
+     * @param value
      */
-    set accessToken(token: string) {
-        localStorage.setItem('accessToken', token);
+    set user(value: User) {
+        // Store the value
+        this._userInfo.next(value);
     }
 
-    get accessToken(): string {
-        return localStorage.getItem('accessToken') ?? '';
+    get user$(): Observable<User> {
+        return this._userInfo.asObservable();
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
 
     /**
      * Forgot password
@@ -59,44 +52,56 @@ export class AuthService {
      * @param credentials
      */
 
-    signIn(credentials: HttpParams): Observable<any> {
-
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/x-www-form-urlencoded'
-        });
-
-        // Throw error, if the user is already logged in
-        if (this._authenticated) {
-            return throwError('User is already logged in.');
-        }
-
+    signIn(credentials: RequestLoginDto): Observable<ResultLoginDto> {
         return this._httpClient
-            .post<ResponseTokenDto>(
-                `${environment.BASE_URL_DOMAIN}/connect/token`,
-                credentials.toString(),
-                {headers}
-            )
-            .pipe(
-                tap((token: ResponseTokenDto) => {
-                    this._authenticated = true;
-                    this.accessToken = token.access_token;
-                }),
-                catchError((error) => {
-                    console.error('Login error:', error);
-                    return throwError(() => error);
-                })
+            .post<ResultLoginDto>(
+                `${environment.BASE_URL}/account/login`,
+                credentials
             );
+    }
+
+    /**
+     * Get the signed-in user profile
+     */
+    getUserProfile(): Observable<User> {
+        return this._httpClient.get<User>(
+            `${environment.BASE_URL}/account/my-profile`
+        );
+    }
+
+    /**
+     * Save signed-in user state in local storage
+     * @param user
+     */
+    saveUserInLocalStorage(user: User): void {
+        this.user = user;
+        localStorage.setItem('userInfo', JSON.stringify(user));
+    }
+
+    /**
+     * Load signed-in user state
+     */
+    loadUserFromLocalStorage(): Observable<User> {
+        if (this._userInfo.value == null) {
+            let fromLocal = localStorage.getItem('userInfo');
+            if (fromLocal) {
+                this.user = JSON.parse(fromLocal);
+            }
+        }
+        return this.user$;
     }
 
     /**
      * Sign out
      */
     signOut(): Observable<any> {
-        // Remove the access token from the local storage
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userInfo');
 
-        // Set the authenticated flag to false
-        this._authenticated = false;
+        this._httpClient
+            .get(`${environment.BASE_URL}/account/logout`)
+            .subscribe(() => {
+                this.user = null;
+            });
 
         // Return the observable
         return of(true);
@@ -115,7 +120,7 @@ export class AuthService {
     }
 
     /**
-     * Unlock session
+     *  Unlock session
      *
      * @param credentials
      */
@@ -127,25 +132,15 @@ export class AuthService {
     }
 
     /**
-     * Check the authentication status
+     * Update the user
+     *
+     * @param user
      */
-    check(): Observable<boolean> {
-        // Check if the user is logged in
-        if (this._authenticated) {
-            return of(true);
-        }
-
-        // Check the access token availability
-        if (!this.accessToken) {
-            return of(false);
-        }
-
-        // Check the access token expire date
-        if (AuthUtils.isTokenExpired(this.accessToken)) {
-            return of(false);
-        }
-
-        // If the access token exists, and it didn't expire, sign in using it
-        //return this.signInUsingToken();
+    update(user: User): Observable<any> {
+        return this._httpClient.patch<User>('api/common/user', { user }).pipe(
+            map((response) => {
+                this.user = response;
+            })
+        );
     }
 }

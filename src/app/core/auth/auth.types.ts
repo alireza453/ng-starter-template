@@ -5,7 +5,7 @@ export interface RegisterUserDto {
     appName: string;
 }
 
-export interface LoginUserDto {
+export interface RequestLoginDto {
     userNameOrEmailAddress: string;
     password: string;
     rememberMe: true;
@@ -15,19 +15,16 @@ export interface ResultLoginDto {
     result: number;
     description: string;
 }
-
-export interface RequestTokenDto {
-    grant_type: string;
-    username: string;
-    password: string;
-    client_id: string;
-    scope: string;
+export interface User {
+    userName: string,
+    email: string,
+    name: string,
+    surname: string,
+    phoneNumber: string,
+    isExternal: boolean,
+    hasPassword: boolean,
+    concurrencyStamp: string,
+    extraProperties: {}
 }
 
-export interface ResponseTokenDto {
-    access_token: string;
-    token_type: string;
-    expires_in: number;
-    id_token: string;
-    refresh_token: string;
-}
+

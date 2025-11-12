@@ -12,7 +12,7 @@
             class="relative overflow-hidden w-full border-0 p-2 gap-2 bg-transparent flex items-center justify-start  rounded-none  transition-colors duration-200">
             <p-avatar icon="fa-regular fa-user" shape="circle" />
             <div class="inline-flex flex-col items-start gap-1">
-                <span class="font-bold">{{ user.name ? user.name : 'No Name' }}</span>
+                <span class="font-bold">{{ user.name ? user.name : user.userName }}</span>
                 <span>{{ user.email }}</span>
             </div>
         </div>

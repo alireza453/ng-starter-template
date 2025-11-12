@@ -27,8 +27,7 @@ export const appRoutes: Route[] = [
     // Auth routes for guests
     {
         path: '',
-        canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
+
         component: LayoutComponent,
         data: {
             layout: 'empty',

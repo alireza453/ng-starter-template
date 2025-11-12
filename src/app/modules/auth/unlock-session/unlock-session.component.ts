@@ -15,7 +15,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/core/auth/auth.service';
-import { UserService } from 'app/core/user/user.service';
 import { Message } from 'primeng/message';
 import { TranslocoPipe } from '@ngneat/transloco';
 
@@ -54,7 +53,6 @@ export class AuthUnlockSessionComponent implements OnInit {
         private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
-        private _userService: UserService
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -66,7 +64,7 @@ export class AuthUnlockSessionComponent implements OnInit {
      */
     ngOnInit(): void {
         // Get the user's name
-        this._userService.user$.subscribe((user) => {
+        this._authService.user$.subscribe((user) => {
             this.name = user.name;
             this._email = user.email;
         });

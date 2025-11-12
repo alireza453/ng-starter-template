@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     FormBuilder,
@@ -24,6 +23,7 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
+import { of, switchMap, throwError } from 'rxjs';
 import { LanguagesComponent } from '../../../layout/common/languages/languages.component';
 import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
 
@@ -82,8 +82,8 @@ export class AuthSignInComponent implements OnInit {
      */
     ngOnInit(): void {
         this.signInForm = this._formBuilder.group({
-            userNameOrEmailAddress: ['admin', [Validators.required]],
-            password: ['1q2w3E*', [Validators.required]],
+            userNameOrEmailAddress: ['', [Validators.required]],
+            password: ['', [Validators.required]],
             rememberMe: [false],
         });
     }
@@ -138,32 +138,42 @@ export class AuthSignInComponent implements OnInit {
         // Hide the alert
         this.showAlert = false;
 
-        const body = new HttpParams()
-            .set('grant_type', 'password')
-            .set('username', this.username.value)
-            .set('password', this.password.value)
-            .set('client_id', 'RavanYar_App')
-            .set('scope', 'openid profile email phone offline_access RavanYar');
-
         // Sign in
-        this._authService.signIn(body).subscribe({
-            next: (response) => {
-                const redirectURL =
-                    this._activatedRoute.snapshot.queryParamMap.get(
-                        'redirectURL'
-                    ) || '/signed-in-redirect';
+        this._authService
+            .signIn({
+                userNameOrEmailAddress: this.username.value,
+                password: this.password.value,
+                rememberMe: this.rememberMe.value,
+            })
+            .pipe(
+                switchMap((res) => {
+                    if (res.result == 1) {
+                        console.log(res.result);
+                        return this._authService.getUserProfile();
+                    }else {
 
-                this._router.navigateByUrl(redirectURL);
-            },
-            error: (err) => {
-                console.log(err);
-                // this.signInErrorAction(
-                //     this._translocoService.translate(
-                //         'invalid-username-or-password'
-                //     )
-                // );
-            },
-        });
+                    return throwError(() => new Error('Login failed'));
+                    }
+
+                })
+            )
+            .subscribe({
+                next: (user) => {
+                    const redirectURL =
+                        this._activatedRoute.snapshot.queryParamMap.get(
+                            'redirectURL'
+                        ) || '/signed-in-redirect';
+
+                    console.log(user);
+                    this._authService.saveUserInLocalStorage(user);
+                    this._router.navigateByUrl(redirectURL);
+                },
+                error: (err) => {
+                    this.signInErrorAction(
+                        this._translocoService.translate('something-went-wrong')
+                    );
+                },
+            });
     }
 
     /**
