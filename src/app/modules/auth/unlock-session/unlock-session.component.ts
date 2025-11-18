@@ -14,7 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { Message } from 'primeng/message';
 import { TranslocoPipe } from '@ngneat/transloco';
 
@@ -50,7 +50,7 @@ export class AuthUnlockSessionComponent implements OnInit {
      */
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _formBuilder: UntypedFormBuilder,
         private _router: Router,
     ) {}

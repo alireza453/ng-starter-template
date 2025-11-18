@@ -2,6 +2,12 @@
     "APP-NAME": "Ravanyar",
     "welcome-back": "Welcome",
     "signin": "Sign In",
+    "title": "title",
+    "register": "register",
+    "enter-new-data": "Enter new Data",
+    "select-category": "Select Category",
+    "required-title": "title is required",
+    "search-in-title": "Search title",
     "signed-in-as": "Signed In as",
     "signup": "Sign Up",
     "dont-have-account": "Don't have an account?",
@@ -67,5 +73,7 @@
     "datetime": "DateTime",
     "success": "Success",
     "fail": "Fail",
-    "signin-history": "SignIn history"
+    "signin-history": "SignIn history",
+    "delete": "Delete",
+    "update": "Update"
 }

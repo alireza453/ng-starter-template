@@ -5,8 +5,7 @@ import {
     HttpRequest,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from 'app/core/auth/auth.service';
-import { AuthUtils } from 'app/core/auth/auth.utils';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { Observable, catchError, throwError } from 'rxjs';
 
 /**
@@ -15,11 +14,11 @@ import { Observable, catchError, throwError } from 'rxjs';
  * @param req
  * @param next
  */
-export const authInterceptor = (
+export const authenticationInterceptor = (
     req: HttpRequest<unknown>,
     next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
-    const authService = inject(AuthService);
+    const authService = inject(AuthenticationService);
 
     // Clone the request object
     let newReq = req.clone({

@@ -1,0 +1,9 @@
+.childAction {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.childItem:hover .childAction {
+    opacity: 1;
+    pointer-events: auto;
+}

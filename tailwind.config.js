@@ -40,7 +40,7 @@ const config = {
         },
         extend: {
             fontFamily: {
-                sans: "Vazirmatn-FD",
+                sans: "Vazirmatn",
                 mono: `"IBM Plex Mono", ${defaultTheme.fontFamily.mono.join(',')}`,
             },
             spacing: {

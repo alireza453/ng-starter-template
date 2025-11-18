@@ -1,7 +1,7 @@
 import { I18nPluralPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { Subject, finalize, takeUntil, takeWhile, tap, timer } from 'rxjs';
 import { TranslocoPipe } from '@ngneat/transloco';
 
@@ -24,7 +24,7 @@ export class AuthSignOutComponent implements OnInit, OnDestroy {
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _router: Router
     ) {}
 

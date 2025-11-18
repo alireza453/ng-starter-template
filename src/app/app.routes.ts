@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 import { initialDataResolver } from 'app/app.resolvers';
-import { AuthGuard } from 'app/core/auth/guards/auth.guard';
-import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
+import { AuthenticationGuard } from 'app/core/auth/authentication/guards/authentication.guard';
+import { NoAuthGuard } from 'app/core/auth/authentication/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 
 // prettier-ignore
@@ -53,8 +53,8 @@ export const appRoutes: Route[] = [
     // Auth routes for authenticated users
     {
         path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canActivate: [AuthenticationGuard],
+        canActivateChild: [AuthenticationGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty',
@@ -71,8 +71,8 @@ export const appRoutes: Route[] = [
     /* Fuse routes */
     {
         path: 'fuse',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canActivate: [AuthenticationGuard],
+        canActivateChild: [AuthenticationGuard],
         component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver,
@@ -265,8 +265,8 @@ export const appRoutes: Route[] = [
      */
     {
         path: 'ravanyar',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+        canActivate: [AuthenticationGuard],
+        canActivateChild: [AuthenticationGuard],
         component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver,

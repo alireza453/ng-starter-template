@@ -29,8 +29,8 @@ import { SigninHistoryDialogService } from '../../../modules/auth/signin-history
 import { Popover } from 'primeng/popover';
 import { Divider } from 'primeng/divider';
 import { Menu } from 'primeng/menu';
-import { User } from '../../../core/auth/auth.types';
-import { AuthService } from '../../../core/auth/auth.service';
+import { User } from '../../../core/auth/authentication/authentication.types';
+import { AuthenticationService } from '../../../core/auth/authentication/authentication.service';
 
 @Component({
     selector: 'user',
@@ -72,7 +72,7 @@ export class UserComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _translocoService: TranslocoService,
         private _signInHistoryDialog: SigninHistoryDialogService
     ) {}

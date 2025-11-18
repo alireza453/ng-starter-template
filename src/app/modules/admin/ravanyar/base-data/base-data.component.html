@@ -1,108 +1,113 @@
 <div class="flex min-w-0 flex-auto flex-col">
-    <!-- Header -->
-    <div
-        class="mx-auto mt-6 flex w-full max-w-screen-xl flex-col gap-3 px-6 sm:px-8"
+    <p-tree
+        [filter]="true"
+        filterPlaceholder="جستجو..."
+        [value]="basedata"
+        styleClass="w-full md:w-[30rem]"
+        selectionMode="single"
     >
-        <!--        table-->
+        <ng-template let-node pTemplate="parent">
+            <div class="flex items-center justify-between gap-2">
+                @if (node.expanded) {
 
-        <p-table
-            #dt2
-            stripedRows
-            [scrollable]="true"
-            scrollHeight="400px"
-            [globalFilterFields]="['id', 'title']"
-            [paginator]="true"
-            dataKey="id"
-            [rows]="3"
-            [value]="baseDataItems"
-            [rowsPerPageOptions]="[3, 5, 10, 15, 20]"
-            [tableStyle]="{ 'min-width': '60rem' }"
-        >
-            <ng-template pTemplate="caption">
-                <div
-                    class="flex flex-col items-center justify-between gap-4 md:flex-row"
+                    <i class="fa-solid fa-folder-open text-amber-500"></i>
+                } @else {
+                    <i class="fa-solid fa-folder text-amber-500"></i>
+                }
+                <span class="font-bold"> {{ node.label }}</span>
+                <p-button
+                    icon="fa-regular fa-plus"
+                    size="small"
+                    tooltipPosition="top"
+                    severity="info"
+                    variant="text"
+                    pTooltip="افزودن زیرمجموعه"
+                    (click)="showInsertDialog(node)"
+                ></p-button>
+            </div>
+        </ng-template>
+
+        <ng-template let-node pTemplate="child">
+            <div
+                class="childItem flex w-full items-center justify-between gap-2"
+            >
+                <span> {{ node.label }}</span>
+
+                <p-button
+                    class="childAction"
+                    icon="fa-regular fa-pen-to-square"
+                    (click)="showDetailsDialog(node)"
+                    severity="secondary"
+                    size="small"
+                    variant="text"
                 >
-                    <!--        form -->
-                    <p-fieldset legend="ثبت اطلاعات جدید">
-                        <div
-                            class="flex flex-col items-center justify-center gap-4 sm:flex-row"
-                        >
-                            <p-select
-                                [options]="categories"
-                                [(ngModel)]="selectedCategory"
-                                variant="filled"
-                                optionLabel="value"
-                                placeholder="انتخاب دسته بندی"
-                                class="w-56"
-                            />
-
-                            <p-floatlabel variant="on">
-                                <input
-                                    id="title"
-                                    pInputText
-                                    [(ngModel)]="inputLabel"
-                                />
-                                <label for="title">{{
-                                    selectedCategory
-                                        ? selectedCategory.value
-                                        : 'عنوان'
-                                }}</label>
-                            </p-floatlabel>
-
-                            <p-button label="ثبت" icon="fa-regular fa-plus" />
-                        </div>
-                    </p-fieldset>
-
-                    <div class="flex items-center justify-center gap-4">
-                        <span class="text-xl font-bold">
-                            {{ selectedCategory ? selectedCategory.value : '' }}
-                        </span>
-                        <input
-                            pInputText
-                            type="text"
-                            (input)="
-                                dt2.filterGlobal(
-                                    $event.target.value,
-                                    'contains'
-                                )
-                            "
-                            placeholder="جستجوی عنوان"
-                        />
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>ردیف</th>
-                    <th>عنوان</th>
-                    <th>عملیات</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-item>
-                <tr>
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.title }}</td>
-                    <td class="flex gap-2">
-                        <p-button
-                            severity="danger"
-                            size="small"
-                            icon="fa-light fa-trash-xmark"
-                            label="حذف"
-                            variant="outlined"
-                        />
-                        <p-button
-                            severity="info"
-                            size="small"
-                            icon="fa-light fa-pen-to-square"
-                            label="ویرایش"
-                            variant="outlined"
-                        />
-                    </td>
-                </tr>
-            </ng-template>
-            <!-- <ng-template pTemplate="footer">
-                تعداد کل {{ items ? items.length : 0 }} مورد.
-            </ng-template> -->
-        </p-table>
-    </div>
+                </p-button>
+            </div>
+        </ng-template>
+    </p-tree>
 </div>
+
+
+<!--Details Dialog-->
+<p-dialog
+    resizable="false"
+    draggable="false"
+    [modal]="true"
+    header="ویرایش یا حذف عنوان"
+    [(visible)]="visibleDetailsDialog"
+    [style]="{ width: '25rem' }"
+>
+    <input
+        class="mb-4 w-full"
+        pInputText
+        id="title"
+        [(ngModel)]="editingTitle"
+        autocomplete="off"
+        placeholder="عنوان"
+    />
+
+    <div class="flex justify-end gap-1">
+        <p-button
+            label="ویرایش"
+            severity="primary"
+            variant="outlined"
+            (click)="ApplyUpdate()"
+            size="small"
+        />
+        <p-button
+            label="حذف"
+            severity="danger"
+            variant="outlined"
+            (click)="ApplyDelete()"
+            size="small"
+        />
+    </div>
+</p-dialog>
+
+<!--Insert Dialog-->
+<p-dialog
+    resizable="false"
+    draggable="false"
+    header="افزودن زیر مجموعه"
+    [modal]="true"
+    [(visible)]="visibleInsertDialog"
+    [style]="{ width: '25rem' }"
+>
+    <input
+        class="mb-4 w-full"
+        pInputText
+        id="title"
+        [(ngModel)]="newTitle"
+        autocomplete="off"
+        placeholder="عنوان"
+    />
+
+    <div class="flex justify-end">
+        <p-button
+            label="افزودن"
+            severity="primary"
+            (click)="ApplyInsert()"
+            size="small"
+        />
+    </div>
+</p-dialog>

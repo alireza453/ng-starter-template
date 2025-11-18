@@ -16,14 +16,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { TranslocoPipe, TranslocoService } from '@ngneat/transloco';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { Button } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
-import { of, switchMap, throwError } from 'rxjs';
+import { switchMap, throwError } from 'rxjs';
 import { LanguagesComponent } from '../../../layout/common/languages/languages.component';
 import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
 
@@ -67,7 +67,7 @@ export class AuthSignInComponent implements OnInit {
      */
     constructor(
         private _activatedRoute: ActivatedRoute,
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _router: Router,
         private _formBuilder: FormBuilder,
         private _translocoService: TranslocoService
@@ -148,11 +148,10 @@ export class AuthSignInComponent implements OnInit {
             .pipe(
                 switchMap((res) => {
                     if (res.result == 1) {
-                        console.log(res.result);
                         return this._authService.getUserProfile();
                     }else {
 
-                    return throwError(() => new Error('Login failed'));
+                    return throwError(() => new Error('something-went-wrong'));
                     }
 
                 })
@@ -164,7 +163,7 @@ export class AuthSignInComponent implements OnInit {
                             'redirectURL'
                         ) || '/signed-in-redirect';
 
-                    console.log(user);
+
                     this._authService.saveUserInLocalStorage(user);
                     this._router.navigateByUrl(redirectURL);
                 },

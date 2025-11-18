@@ -16,7 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { TranslocoPipe } from '@ngneat/transloco';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { Button } from 'primeng/button';
 import { Checkbox } from 'primeng/checkbox';
 import { IconField } from 'primeng/iconfield';
@@ -61,7 +61,7 @@ export class AuthSignUpComponent implements OnInit {
     showAlert: boolean = false;
 
     constructor(
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _activatedRoute: ActivatedRoute,
         private _authValidation:AuthValidationService,
         private _formBuilder: FormBuilder,

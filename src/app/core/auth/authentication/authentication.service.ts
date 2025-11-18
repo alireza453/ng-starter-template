@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map, of, switchMap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import {
     RegisterUserDto,
     RequestLoginDto,
     ResultLoginDto,
     User,
-} from './auth.types';
+} from './authentication.types';
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class AuthenticationService {
     private _httpClient = inject(HttpClient);
     private _userInfo = new BehaviorSubject<User | null>(null);
 

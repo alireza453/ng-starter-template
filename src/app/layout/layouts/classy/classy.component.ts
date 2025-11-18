@@ -21,7 +21,7 @@ import { Menubar } from 'primeng/menubar';
 import { FuseLoadingBarComponent } from '../../../../@fuse/components/loading-bar';
 import { SchemeComponent } from '../../common/theme/scheme.component';
 import { NotificationsComponent } from '../../common/notifications/notifications.component';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthenticationService } from '../../../core/auth/authentication/authentication.service';
 
 @Component({
     selector: 'classy-layout',
@@ -58,7 +58,7 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy {
         private _activatedRoute: ActivatedRoute,
         private _router: Router,
         private _navigationService: NavigationService,
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
     ) {

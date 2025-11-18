@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { fuseAnimations } from '@fuse/animations';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { Message } from 'primeng/message';
 
 @Component({
@@ -45,7 +45,7 @@ export class ComingSoonFullscreenComponent implements OnInit {
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _formBuilder: UntypedFormBuilder
     ) {}
 

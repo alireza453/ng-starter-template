@@ -4,6 +4,10 @@
     "signin": "ورود",
     "signed-in-as": "ورود به عنوان",
     "signup": "ثبت نام",
+    "title": "عنوان",
+    "select-category": "انتخاب دسته بندی",
+    "search-in-title": "جستجوی عنوان",
+    "required-title": "عنوان الزامی",
     "dont-have-account": "حساب کاربری ندارید؟",
     "required-email": "ایمیل الزامی",
     "required-username": "نام کاربری الزامی",
@@ -68,8 +72,7 @@
     "datetime": "زمان",
     "success": "موفق",
     "fail": "ناموفق",
-    "signin-history": "تاریخچه ورود"
-
-
-
+    "signin-history": "تاریخچه ورود",
+    "delete": "حذف",
+    "update": "ویرایش"
 }

@@ -18,7 +18,7 @@ import { definePreset } from '@primeng/themes';
 import AURA from '@primeng/themes/aura';
 import LARA from '@primeng/themes/lara';
 import { appRoutes } from 'app/app.routes';
-import { provideAuth } from 'app/core/auth/auth.provider';
+import { provideAuth } from 'app/core/auth/authentication/authentication.provider';
 import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
 import { providePrimeNG } from 'primeng/config';

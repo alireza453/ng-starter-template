@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateChildFn, CanActivateFn, Router } from '@angular/router';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { of, switchMap } from 'rxjs';
 
 export const NoAuthGuard: CanActivateFn | CanActivateChildFn = (
@@ -10,7 +10,7 @@ export const NoAuthGuard: CanActivateFn | CanActivateChildFn = (
     const router: Router = inject(Router);
 
     // Check the authentication status
-    return inject(AuthService)
+    return inject(AuthenticationService)
         .loadUserFromLocalStorage()
         .pipe(
             switchMap((user) => {

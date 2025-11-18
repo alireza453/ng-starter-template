@@ -15,7 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseValidators } from '@fuse/validators';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
 import { finalize } from 'rxjs';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
@@ -63,7 +63,7 @@ export class AuthResetPasswordComponent implements OnInit {
      * Constructor
      */
     constructor(
-        private _authService: AuthService,
+        private _authService: AuthenticationService,
         private _formBuilder: UntypedFormBuilder
     ) {}
 
