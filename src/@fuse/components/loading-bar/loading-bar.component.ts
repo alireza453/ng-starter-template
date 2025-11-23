@@ -10,7 +10,7 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 import { FuseLoadingService } from '@fuse/services/loading';
 import { Subject, takeUntil } from 'rxjs';
 import { ProgressBar } from 'primeng/progressbar';
@@ -22,7 +22,7 @@ import { ProgressBar } from 'primeng/progressbar';
     encapsulation: ViewEncapsulation.None,
     exportAs: 'fuseLoadingBar',
     standalone: true,
-    imports: [MatProgressBarModule, ProgressBar],
+    imports: [ ProgressBar],
 })
 export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
     private _fuseLoadingService = inject(FuseLoadingService);

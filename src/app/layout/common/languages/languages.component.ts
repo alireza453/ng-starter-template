@@ -7,8 +7,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatMenuModule } from '@angular/material/menu';
+
 import { Router } from '@angular/router';
 import {
     FuseNavigationService,
@@ -27,8 +26,6 @@ import { FuseConfigService } from '../../../../@fuse/services/config';
     exportAs: 'languages',
     standalone: true,
     imports: [
-        MatButtonModule,
-        MatMenuModule,
         FormsModule,
         ButtonModule,
         Select,

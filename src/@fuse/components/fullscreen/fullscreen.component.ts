@@ -7,9 +7,7 @@ import {
     ViewEncapsulation,
     inject,
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -20,10 +18,6 @@ import { ButtonModule } from 'primeng/button';
     exportAs: 'fuseFullscreen',
     standalone: true,
     imports: [
-        MatButtonModule,
-        MatTooltipModule,
-        NgTemplateOutlet,
-        MatIconModule,
         ButtonModule
     ],
 })

@@ -18,9 +18,6 @@ import {
     ViewContainerRef,
     ViewEncapsulation,
 } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
 import { Notification } from 'app/layout/common/notifications/notifications.types';
@@ -45,26 +42,15 @@ import { FuseScrollbarDirective } from '../../../../@fuse/directives/scrollbar';
     exportAs: 'notifications',
     standalone: true,
     imports: [
-        MatButtonModule,
-        MatIconModule,
-        MatTooltipModule,
-        NgClass,
-        NgTemplateOutlet,
-        RouterLink,
-        DatePipe,
         Button,
         ButtonModule,
         Tooltip,
         CommonModule,
         Popover,
-        NgForOf,
         Avatar,
         Badge,
-        BadgeDirective,
-        Tag,
         Divider,
         TranslocoPipe,
-        TranslocoDirective,
         FuseScrollbarDirective,
     ],
 })

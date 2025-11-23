@@ -1,10 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
-import {
-    DateAdapter,
-    MAT_DATE_FORMATS,
-    MAT_DATE_LOCALE,
-} from '@angular/material/core';
+
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
     PreloadAllModules,
@@ -16,18 +12,14 @@ import { provideFuse } from '@fuse';
 import { TranslocoService, provideTransloco } from '@ngneat/transloco';
 import { definePreset } from '@primeng/themes';
 import AURA from '@primeng/themes/aura';
-import LARA from '@primeng/themes/lara';
 import { appRoutes } from 'app/app.routes';
 import { provideAuth } from 'app/core/auth/authentication/authentication.provider';
-import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
 import { providePrimeNG } from 'primeng/config';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
-import {
-    MaterialPersianDateAdapter,
-    PERSIAN_DATE_FORMATS,
-} from './core/utils/MaterialPersianDateAdapter';
+
+
 
 const IndigoPreset = definePreset(AURA, {
     semantic: {
@@ -101,16 +93,7 @@ export const appConfig: ApplicationConfig = {
             withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
         ),
 
-        // Material Persian Date Adapter
-        {
-            provide: DateAdapter,
-            useClass: MaterialPersianDateAdapter,
-            deps: [MAT_DATE_LOCALE],
-        },
-        {
-            provide: MAT_DATE_FORMATS,
-            useValue: PERSIAN_DATE_FORMATS,
-        },
+
 
         // Transloco Config
         provideTransloco({
@@ -151,7 +134,6 @@ export const appConfig: ApplicationConfig = {
 
         // Fuse
         provideAuth(),
-        provideIcons(),
         provideFuse({
             mockApi: {
                 delay: 0,
@@ -169,5 +151,7 @@ export const appConfig: ApplicationConfig = {
                 layoutDirection: 'rtl',
             },
         }),
+
+
     ],
 };

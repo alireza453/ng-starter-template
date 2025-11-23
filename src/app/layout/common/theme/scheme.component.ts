@@ -1,6 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+
 import {} from 'app/app.config';
 import { Subject, takeUntil } from 'rxjs';
 import {
@@ -12,7 +11,7 @@ import { Button } from 'primeng/button';
 @Component({
     selector: 'scheme',
     standalone: true,
-    imports: [MatIcon, MatIconButton, Button],
+    imports: [ Button],
     templateUrl: './scheme.component.html',
     styleUrl: './scheme.component.scss',
 })

@@ -1,6 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { FuseFullscreenComponent } from '@fuse/components/fullscreen';
 import {
@@ -33,8 +31,6 @@ import { AuthenticationService } from '../../../core/auth/authentication/authent
         FuseLoadingBarComponent,
         FuseVerticalNavigationComponent,
         UserComponent,
-        MatIconModule,
-        MatButtonModule,
         LanguagesComponent,
         FuseFullscreenComponent,
         RouterOutlet,

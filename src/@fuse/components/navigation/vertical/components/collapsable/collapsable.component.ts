@@ -11,8 +11,6 @@ import {
     forwardRef,
     inject,
 } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavigationEnd, Router } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
@@ -34,15 +32,12 @@ import { Badge } from 'primeng/badge';
     standalone: true,
     imports: [
         NgClass,
-        MatTooltipModule,
-        MatIconModule,
         FuseVerticalNavigationBasicItemComponent,
         forwardRef(() => FuseVerticalNavigationCollapsableItemComponent),
         FuseVerticalNavigationDividerItemComponent,
         FuseVerticalNavigationGroupItemComponent,
         FuseVerticalNavigationSpacerItemComponent,
         Tooltip,
-        Badge,
     ],
 })
 export class FuseVerticalNavigationCollapsableItemComponent

@@ -8,8 +8,7 @@ import {
     OnInit,
     inject,
 } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 import {
     IsActiveMatchOptions,
     RouterLink,
@@ -33,9 +32,7 @@ import { Tag } from 'primeng/tag';
         NgClass,
         RouterLink,
         RouterLinkActive,
-        MatTooltipModule,
         NgTemplateOutlet,
-        MatIconModule,
         Tooltip,
         Badge,
         Tag,

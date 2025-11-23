@@ -7,11 +7,7 @@ import {
     UntypedFormGroup,
     Validators,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthenticationService } from 'app/core/auth/authentication/authentication.service';
@@ -27,11 +23,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
     imports: [
         FormsModule,
         ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
         RouterLink,
         Message,
         TranslocoPipe,

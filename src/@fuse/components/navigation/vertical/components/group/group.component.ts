@@ -10,7 +10,7 @@ import {
     forwardRef,
     inject,
 } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
 import { FuseVerticalNavigationBasicItemComponent } from '@fuse/components/navigation/vertical/components/basic/basic.component';
@@ -27,7 +27,6 @@ import { Subject, takeUntil } from 'rxjs';
     standalone: true,
     imports: [
         NgClass,
-        MatIconModule,
         FuseVerticalNavigationBasicItemComponent,
         FuseVerticalNavigationCollapsableItemComponent,
         FuseVerticalNavigationDividerItemComponent,

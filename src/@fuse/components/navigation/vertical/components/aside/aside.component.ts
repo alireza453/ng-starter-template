@@ -11,8 +11,7 @@ import {
     SimpleChanges,
     inject,
 } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { NavigationEnd, Router } from '@angular/router';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types';
@@ -32,8 +31,6 @@ import { Tooltip } from 'primeng/tooltip';
     standalone: true,
     imports: [
         NgClass,
-        MatTooltipModule,
-        MatIconModule,
         FuseVerticalNavigationBasicItemComponent,
         FuseVerticalNavigationCollapsableItemComponent,
         FuseVerticalNavigationDividerItemComponent,

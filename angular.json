@@ -25,9 +25,6 @@
                         "inlineStyleLanguage": "scss",
                         "allowedCommonJsDependencies": [
                             "apexcharts",
-                            "crypto-js/enc-utf8",
-                            "crypto-js/hmac-sha256",
-                            "crypto-js/enc-base64",
                             "quill-delta"
                         ],
                         "assets": [
@@ -50,7 +47,6 @@
                         },
                         "styles": [
                             "src/styles.scss",
-                            "src/@fuse/styles/themes.scss",
                             "src/@fuse/styles/main.scss"
                         ],
                         "scripts": []

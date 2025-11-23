@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject, tap } from 'rxjs';
-import { Message } from '../../../layout/common/messages/messages.types';
 import { LoginHistoryModel } from './sign-in-history.model';
 
 @Injectable({

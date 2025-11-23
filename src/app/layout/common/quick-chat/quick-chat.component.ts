@@ -13,10 +13,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+
 import { FuseScrollbarDirective } from '@fuse/directives/scrollbar';
 import { TranslocoPipe } from '@ngneat/transloco';
 import { QuickChatService } from 'app/layout/common/quick-chat/quick-chat.service';
@@ -37,12 +34,7 @@ import { Subject, takeUntil } from 'rxjs';
     standalone: true,
     imports: [
         NgClass,
-        MatIconModule,
-        MatButtonModule,
         FuseScrollbarDirective,
-        NgTemplateOutlet,
-        MatFormFieldModule,
-        MatInputModule,
         TextFieldModule,
         DatePipe,
         Button,
@@ -50,9 +42,7 @@ import { Subject, takeUntil } from 'rxjs';
         DrawerModule,
         Avatar,
         InputText,
-        FormsModule,
-        BadgeDirective,
-        Badge,
+        FormsModule
     ],
 })
 export class QuickChatComponent implements OnInit, OnDestroy {

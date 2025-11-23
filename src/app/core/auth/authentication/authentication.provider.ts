@@ -16,5 +16,16 @@ export const provideAuth = (): Array<Provider | EnvironmentProviders> => {
             useValue: () => inject(AuthenticationService),
             multi: true,
         },
+
+        //Provide ABP Auth
+        // provideAbpCore(
+        //     withOptions({
+        //         environment:authEnvironment,
+        //         registerLocaleFn: registerLocale(),
+        //     })
+        // ),
+        // provideAbpOAuth(),
+        // provideIdentityConfig(),
+        // provideAccountConfig(),
     ];
 };
