@@ -26,7 +26,6 @@ import { AuthenticationService } from '../../../core/auth/authentication/authent
     templateUrl: './classy.component.html',
     styleUrl: './classy.component.scss',
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
     imports: [
         FuseLoadingBarComponent,
         FuseVerticalNavigationComponent,
@@ -40,7 +39,7 @@ import { AuthenticationService } from '../../../core/auth/authentication/authent
         Menubar,
         NotificationsComponent,
         FuseLoadingBarComponent,
-    ],
+    ]
 })
 export class ClassyLayoutComponent implements OnInit, OnDestroy {
     isScreenSmall: boolean;

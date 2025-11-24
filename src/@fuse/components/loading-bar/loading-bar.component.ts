@@ -21,8 +21,7 @@ import { ProgressBar } from 'primeng/progressbar';
     styleUrls: ['./loading-bar.component.scss'],
     encapsulation: ViewEncapsulation.None,
     exportAs: 'fuseLoadingBar',
-    standalone: true,
-    imports: [ ProgressBar],
+    imports: [ProgressBar]
 })
 export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
     private _fuseLoadingService = inject(FuseLoadingService);

@@ -6,9 +6,8 @@ export interface RegisterUserDto {
 }
 
 export interface RequestLoginDto {
-    userNameOrEmailAddress: string;
+    username: string;
     password: string;
-    rememberMe: true;
 }
 
 export interface ResultLoginDto {
@@ -16,15 +15,13 @@ export interface ResultLoginDto {
     description: string;
 }
 export interface User {
-    userName: string,
-    email: string,
-    name: string,
-    surname: string,
-    phoneNumber: string,
-    isExternal: boolean,
-    hasPassword: boolean,
-    concurrencyStamp: string,
-    extraProperties: {}
+    userName: string;
+    email: string;
+    name: string;
+    surname: string;
+    phoneNumber: string;
+    isExternal: boolean;
+    hasPassword: boolean;
+    concurrencyStamp: string;
+    extraProperties: {};
 }
-
-

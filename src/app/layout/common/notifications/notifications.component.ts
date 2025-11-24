@@ -40,7 +40,6 @@ import { FuseScrollbarDirective } from '../../../../@fuse/directives/scrollbar';
     styleUrl: './notifications.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'notifications',
-    standalone: true,
     imports: [
         Button,
         ButtonModule,
@@ -52,7 +51,7 @@ import { FuseScrollbarDirective } from '../../../../@fuse/directives/scrollbar';
         Divider,
         TranslocoPipe,
         FuseScrollbarDirective,
-    ],
+    ]
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
     @ViewChild('notificationsOrigin') private _notificationsOrigin: any;

@@ -1,31 +1,31 @@
 import { Environment } from '@abp/ng.core';
 
-
 export const environment = {
-    production: false,
-    BASE_URL: 'https://localhost:44393/api',
-    BASE_URL_DOMAIN: 'https://localhost:44393',
+    production: true,
+    BASE_API: 'https://localhost:44357/api',
+    BACKEND_BASE_URL: 'https://localhost:44357',
+    UI_BASE_URL : 'http://localhost:4200'
 };
 
-const UI_BASE_URL = 'http://localhost:4200';
+
 const oAuthConfig = {
-    issuer: environment.BASE_URL_DOMAIN,
-    redirectUri: UI_BASE_URL,
+    issuer: environment.BACKEND_BASE_URL,
+    redirectUri: environment.UI_BASE_URL,
     clientId: 'testabp_App',
     responseType: 'code',
     scope: 'email testabp',
     requireHttps: true,
 };
 export const authEnvironment = {
-    production: false,
+    production: true,
     application: {
-        UI_BASE_URL,
+        baseUrl:environment.UI_BASE_URL,
         name: 'testabp',
     },
     oAuthConfig,
     apis: {
         default: {
-            url: environment.BASE_URL_DOMAIN,
+            url: environment.BACKEND_BASE_URL,
             rootNamespace: 'testabp',
         },
         AbpAccountPublic: {
@@ -33,5 +33,4 @@ export const authEnvironment = {
             rootNamespace: 'AbpAccountPublic',
         },
     },
-} as Environment
-
+} as Environment;

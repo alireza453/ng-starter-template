@@ -1,11 +1,12 @@
-import { DOCUMENT } from '@angular/common';
+
 import {
-    Component,
-    Inject,
-    OnDestroy,
-    OnInit,
-    Renderer2,
-    ViewEncapsulation,
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewEncapsulation,
+  DOCUMENT
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FuseConfig, FuseConfigService } from '@fuse/services/config';
@@ -21,8 +22,7 @@ import { ClassyLayoutComponent } from './layouts/classy/classy.component';
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [EmptyLayoutComponent, ClassyLayoutComponent],
+    imports: [EmptyLayoutComponent, ClassyLayoutComponent]
 })
 export class LayoutComponent implements OnInit, OnDestroy {
     config: FuseConfig;

@@ -10,7 +10,6 @@ import { Tooltip } from 'primeng/tooltip';
 
 @Component({
     selector: 'base-data',
-    standalone: true,
     imports: [
         ReactiveFormsModule,
         InputTextModule,
@@ -22,7 +21,7 @@ import { Tooltip } from 'primeng/tooltip';
         Tooltip,
     ],
     templateUrl: './base-data.component.html',
-    styleUrl: './base-data.component.scss',
+    styleUrl: './base-data.component.scss'
 })
 export class BaseDataComponent implements OnInit {
     basedata!: TreeNode[];

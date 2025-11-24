@@ -26,7 +26,6 @@ import { AuthValidationService } from '../auth-validation.service';
     templateUrl: './sign-up.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
-    standalone: true,
     imports: [
         RouterLink,
         FormsModule,
@@ -39,7 +38,7 @@ import { AuthValidationService } from '../auth-validation.service';
         IconField,
         InputIcon,
         InputText,
-    ],
+    ]
 })
 export class AuthSignUpComponent implements OnInit {
     alert: { type: 'success' | 'error'; message: string } = {

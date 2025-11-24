@@ -10,10 +10,9 @@ import { Button } from 'primeng/button';
 
 @Component({
     selector: 'scheme',
-    standalone: true,
-    imports: [ Button],
+    imports: [Button],
     templateUrl: './scheme.component.html',
-    styleUrl: './scheme.component.scss',
+    styleUrl: './scheme.component.scss'
 })
 export class SchemeComponent implements OnInit {
     private _config: FuseConfig;

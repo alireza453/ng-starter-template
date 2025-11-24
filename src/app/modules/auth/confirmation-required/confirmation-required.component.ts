@@ -9,8 +9,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
     templateUrl: './confirmation-required.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
-    standalone: true,
-    imports: [RouterLink, AuthBasePartComponent, TranslocoPipe],
+    imports: [RouterLink, AuthBasePartComponent, TranslocoPipe]
 })
 export class AuthConfirmationRequiredComponent {
     /**

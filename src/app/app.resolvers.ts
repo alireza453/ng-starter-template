@@ -10,13 +10,13 @@ export const initialDataResolver = () => {
     const notificationsService = inject(NotificationsService);
     const quickChatService = inject(QuickChatService);
 
-    const signinHistoryService = inject(SigninHistoryDialogService)
+    const signinHistoryService = inject(SigninHistoryDialogService);
 
     // Fork join multiple API endpoint calls to wait all of them to finish
     return forkJoin([
         navigationService.get(),
         notificationsService.getAll(),
         quickChatService.getChats(),
-        signinHistoryService.getAll()
+        signinHistoryService.getAll(),
     ]);
 };

@@ -1,5 +1,4 @@
 import { BooleanInput } from '@angular/cdk/coercion';
-import { NgClass, NgIf } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -18,15 +17,12 @@ import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { RippleModule } from 'primeng/ripple';
-import { TieredMenu } from 'primeng/tieredmenu';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SigninHistoryDialogComponent } from '../../../modules/auth/signin-history/signin-history-dialog.component';
-import { UserStatus } from './user-status.mode';
 import { SigninHistoryDialogService } from '../../../modules/auth/signin-history/signin-history-dialog.service';
-import { Popover } from 'primeng/popover';
-import { Divider } from 'primeng/divider';
+
+import { ConfigStateService, CurrentUserDto } from '@abp/ng.core';
 import { Menu } from 'primeng/menu';
-import { User } from '../../../core/auth/authentication/authentication.types';
 import { AuthenticationService } from '../../../core/auth/authentication/authentication.service';
 
 @Component({
@@ -36,7 +32,6 @@ import { AuthenticationService } from '../../../core/auth/authentication/authent
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'user',
-    standalone: true,
     imports: [
         ButtonModule,
         BadgeModule,
@@ -54,7 +49,7 @@ export class UserComponent implements OnInit, OnDestroy {
     /* eslint-enable @typescript-eslint/naming-convention */
 
     @Input() showAvatar: boolean = true;
-    user: User;
+    user: CurrentUserDto;
     userMenuItems: MenuItem[];
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -65,10 +60,12 @@ export class UserComponent implements OnInit, OnDestroy {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
-        private _authService: AuthenticationService,
         private _translocoService: TranslocoService,
-        private _signInHistoryDialog: SigninHistoryDialogService
-    ) {}
+        private _authService: AuthenticationService,
+        private _signInHistoryDialog: SigninHistoryDialogService,
+        private _abpConfigStateService: ConfigStateService,
+    ) {
+    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -78,13 +75,12 @@ export class UserComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Subscribe to the user service
-        this._authService
-            .getUserProfile()
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((user: User) => {
-                this.user = user;
-            });
+        //Subscribe to the user service
+        this._abpConfigStateService.getAll$().subscribe({
+            next: (data) => {
+                this.user = data.currentUser;
+            },
+        });
 
         this.userMenuItems = [
             {
@@ -95,12 +91,12 @@ export class UserComponent implements OnInit, OnDestroy {
                 icon: 'fa-regular fa-user',
             },
             {
-                label:'signin-history',
+                label: 'signin-history',
                 icon: 'fa-regular fa-user',
                 command: (event) => {
                     this._signInHistoryDialog.visibleDialog = true;
                 },
-            }
+            },
         ];
     }
 
@@ -117,12 +113,10 @@ export class UserComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-
     /**
      * Sign out
      */
     signOut(): void {
-        this._router.navigate(['/sign-out']);
+this._router.navigate(['/sign-out']);
     }
-
 }

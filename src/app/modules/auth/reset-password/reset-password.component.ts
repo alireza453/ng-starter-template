@@ -25,7 +25,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
     styleUrl: 'reset-password.component.scss',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
-    standalone: true,
     imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -35,7 +34,7 @@ import { TranslocoPipe } from '@ngneat/transloco';
         Password,
         AuthBasePartComponent,
         TranslocoPipe,
-    ],
+    ]
 })
 export class AuthResetPasswordComponent implements OnInit {
     @ViewChild('resetPasswordNgForm') resetPasswordNgForm: NgForm;

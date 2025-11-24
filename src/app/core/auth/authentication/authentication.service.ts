@@ -1,17 +1,17 @@
+import { AuthService } from '@abp/ng.core';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, map, of, switchMap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import {
-    RegisterUserDto,
-    RequestLoginDto,
-    ResultLoginDto,
-    User,
-} from './authentication.types';
+import { RegisterUserDto, RequestLoginDto, User } from './authentication.types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private _httpClient = inject(HttpClient);
+    constructor(
+        private _httpClient: HttpClient,
+        private _abpAuthService: AuthService
+    ) {}
+
     private _userInfo = new BehaviorSubject<User | null>(null);
 
     /**
@@ -52,30 +52,8 @@ export class AuthenticationService {
      * @param credentials
      */
 
-    signIn(credentials: RequestLoginDto): Observable<ResultLoginDto> {
-        return this._httpClient
-            .post<ResultLoginDto>(
-                `${environment.BASE_URL}/account/login`,
-                credentials
-            );
-    }
-
-    /**
-     * Get the signed-in user profile
-     */
-    getUserProfile(): Observable<User> {
-        return this._httpClient.get<User>(
-            `${environment.BASE_URL}/account/my-profile`
-        );
-    }
-
-    /**
-     * Save signed-in user state in local storage
-     * @param user
-     */
-    saveUserInLocalStorage(user: User): void {
-        this.user = user;
-        localStorage.setItem('userInfo', JSON.stringify(user));
+    signIn(credentials: RequestLoginDto): Observable<any> {
+        return this._abpAuthService.login(credentials);
     }
 
     /**
@@ -94,17 +72,8 @@ export class AuthenticationService {
     /**
      * Sign out
      */
-    signOut(): Observable<any> {
-        localStorage.removeItem('userInfo');
-
-        this._httpClient
-            .get(`${environment.BASE_URL}/account/logout`)
-            .subscribe(() => {
-                this.user = null;
-            });
-
-        // Return the observable
-        return of(true);
+    signOut() {
+         this._abpAuthService.logout();
     }
 
     /**
@@ -114,7 +83,7 @@ export class AuthenticationService {
      */
     signUp(user: RegisterUserDto): Observable<any> {
         return this._httpClient.post(
-            `${environment.BASE_URL}/account/register`,
+            `${environment.BASE_API}/account/register`,
             user
         );
     }

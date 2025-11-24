@@ -1,11 +1,12 @@
-import { DOCUMENT, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
-    ChangeDetectionStrategy,
-    Component,
-    Input,
-    TemplateRef,
-    ViewEncapsulation,
-    inject,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+  ViewEncapsulation,
+  inject,
+  DOCUMENT
 } from '@angular/core';
 
 import { ButtonModule } from 'primeng/button';
@@ -16,10 +17,9 @@ import { ButtonModule } from 'primeng/button';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'fuseFullscreen',
-    standalone: true,
     imports: [
         ButtonModule
-    ],
+    ]
 })
 export class FuseFullscreenComponent {
     private _document = inject(DOCUMENT);

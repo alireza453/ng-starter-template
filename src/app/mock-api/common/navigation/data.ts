@@ -15,14 +15,14 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'صفحه اصلی',
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-document-check',
-                link: '/admin/home',
+                link: 'dashboard/home',
             },
             {
                 id: 'dashboards.basedata',
                 title: 'ثبت اطلاعات پایه',
                 type: 'basic',
                 icon: 'heroicons_outline:clipboard-document-check',
-                link: '/admin/base-data',
+                link: 'dashboard/base-data',
             },
         ]
     }

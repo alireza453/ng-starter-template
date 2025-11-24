@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { APP_INITIALIZER, ApplicationConfig, inject } from '@angular/core';
 
+import { provideAbpCore, withOptions } from '@abp/ng.core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
     PreloadAllModules,
@@ -13,13 +14,15 @@ import { TranslocoService, provideTransloco } from '@ngneat/transloco';
 import { definePreset } from '@primeng/themes';
 import AURA from '@primeng/themes/aura';
 import { appRoutes } from 'app/app.routes';
-import { provideAuth } from 'app/core/auth/authentication/authentication.provider';
 import { mockApiServices } from 'app/mock-api';
 import { providePrimeNG } from 'primeng/config';
 import { firstValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
-
-
+import { provideAbpOAuth } from '@abp/ng.oauth';
+import { provideIdentityConfig } from '@abp/ng.identity/config';
+import { provideAccountConfig } from '@abp/ng.account/config';
+import { registerLocale } from '@abp/ng.core/locale';
+import { environment } from 'environments/smaple/test';
 
 const IndigoPreset = definePreset(AURA, {
     semantic: {
@@ -37,8 +40,8 @@ const IndigoPreset = definePreset(AURA, {
                     700: '{zinc.700}',
                     800: '{zinc.800}',
                     900: '{zinc.900}',
-                    950: '{zinc.950}'
-                }
+                    950: '{zinc.950}',
+                },
             },
             dark: {
                 surface: {
@@ -53,9 +56,9 @@ const IndigoPreset = definePreset(AURA, {
                     700: '{slate.700}',
                     800: '{slate.800}',
                     900: '{slate.900}',
-                    950: '{slate.950}'
-                }
-            }
+                    950: '{slate.950}',
+                },
+            },
         },
         primary: {
             50: '{indigo.50}',
@@ -75,25 +78,34 @@ const IndigoPreset = definePreset(AURA, {
 export const appConfig: ApplicationConfig = {
     providers: [
         provideAnimationsAsync(),
+        provideHttpClient(),
+
+        //ABP Auth Providers
+        provideAbpCore(
+            withOptions({
+                environment,
+                registerLocaleFn: registerLocale(),
+            })
+        ),
+        provideAbpOAuth(),
+        provideIdentityConfig(),
+        provideAccountConfig(),
+
         providePrimeNG({
-             ripple: true,
+            ripple: true,
             theme: {
                 preset: IndigoPreset,
                 options: {
                     darkModeSelector: '.mydark',
-                    cssLayer:false
+                    cssLayer: false,
                 },
             },
-
         }),
-        provideHttpClient(),
+
+
         provideRouter(
             appRoutes,
-            withPreloading(PreloadAllModules),
-            withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })
         ),
-
-
 
         // Transloco Config
         provideTransloco({
@@ -133,7 +145,7 @@ export const appConfig: ApplicationConfig = {
         },
 
         // Fuse
-        provideAuth(),
+        //provideAuth(),
         provideFuse({
             mockApi: {
                 delay: 0,

@@ -20,23 +20,17 @@ import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/ver
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 import { Subject, takeUntil } from 'rxjs';
 import { Tooltip } from 'primeng/tooltip';
-import { Badge } from 'primeng/badge';
-import { Tag } from 'primeng/tag';
-
 @Component({
     selector: 'fuse-vertical-navigation-basic-item',
     templateUrl: './basic.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         NgClass,
         RouterLink,
         RouterLinkActive,
         NgTemplateOutlet,
         Tooltip,
-        Badge,
-        Tag,
-    ],
+    ]
 })
 export class FuseVerticalNavigationBasicItemComponent
     implements OnInit, OnDestroy

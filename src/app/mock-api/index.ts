@@ -8,6 +8,7 @@ import { ShortcutsMockApi } from 'app/mock-api/common/shortcuts/api';
 import { UserMockApi } from 'app/mock-api/common/user/api';
 import { IconsMockApi } from 'app/mock-api/ui/icons/api';
 import { LoginHistoryMockApi } from './common/signin-history/api';
+import { ChatMockApi } from './common/chat/api';
 
 export const mockApiServices = [
     IconsMockApi,
@@ -17,5 +18,6 @@ export const mockApiServices = [
     SearchMockApi,
     ShortcutsMockApi,
     UserMockApi,
-    LoginHistoryMockApi
+    LoginHistoryMockApi,
+    ChatMockApi
 ];

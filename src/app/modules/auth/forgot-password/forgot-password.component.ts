@@ -28,7 +28,6 @@ import { Message } from 'primeng/message';
     styleUrl: './forgot-password.component.scss',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
-    standalone: true,
     imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -40,7 +39,7 @@ import { Message } from 'primeng/message';
         AuthBasePartComponent,
         TranslocoPipe,
         Message,
-    ],
+    ]
 })
 export class AuthForgotPasswordComponent implements OnInit {
     @ViewChild('forgotPasswordNgForm') forgotPasswordNgForm: NgForm;

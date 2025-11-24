@@ -1,16 +1,17 @@
 import { ScrollStrategy, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { DOCUMENT, DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
-    Component,
-    ElementRef,
-    Inject,
-    NgZone,
-    OnDestroy,
-    OnInit,
-    Renderer2,
-    ViewChild,
-    ViewEncapsulation,
+  Component,
+  ElementRef,
+  Inject,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild,
+  ViewEncapsulation,
+  DOCUMENT
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -19,7 +20,6 @@ import { TranslocoPipe } from '@ngneat/transloco';
 import { QuickChatService } from 'app/layout/common/quick-chat/quick-chat.service';
 import { Chat } from 'app/layout/common/quick-chat/quick-chat.types';
 import { Avatar } from 'primeng/avatar';
-import { Badge, BadgeDirective } from 'primeng/badge';
 import { Button } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
 import { InputText } from 'primeng/inputtext';
@@ -31,7 +31,6 @@ import { Subject, takeUntil } from 'rxjs';
     styleUrls: ['./quick-chat.component.scss'],
     encapsulation: ViewEncapsulation.None,
     exportAs: 'quickChat',
-    standalone: true,
     imports: [
         NgClass,
         FuseScrollbarDirective,
@@ -43,7 +42,7 @@ import { Subject, takeUntil } from 'rxjs';
         Avatar,
         InputText,
         FormsModule
-    ],
+    ]
 })
 export class QuickChatComponent implements OnInit, OnDestroy {
     @ViewChild('drawerRef') drawerRef!: Drawer;

@@ -24,13 +24,12 @@ import { FuseConfigService } from '../../../../@fuse/services/config';
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: 'languages',
-    standalone: true,
     imports: [
         FormsModule,
         ButtonModule,
         Select,
         TranslocoPipe,
-    ],
+    ]
 })
 export class LanguagesComponent implements OnInit, OnDestroy {
     availableLangs: AvailableLangs;

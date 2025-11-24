@@ -19,14 +19,13 @@ import { TranslocoPipe } from '@ngneat/transloco';
     templateUrl: './unlock-session.component.html',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
-    standalone: true,
     imports: [
         FormsModule,
         ReactiveFormsModule,
         RouterLink,
         Message,
         TranslocoPipe,
-    ],
+    ]
 })
 export class AuthUnlockSessionComponent implements OnInit {
     @ViewChild('unlockSessionNgForm') unlockSessionNgForm: NgForm;

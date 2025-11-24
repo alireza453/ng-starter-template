@@ -1,8 +1,7 @@
 import { Route } from '@angular/router';
 import { initialDataResolver } from 'app/app.resolvers';
-import { AuthenticationGuard } from 'app/core/auth/authentication/guards/authentication.guard';
-import { NoAuthGuard } from 'app/core/auth/authentication/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
+import { authGuard, AuthGuard } from '@abp/ng.core';
 
 // prettier-ignore
 /* eslint-disable max-len */
@@ -11,7 +10,7 @@ export const appRoutes: Route[] = [
 
     // Redirect empty path to 'ravanyar/dashboard/home'
     {
-        path: '', pathMatch: 'full', redirectTo: 'ravanyar/dashboards/home' ,
+        path: '', pathMatch: 'full', redirectTo: 'ravanyar/dashboard/home' ,
     },
 
     // Redirect signed-in user to the 'ravanyar/dashboards/home'
@@ -21,7 +20,7 @@ export const appRoutes: Route[] = [
     {
         path: 'signed-in-redirect',
         pathMatch: 'full',
-        redirectTo: 'ravanyar/dashboards/home',
+        redirectTo: 'ravanyar/dashboard/home',
     },
 
     // Auth routes for guests
@@ -53,8 +52,6 @@ export const appRoutes: Route[] = [
     // Auth routes for authenticated users
     {
         path: '',
-        canActivate: [AuthenticationGuard],
-        canActivateChild: [AuthenticationGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty',
@@ -73,15 +70,15 @@ export const appRoutes: Route[] = [
      */
     {
         path: 'ravanyar',
-        canActivate: [AuthenticationGuard],
-        canActivateChild: [AuthenticationGuard],
+        canActivate: [authGuard],
+        canActivateChild: [authGuard],
         component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver,
         },
         children: [
             {
-                path: 'admin', children: [
+                path: 'dashboard', children: [
                     //home page
                     {
                         path: 'home',

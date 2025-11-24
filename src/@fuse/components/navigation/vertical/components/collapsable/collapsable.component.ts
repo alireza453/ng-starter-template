@@ -29,7 +29,6 @@ import { Badge } from 'primeng/badge';
     templateUrl: './collapsable.component.html',
     animations: fuseAnimations,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         NgClass,
         FuseVerticalNavigationBasicItemComponent,
@@ -38,7 +37,7 @@ import { Badge } from 'primeng/badge';
         FuseVerticalNavigationGroupItemComponent,
         FuseVerticalNavigationSpacerItemComponent,
         Tooltip,
-    ],
+    ]
 })
 export class FuseVerticalNavigationCollapsableItemComponent
     implements OnInit, OnDestroy

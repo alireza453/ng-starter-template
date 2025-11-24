@@ -1,3 +1,4 @@
+import { ConfigStateService } from '@abp/ng.core';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import {
     FormBuilder,
@@ -17,7 +18,6 @@ import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
-import { switchMap, throwError } from 'rxjs';
 import { LanguagesComponent } from '../../../layout/common/languages/languages.component';
 import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
 
@@ -27,7 +27,6 @@ import { AuthBasePartComponent } from '../base-part/auth-base-part.component';
     styleUrl: 'sign-in.component.scss',
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
-    standalone: true,
     imports: [
         RouterLink,
         FormsModule,
@@ -58,7 +57,7 @@ export class AuthSignInComponent implements OnInit {
         private _authService: AuthenticationService,
         private _router: Router,
         private _formBuilder: FormBuilder,
-        private _translocoService: TranslocoService
+        private _translocoService: TranslocoService,
     ) {}
 
     // -----------------------------------------------------------------------------------------------------
@@ -70,8 +69,8 @@ export class AuthSignInComponent implements OnInit {
      */
     ngOnInit(): void {
         this.signInForm = this._formBuilder.group({
-            userNameOrEmailAddress: ['', [Validators.required]],
-            password: ['', [Validators.required]],
+            userNameOrEmailAddress: ['admin', [Validators.required]],
+            password: ['1q2w3E*', [Validators.required]],
             rememberMe: [false],
         });
     }
@@ -115,52 +114,38 @@ export class AuthSignInComponent implements OnInit {
      * Sign in
      */
     signIn(): void {
-        // Return if the form is invalid
+        //Return if the form is invalid
         if (this.signInForm.invalid) {
             return;
         }
 
-        // Disable the form
+        //Disable the form
         this.signInForm.disable();
 
-        // Hide the alert
+        //Hide the alert
         this.showAlert = false;
 
-        // Sign in
-        this._authService
-            .signIn({
-                userNameOrEmailAddress: this.username.value,
-                password: this.password.value,
-                rememberMe: this.rememberMe.value,
-            })
-            .pipe(
-                switchMap((res) => {
-                    if (res.result == 1) {
-                        return this._authService.getUserProfile();
-                    }else {
-
-                    return throwError(() => new Error('something-went-wrong'));
-                    }
-
-                })
-            )
-            .subscribe({
-                next: (user) => {
-                    const redirectURL =
-                        this._activatedRoute.snapshot.queryParamMap.get(
-                            'redirectURL'
-                        ) || '/signed-in-redirect';
-
-
-                    this._authService.saveUserInLocalStorage(user);
-                    this._router.navigateByUrl(redirectURL);
-                },
-                error: (err) => {
-                    this.signInErrorAction(
-                        this._translocoService.translate('something-went-wrong')
-                    );
-                },
-            });
+        //Sign in
+        this._authService.signIn({
+            username: this.username.value,
+            password: this.password.value,
+        });
+        // .subscribe({
+        //     next: (user) => {
+        //         console.log(user);
+        //         const redirectURL =
+        //             this._activatedRoute.snapshot.queryParamMap.get(
+        //                 'redirectURL'
+        //             ) || '/signed-in-redirect';
+        //
+        //         this._router.navigateByUrl(redirectURL);
+        //     },
+        //     error: (err) => {
+        //         this.signInErrorAction(
+        //             this._translocoService.translate('something-went-wrong')
+        //         );
+        //     },
+        // });
     }
 
     /**
@@ -176,4 +161,5 @@ export class AuthSignInComponent implements OnInit {
         // Show the alert
         this.showAlert = true;
     }
+
 }

@@ -28,7 +28,6 @@ import { Tooltip } from 'primeng/tooltip';
     selector: 'fuse-vertical-navigation-aside-item',
     templateUrl: './aside.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
     imports: [
         NgClass,
         FuseVerticalNavigationBasicItemComponent,
@@ -37,7 +36,7 @@ import { Tooltip } from 'primeng/tooltip';
         FuseVerticalNavigationGroupItemComponent,
         FuseVerticalNavigationSpacerItemComponent,
         Tooltip,
-    ],
+    ]
 })
 export class FuseVerticalNavigationAsideItemComponent
     implements OnChanges, OnInit, OnDestroy

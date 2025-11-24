@@ -9,10 +9,9 @@ import { SigninHistoryDialogService } from './signin-history-dialog.service';
 
 @Component({
     selector: 'signin-history-dialog',
-    standalone: true,
     imports: [Dialog, TableModule, Tag, TranslocoPipe],
     templateUrl: './signin-history-dialog.component.html',
-    styleUrl: './signin-history-dialog.component.scss',
+    styleUrl: './signin-history-dialog.component.scss'
 })
 export class SigninHistoryDialogComponent implements OnInit {
     signInHistoryDialog = inject(SigninHistoryDialogService);
