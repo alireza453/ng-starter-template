@@ -8,20 +8,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'روان یار',
         subtitle: 'داشبورد روان یار',
         type: 'collapsable',
-        icon: 'heroicons_outline:home',
+        icon: 'fa-light fa-house',
         children: [
             {
                 id: 'dashboards.home',
                 title: 'صفحه اصلی',
-                type: 'basic',
-                icon: 'heroicons_outline:clipboard-document-check',
+                type:'basic',
+                icon: 'fa-light fa-house',
                 link: 'dashboard/home',
             },
             {
                 id: 'dashboards.basedata',
                 title: 'ثبت اطلاعات پایه',
                 type: 'basic',
-                icon: 'heroicons_outline:clipboard-document-check',
+                icon: 'fa-light fa-database',
                 link: 'dashboard/base-data',
             },
         ]

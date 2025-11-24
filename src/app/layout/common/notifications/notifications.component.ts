@@ -12,7 +12,7 @@ import {
     ChangeDetectorRef,
     Component, computed,
     OnDestroy,
-    OnInit,
+    OnInit, signal,
     TemplateRef,
     ViewChild,
     ViewContainerRef,
@@ -59,7 +59,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     private _notificationsPanel: TemplateRef<any>;
     htmlTag = document.documentElement;
     notifications: Notification[];
-    unreadCount: number = 0;
+    unreadCount= signal<number>(0);
     private _overlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     members = [
@@ -268,6 +268,6 @@ export class NotificationsComponent implements OnInit, OnDestroy {
             ).length;
         }
 
-        this.unreadCount = count;
+        this.unreadCount.set(count);
     }
 }

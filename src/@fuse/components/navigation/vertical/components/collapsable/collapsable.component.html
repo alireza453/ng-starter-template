@@ -11,11 +11,7 @@
     >
         <!-- Icon -->
         @if (item.icon) {
-            <mat-icon
-                class="rtl:ml-4 ltr:mr-4"
-                [ngClass]="item.classes?.icon"
-                [svgIcon]="item.icon"
-            ></mat-icon>
+            <i class="me-4" [class]="item.icon"></i>
         }
 
         <!-- Title & Subtitle -->
@@ -47,20 +43,11 @@
         }
 
         <!-- Arrow -->
-        @if (htmltag.getAttribute('dir') === 'rtl') {
-            <mat-icon
-                class="fuse-vertical-navigation-item-arrow icon-size-4   rtl:mr-auto  ltr:ml-auto"
-
-
-                [svgIcon]="'heroicons_solid:chevron-left'"
-            ></mat-icon>
+        @if (isCollapsed) {
+            <i class="fa-regular fa-angle-up ms-auto"></i>
         } @else {
-            <mat-icon
-                class="fuse-vertical-navigation-item-arrow icon-size-4   rtl:mr-auto  ltr:ml-auto"
 
-
-                [svgIcon]="'heroicons_solid:chevron-right'"
-            ></mat-icon>
+            <i class="fa-regular fa-angle-down ms-auto"></i>
         }
 
     </div>

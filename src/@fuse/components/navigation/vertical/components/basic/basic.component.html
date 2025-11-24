@@ -112,11 +112,10 @@
 <ng-template #itemTemplate>
     <!-- Icon -->
     @if (item.icon) {
-        <mat-icon
-            class="rtl:ml-4 ltr:mr-4"
-            [ngClass]="item.classes?.icon"
-            [svgIcon]="item.icon"
-        ></mat-icon>
+        <i
+            class="me-4"
+            [class]="item.icon"
+        ></i>
     }
 
     <!-- Title & Subtitle -->

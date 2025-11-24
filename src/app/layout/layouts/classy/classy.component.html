@@ -4,7 +4,7 @@
 <!-- Navigation -->
 <fuse-vertical-navigation
     class="bg-slate-50 dark:bg-slate-900 print:hidden"
-    mode="over"
+    mode="side"
     [name]="'mainNavigation'"
     [position]="
         document.documentElement.getAttribute('dir') == 'rtl' ? 'right' : 'left'
@@ -13,12 +13,16 @@
 >
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
-        <div class="flex w-full items-center justify-between p-4">
+        <div class="flex w-full  p-4">
             <!-- Logo -->
-            <div class="flex items-center justify-center">
+            <div class="flex items-center justify-start gap-4">
                 <img class="w-8" src="images/logo/logo.svg" />
+                <h1 class="font-bold text-3xl text-primary">
+                    سامانه روان یار
+                </h1>
             </div>
-            <scheme></scheme>
+
+
         </div>
     </ng-container>
     <!--     Navigation footer hook -->
@@ -43,6 +47,7 @@
                     icon="fa-regular fa-light fa-bars-staggered"
                     severity="primary"
                     variant="outlined"
+                    size="small"
                     (click)="toggleNavigation('mainNavigation')"
                 >
                 </p-button>
@@ -50,6 +55,7 @@
                 <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
                 <notifications></notifications>
                 <user></user>
+                <scheme></scheme>
 
             </div>
         </ng-template>
