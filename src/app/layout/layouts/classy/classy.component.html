@@ -13,16 +13,12 @@
 >
     <!-- Navigation header hook -->
     <ng-container fuseVerticalNavigationContentHeader>
-        <div class="flex w-full  p-4">
+        <div class="flex w-full p-4">
             <!-- Logo -->
             <div class="flex items-center justify-start gap-4">
                 <img class="w-8" src="images/logo/logo.svg" />
-                <h1 class="font-bold text-3xl text-primary">
-                    سامانه روان یار
-                </h1>
+                <h1 class="text-3xl font-bold text-primary">سامانه روان یار</h1>
             </div>
-
-
         </div>
     </ng-container>
     <!--     Navigation footer hook -->
@@ -41,7 +37,7 @@
     <p-menubar>
         <ng-template #start>
             <div
-                class="flex w-full items-center justify-between gap-1 sm:gap-2"
+                class="flex w-full items-center justify-between gap-1 sm:gap-1"
             >
                 <p-button
                     icon="fa-regular fa-light fa-bars-staggered"
@@ -56,7 +52,6 @@
                 <notifications></notifications>
                 <user></user>
                 <scheme></scheme>
-
             </div>
         </ng-template>
         <ng-template #end>

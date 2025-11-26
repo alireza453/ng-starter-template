@@ -1,75 +1,107 @@
 <!-- Notifications toggle -->
-<p-button severity="secondary"
-          size="small"
-          variant="outlined"
-          (click)="op.toggle($event)"
+<p-button
+    severity="secondary"
+    size="small"
+    variant="outlined"
+    (click)="op.toggle($event)"
 >
     <div class="flex items-center justify-center gap-1">
         <i class="fa-regular fa-bell"></i>
         @if (unreadCount() > 0) {
-            <p-badge size="small"  value="{{unreadCount()}}"></p-badge>
+            <!-- <p-badge size="small"  value="{{unreadCount()}}"></p-badge>
+              -->
+            <span class="font-bold text-red-500">
+                {{ unreadCount() }}
+            </span>
+        } @else {
+            0
         }
     </div>
 </p-button>
 
-
-
 <p-popover #op>
-    <div class="flex flex-col gap-4 w-[20rem]">
+    <div class="flex w-[20rem] flex-col gap-4">
         <div>
             <!--Header-->
-            <div class="w-full gap-2  mb-2 flex items-center ">
-
+            <div class="mb-2 flex w-full items-center gap-2">
                 <p-button
                     severity="primary"
                     variant="outlined"
                     icon="fa-solid fa-solid fa-envelope-circle-check"
-                    [pTooltip]=" ('mark-all-as-read' | transloco) "
+                    [pTooltip]="'mark-all-as-read' | transloco"
                     [disabled]="unreadCount() === 0"
                     (click)="markAllAsRead()"
                 >
                 </p-button>
                 <span
-                    class="font-medium text-surface-900 dark:text-surface-200  block ">{{ 'notifications' | transloco }}</span>
-
-
+                    class="block font-medium text-surface-900 dark:text-surface-200"
+                    >{{ 'notifications' | transloco }}</span
+                >
             </div>
 
             @if (notifications.length > 0) {
-                <ul class="list-none sm:max-h-100 p-0 m-0 flex flex-col overflow-hidden overscroll-auto"
-                    fuseScrollbar [fuseScrollbarOptions]="{ wheelPropagation: false }">
-                    @for (notification of notifications; track notification.id) {
+                <ul
+                    class="m-0 flex list-none flex-col overflow-hidden overscroll-auto p-0 sm:max-h-100"
+                    fuseScrollbar
+                    [fuseScrollbarOptions]="{ wheelPropagation: false }"
+                >
+                    @for (
+                        notification of notifications;
+                        track notification.id
+                    ) {
                         <li
-                            class="flex items-center justify-stretch gap-2 px-2 py-3 hover:bg-emphasis cursor-pointer rounded-border"
+                            class="flex cursor-pointer items-center justify-stretch gap-2 px-2 py-3 rounded-border hover:bg-emphasis"
                         >
                             <!--                        Avatar-->
                             @if (notification.image) {
                                 <img
                                     class="w-8 rounded-md"
-                                    [src]="notification.image "
+                                    [src]="notification.image"
                                     [alt]="'Notification image'"
                                 />
                             } @else {
-                                <p-avatar class="w-8" icon="fa-light fa-user"></p-avatar>
+                                <p-avatar
+                                    class="w-8"
+                                    icon="fa-light fa-user"
+                                ></p-avatar>
                             }
 
                             <!--                        title,Description,Time-->
                             <div class="flex flex-1 flex-col gap-1">
-                                <span class="font-medium">{{ notification.title }}</span>
-                                <div class="text-sm text-ellipsis">{{ notification.description }}</div>
-                                <div class="text-sm ">{{ notification.time }}</div>
+                                <span class="font-medium">{{
+                                    notification.title
+                                }}</span>
+                                <div class="text-ellipsis text-sm">
+                                    {{ notification.description }}
+                                </div>
+                                <div class="text-sm">
+                                    {{ notification.time }}
+                                </div>
                             </div>
 
                             <!--Actions-->
-                            <div class=" flex flex-col gap-2">
+                            <div class="flex flex-col gap-2">
                                 <p-button
                                     size="small"
-                                    [icon]="notification.read ?  'fa-duotone fa-light fa-check' : 'fa-duotone fa-thin fa-envelope'  "
-                                    [severity]="notification.read ? 'secondary' : 'primary' "
+                                    [icon]="
+                                        notification.read
+                                            ? 'fa-duotone fa-light fa-check'
+                                            : 'fa-duotone fa-thin fa-envelope'
+                                    "
+                                    [severity]="
+                                        notification.read
+                                            ? 'secondary'
+                                            : 'primary'
+                                    "
                                     [rounded]="true"
                                     variant="text"
                                     (click)="toggleRead(notification)"
-                                    [pTooltip]=" notification.read ? ('mark-as-unread' |transloco)  : ('mark-as-read'   | transloco) "></p-button>
+                                    [pTooltip]="
+                                        notification.read
+                                            ? ('mark-as-unread' | transloco)
+                                            : ('mark-as-read' | transloco)
+                                    "
+                                ></p-button>
 
                                 <!-- Remove -->
                                 <p-button
@@ -79,22 +111,20 @@
                                     [rounded]="true"
                                     icon="fa-duotone fa-light fa-trash"
                                     (click)="delete(notification)"
-                                    [pTooltip]=" 'remove' | transloco "
+                                    [pTooltip]="'remove' | transloco"
                                 >
                                 </p-button>
                             </div>
                         </li>
                         <p-divider></p-divider>
                     }
-
                 </ul>
             } @else {
                 <div class="flex flex-col items-center justify-center gap-6">
                     <i class="fa-regular fa-bell-slash text-7xl"></i>
-                    <p class="text-lg">{{ 'no-notification'|transloco }}</p>
+                    <p class="text-lg">{{ 'no-notification' | transloco }}</p>
                 </div>
             }
-
         </div>
     </div>
 </p-popover>
