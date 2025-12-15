@@ -1,0 +1,59 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <p-tree
+        [filter]="true"
+        filterPlaceholder="جستجو..."
+        [value]="baseInfoCategories"
+        (onNodeSelect)="onNodeSelect($event)"
+        styleClass="w-full md:w-[30rem]"
+        selectionMode="single"
+    >
+        <ng-template pTemplate="header">
+            <div class="w-full my-2">
+                <p-inputgroup>
+                    <input [(ngModel)]="name" name="name" pInputText placeholder="عنوان گروه" />
+                    <input [(ngModel)]="display" name="display" pInputText placeholder="نام نمایشی" />
+                    <p-button label="افزودن" (click)="addCategory()" />
+
+                </p-inputgroup>
+            </div>
+
+        </ng-template>
+        <ng-template let-node pTemplate="parent">
+            <div class="childItem flex items-center justify-between gap-1">
+                @if (node.expanded) {
+                    <!--                    fa-solid fa-folder-open-->
+                    <i class=" pi pi-folder-open text-amber-500"></i>
+                } @else {
+                    <!--                    fa-solid fa-folder-->
+                    <i class="pi pi-folder text-amber-500"></i>
+                }
+                <span class="font-bold ms-2"> {{ node.label }}</span>
+                <add-child-button
+                    (childAddedEvent)="onChildAdded()"
+                    [node]="node"></add-child-button>
+                <edit-node-button
+                    (childEditedEvent)="onChildEdited()"
+                    (childDeletedEvent)="onChildEdited()"
+                    [node]="node"></edit-node-button>
+
+            </div>
+        </ng-template>
+
+        <ng-template let-node pTemplate="child">
+            <div
+                class="childItem flex w-full items-center justify-between gap-1"
+            >
+                <span> {{ node.label }}</span>
+                <add-child-button
+                    (childAddedEvent)="onChildAdded()"
+                                  [node]="node"></add-child-button>
+
+                <edit-node-button (childEditedEvent)="onChildEdited()"
+                                  (childDeletedEvent)="onChildDeleted()"
+                                  [node]="node"></edit-node-button>
+            </div>
+        </ng-template>
+    </p-tree>
+</div>
+
+<p-toast></p-toast>

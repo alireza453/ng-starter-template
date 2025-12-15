@@ -10,7 +10,7 @@ export const appRoutes: Route[] = [
 
     // Redirect empty path to 'ravanyar/dashboard/home'
     {
-        path: '', pathMatch: 'full', redirectTo: 'ravanyar/dashboard/home' ,
+        path: '', pathMatch: 'full', redirectTo: 'dashboard/home' ,
     },
 
     // Redirect signed-in user to the 'ravanyar/dashboards/home'
@@ -20,7 +20,7 @@ export const appRoutes: Route[] = [
     {
         path: 'signed-in-redirect',
         pathMatch: 'full',
-        redirectTo: 'ravanyar/dashboard/home',
+        redirectTo: 'dashboard/home',
     },
 
     // Auth routes for guests
@@ -69,7 +69,7 @@ export const appRoutes: Route[] = [
     Ravanyar routes
      */
     {
-        path: 'ravanyar',
+        path: '',
         canActivate: [authGuard],
         canActivateChild: [authGuard],
         component: LayoutComponent,
@@ -85,8 +85,16 @@ export const appRoutes: Route[] = [
                         loadChildren: () => import('app/modules/admin/home/home.routes'),
                     },
                     {
-                        path: 'base-data',
-                        loadChildren: () => import('app/modules/admin/base-data/base-data.routes'),
+                        path: 'base-info',
+                        loadChildren: () => import('app/modules/admin/base-info/base-info.routes'),
+                    },
+                    {
+                        path: 'user-management',
+                        loadChildren: () => import('app/modules/admin/user-management/user-management.routes'),
+                    },
+                    {
+                        path: 'roles-management',
+                        loadChildren: () => import('app/modules/admin/roles-management/roles-management.routes'),
                     },
                 ]
             },

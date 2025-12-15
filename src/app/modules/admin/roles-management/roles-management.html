@@ -1,0 +1,104 @@
+<div class="w-full p-4 h-full flex flex-col ">
+    <p-card>
+        <p-table
+            #dt1
+            dataKey="id"
+            [rows]="10"
+            [value]="rolesList"
+            [tableStyle]="{ 'width': '100%' }"
+            [globalFilterFields]="['name']"
+        >
+            <ng-template pTemplate="caption" let-role>
+                <div class="flex items-center gap-1 justify-between">
+
+                    <p-iconfield iconPosition="left" class="me-auto">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                               placeholder="جستجو..." [(ngModel)]="searchValue" />
+                    </p-iconfield>
+
+
+                    <p-button label="خروجی csv" size="small" [outlined]="true" icon="pi pi-file-excel"
+                              (click)="dt1.exportCSV()"></p-button>
+                    <p-button label="حذف فیلتر" size="small" [outlined]="true" icon="pi pi-filter-slash"
+                              (click)="clear(dt1)" />
+                    <p-button icon="pi pi-plus" size="small" label="نقش جدید" (click)="showNewRoleDialog()"></p-button>
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+                    <th>
+                        ردیف
+
+                    </th>
+                    <th>
+                        نام
+
+                    </th>
+                    <th>
+                        عملیات
+                    </th>
+
+                </tr>
+
+            </ng-template>
+            <ng-template #body let-role let-rowIndex="rowIndex">
+                <tr>
+                    <td>{{ rowIndex + 1 }}</td>
+                    <td>{{ role.name }}</td>
+                    <td class="flex items-center justify-center gap-1">
+                        <p-button size="small"
+                                  severity="danger"
+                                  [outlined]="true"
+                                  label="حذف"
+                                  icon="pi pi-trash"
+                                  (click)="deleteRole(role)">
+                        </p-button>
+                        <p-button size="small"
+                                  severity="primary"
+                                  [outlined]="true"
+                                  label="ویرایش"
+                                  icon="pi pi-pen-to-square"
+                                  (click)="showEditRoleDialog(role)">
+                        </p-button>
+
+                        <permissions-tree
+                            providerName="R"
+                            [providerKey]="role.name"
+                            entityFlag="role"
+                        ></permissions-tree>
+
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
+</div>
+
+
+<!--new or edit dialog-->
+<p-dialog [draggable]="false" [resizable]="false"
+          [header]="dialogHeader"
+          [modal]="true"
+          [(visible)]="newEditRoleDialogVisible"
+          [style]="{ width: '25rem' }">
+
+    <input pInputText id="roleInput"
+           [(ngModel)]="roleInput"
+           placeholder="عنوان نقش"
+           name="roleInput"
+           class="flex-auto w-full"
+           autocomplete="off" />
+
+    <ng-template #footer>
+        <div class="flex justify-end">
+            <p-button label="ذخیره" severity="primary" (click)="saveRole()" />
+        </div>
+    </ng-template>
+
+</p-dialog>
+
+
+<p-toast />

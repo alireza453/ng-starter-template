@@ -22,7 +22,7 @@ import { provideAbpOAuth } from '@abp/ng.oauth';
 import { provideIdentityConfig } from '@abp/ng.identity/config';
 import { provideAccountConfig } from '@abp/ng.account/config';
 import { registerLocale } from '@abp/ng.core/locale';
-import { environment } from 'environments/smaple/test';
+import { environment } from 'environments/auth-environment';
 
 const IndigoPreset = definePreset(AURA, {
     semantic: {

@@ -14,11 +14,8 @@
     >
         <!-- Icon -->
         @if (item.icon) {
-            <mat-icon
-                class="fuse-vertical-navigation-item-icon"
-                [ngClass]="item.classes?.icon"
-                [svgIcon]="item.icon"
-            ></mat-icon>
+            <i class="me-4 text-lg" [class]="item.icon"></i>
+
         }
 
         <!-- Title & Subtitle -->

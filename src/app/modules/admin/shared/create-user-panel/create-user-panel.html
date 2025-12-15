@@ -1,0 +1,109 @@
+@if (panelMode == 'insertUser') {
+    <p-button size="small"
+              severity="primary"
+              label="کاربر جدید"
+              icon="pi pi-plus"
+              (click)="openPanel()">
+    </p-button>
+} @else {
+    <p-button size="small"
+              severity="primary"
+              [outlined]="true"
+              label="ویرایش"
+              icon="pi pi-pen-to-square"
+              (click)="openPanel()">
+    </p-button>
+}
+
+<!--user info form-->
+<p-drawer
+    [header]="panelHeader"
+    [(visible)]="visiblePanel"
+    [style]="{ width: '20rem'}">
+
+    <p-tabs value="0">
+        <p-tablist>
+            <p-tab value="0">انتخاب نقش</p-tab>
+            <p-tab value="1">اطلاعات کاربری</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+
+            <!--                <div class="w-full flex items-center justify-center flex-col gap-1 ">-->
+            <!--                    <p-progress-spinner styleClass="w-10 h-10" />-->
+            <!--                    <span>در حال دریافت...</span>-->
+            <!--                </div>-->
+
+            <p-tabpanel value="0">
+                <p-tree
+                    [filter]="true"
+                    filterPlaceholder="جستجو..."
+                    [(selection)]="selectedRoles"
+                    [value]="rolesList"
+                    styleClass="h-full p-0  overflow-y-auto"
+                    selectionMode="checkbox" />
+            </p-tabpanel>
+            <p-tabpanel value="1">
+                <form [formGroup]="userInfoForm" #newUserNgForm="ngForm">
+                    <div class="flex flex-col w-full gap-3 items-center justify-center">
+                        <p-floatlabel variant="on">
+                            <input pInputText id="userName" formControlName="userName" autocomplete="off" />
+                            <label for="userName">نام کاربری</label>
+                        </p-floatlabel>
+
+                        <p-floatlabel variant="on">
+                            <input pInputText id="name" formControlName="name" autocomplete="off" />
+                            <label for="name">نام</label>
+                        </p-floatlabel>
+                        <p-floatlabel variant="on">
+                            <input pInputText id="surname" formControlName="surname" autocomplete="off" />
+                            <label for="surname">نام کامل</label>
+                        </p-floatlabel>
+
+                        <p-floatlabel variant="on">
+                            <input pInputText id="email" formControlName="email" autocomplete="off" />
+                            <label for="email">ایمیل</label>
+                        </p-floatlabel>
+
+                        <p-floatlabel variant="on">
+                            <input pInputText id="phoneNumber" formControlName="phoneNumber" autocomplete="off" />
+                            <label for="phoneNumber">شماره تماس</label>
+                        </p-floatlabel>
+
+                        <p-floatlabel variant="on">
+                            <input type="password" pInputText id="password" formControlName="password"
+                                   autocomplete="off" />
+                            <label for="password">رمز عبور</label>
+                        </p-floatlabel>
+
+                        <div class="flex w-full items-center justify-start gap-2">
+                        <span>
+                            وضعیت کاربر
+                        </span>
+                            <p-toggleswitch formControlName="isActive">
+                                <ng-template #handle let-checked="checked">
+                                    <i [ngClass]="['!text-xs', 'pi', checked ? 'pi-check' : 'pi-times']"></i>
+                                </ng-template>
+                            </p-toggleswitch>
+                        </div>
+
+                    </div>
+                </form>
+            </p-tabpanel>
+
+        </p-tabpanels>
+    </p-tabs>
+
+    <ng-template #footer>
+
+        <p-button
+            styleClass="w-full"
+            [disabled]="userInfoForm.disabled || userInfoForm.invalid "
+            (click)="applyChange()">
+            <span> ثبت </span>
+        </p-button>
+
+    </ng-template>
+
+</p-drawer>
+
+<p-toast />

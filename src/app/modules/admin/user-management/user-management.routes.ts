@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { BaseDataComponent } from './base-data.component';
+import { UserManagement } from './user-management';
 
 export default [
     {
         path     : '',
-        component: BaseDataComponent,
+        component: UserManagement,
     },
 ] as Routes;

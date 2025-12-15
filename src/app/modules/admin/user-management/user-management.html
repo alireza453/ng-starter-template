@@ -1,0 +1,170 @@
+<div class="w-full p-4 h-full flex flex-col ">
+    <p-card>
+        <p-table
+            #dt1
+            dataKey="id"
+            [paginator]="true"
+            [rows]="10"
+            [scrollable]="true"
+            [rowsPerPageOptions]="[10, 20, 30,40,50]"
+            [value]="users"
+            [tableStyle]="{ 'width': '100%' }"
+            [globalFilterFields]="['name', 'username', 'email']"
+        >
+            <ng-template pTemplate="caption">
+                <div class="flex items-center gap-1 justify-between">
+
+                    <p-iconfield iconPosition="left" class="me-auto">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                               placeholder="جستجو..." [(ngModel)]="searchValue" />
+                    </p-iconfield>
+
+                    <p-button label="خروجی csv" size="small" [outlined]="true" icon="pi pi-file-excel"
+                              (click)="dt1.exportCSV()"></p-button>
+                    <p-button label="حذف فیلتر" size="small" [outlined]="true" icon="pi pi-filter-slash"
+                              (click)="clear(dt1)" />
+                    <create-user-panel
+                        panelHeader="افزودن کاربر"
+                        (userChanged)="onUserChanged()"
+                        panelMode="insertUser">
+                    </create-user-panel>
+                </div>
+            </ng-template>
+            <ng-template #header>
+                <tr>
+
+                    <th>
+                        ردیف
+                    </th>
+                    <th pSortableColumn="userName">
+                        نام کاربری
+                        <p-sortIcon field="userName" />
+                        <p-columnFilter type="text" field="userName" display="menu" />
+                    </th>
+                    <th pSortableColumn="name">
+                        نام
+                        <p-sortIcon field="name" />
+                        <p-columnFilter type="text" field="name" display="menu" />
+                    </th>
+                    <th pSortableColumn="email">
+                        ایمیل
+                        <p-sortIcon field="email" />
+                        <p-columnFilter type="text" field="email" display="menu" />
+                    </th>
+                    <th pSortableColumn="creationTime">
+                        تاریخ ایجاد
+                        <p-sortIcon field="creationTime" />
+                    </th>
+                    <th pSortableColumn="lastModificationTime">
+                        آخرین تغییر
+                        <p-sortIcon field="lastModificationTime" />
+                    </th>
+                    <th pSortableColumn="deletionTime">
+                        تاریخ حذف
+                        <p-sortIcon field="deletionTime" />
+                    </th>
+
+                    <th pSortableColumn="emailConfirmed">
+                        تایید ایمیل
+                        <p-sortIcon field="emailConfirmed" />
+                    </th>
+                    <th pSortableColumn="phoneNumber">
+                        شماره تلفن
+                        <p-sortIcon field="phoneNumber" />
+                    </th>
+                    <th pSortableColumn="phoneNumberConfirmed">
+                        تایید شماره تلفن
+                        <p-sortIcon field="phoneNumberConfirmed" />
+                    </th>
+                    <th pSortableColumn="isActive">
+                        وضعیت
+                        <p-sortIcon field="isActive" />
+                    </th>
+                    <th>
+                        نقش ها
+                    </th>
+                    <th>
+                        عملیات
+                    </th>
+
+                </tr>
+
+            </ng-template>
+            <ng-template #body
+                         let-user
+                         let-rowIndex="rowIndex">
+                <tr>
+
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.userName }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.creationTime | shortDateTime }}</td>
+                    <td>{{ user.lastModificationTime | shortDateTime }}</td>
+                    <td>{{ user.deletionTime | shortDateTime }}</td>
+
+                    <td>
+                        <i
+                            class="pi"
+                            [ngClass]="{
+                        'text-green-500 pi-check-circle': user.emailConfirmed,
+                        'text-red-500 pi-times-circle': !user.emailConfirmed
+                    }"></i>
+                    </td>
+                    <td>{{ user.phoneNumber }}</td>
+                    <td>
+                        <i
+                            class="pi"
+                            [ngClass]="{
+                        'text-green-500 pi-check-circle': user.phoneNumberConfirmed,
+                        'text-red-500 pi-times-circle': !user.phoneNumberConfirmed
+                    }"
+                        ></i>
+                    <td>
+                        <i
+                            class="pi"
+                            [ngClass]="{
+                        'text-green-500 pi-check-circle': user.isActive,
+                        'text-red-500 pi-times-circle': !user.isActive
+                    }"
+                        ></i>
+                    </td>
+
+                    <td>
+                            @for (role of user.roles; track role.name) {
+                                <p-tag class="m-[2px]" severity="info" [value]="role.name" />
+                            }
+                    </td>
+                    <td class="flex items-center flex-col justify-center gap-1">
+                        <p-button size="small"
+                                  severity="danger"
+                                  [outlined]="true"
+                                  label="حذف"
+                                  icon="pi pi-trash"
+                                  (click)="deleteUser(user)">
+                        </p-button>
+
+                        <create-user-panel
+                            panelHeader="ویرایش کاربر"
+                            [user]="user"
+                            (userChanged)="onUserChanged()"
+                            panelMode="editUser">
+                        </create-user-panel>
+
+                        <permissions-tree
+                            providerName="U"
+                            [providerKey]="user.id"
+                            entityFlag="user"
+                        ></permissions-tree>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
+</div>
+
+
+<p-toast></p-toast>

@@ -70,6 +70,7 @@ export class QuickChatService {
                     // Return the chat
                     return chat;
                 }),
+
                 switchMap((chat) => {
                     if (!chat) {
                         return throwError(

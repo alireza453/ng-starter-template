@@ -11,7 +11,7 @@
     >
         <!-- Icon -->
         @if (item.icon) {
-            <i class="me-4" [class]="item.icon"></i>
+            <i class="me-4 text-lg" [class]="item.icon"></i>
         }
 
         <!-- Title & Subtitle -->
@@ -44,10 +44,10 @@
 
         <!-- Arrow -->
         @if (isCollapsed) {
-            <i class="fa-regular fa-angle-up ms-auto"></i>
+            <i class="fa-regular fa-angle-down ms-auto"></i>
         } @else {
 
-            <i class="fa-regular fa-angle-down ms-auto"></i>
+            <i class="fa-regular fa-angle-up ms-auto"></i>
         }
 
     </div>

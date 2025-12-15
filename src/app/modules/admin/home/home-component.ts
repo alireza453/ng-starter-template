@@ -1,17 +1,16 @@
-import { PermissionService } from '@abp/ng.core';
 import { Component, OnInit } from '@angular/core';
+import { Button } from 'primeng/button';
+import { Tree } from 'primeng/tree';
+import { TableModule } from 'primeng/table';
 
 @Component({
     selector: 'app-home-component',
-    imports: [],
+    imports: [Tree, Button, TableModule],
     templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-    constructor(private permissionService: PermissionService) {}
 
     ngOnInit(): void {
-        console.log(
-            this.permissionService.getGrantedPolicy('AbpIdentity.Roles.Create')
-        );
+
     }
 }

@@ -1,0 +1,29 @@
+
+<p-button size="small"
+          severity="secondary"
+          [outlined]="true"
+          label="دسترسی"
+          icon="pi pi-pen-to-square"
+          (click)="showPermissionsDialog()">
+</p-button>
+
+
+<!--permissions dialog-->
+<p-drawer [draggable]="false"
+          header="تعیین دسترسی"
+          [(visible)]="permissionsDrawerVisible"
+          [style]="{ width: '20rem'}">
+
+    <p-tree
+        [filter]="true"
+        filterPlaceholder="جستجو..."
+        [(selection)]="selectedPermissions"
+        [value]="permissionsList"
+        styleClass="h-full p-0  overflow-y-auto"
+        (selectionChange)="syncSelect($event)"
+        selectionMode="checkbox" />
+
+</p-drawer>
+
+
+<p-toast />
